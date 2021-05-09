@@ -1,0 +1,62 @@
+1.table `user`
+- user_id : INT (PK, AI)
+- user_name(fullname) : VARCHAR(50)
+- user_birthday : DATE
+- user_phone : VARCHAR(20)
+- user_identity: VARCHAR(20)
+- user_avatar: TEXT
+- user_address : VARCHAR(255)
+
+username : le phuoc thanh cao
+email : lephuocthanhcao@gmail.com
+accountName : leechoncaao
+show trên navbar : username
+
+2.table `account`
+- account_id : INT (PK, AI)
+- account_name: VARCHAR(50)
+- account_password: VARCHAR(255)
+- account_email : VARCHAR(50)
+- account_enable : BIT(1) (0 : false; 1 : true) --> dùng để remove 
+- account_logout_time : DATETIME
+- user_id : INT (FK from table `user`)
+
+3.table `role`
+- role_id : INT (PK, AI)
+- role_name : VARCHAR(20) (value : 'ADMIN', 'MEMBER')
+
+4.table `account_role`
+- account_role_id : INT(PK, AI)
+- account_id : INT (FK from table `account`)
+- role_id : INT (FK from table `role`)
+
+5.table `product`
+- product_id : INT (PK, AI)
+- product_name : VARCHAR(50)
+- product_price : DOUBLE
+- product_price_step : DOUBLE
+- product_service_fee : DOUBLE (default : NULL, set sau khi có last_price)
+- product_quantity : INT (default : 1)
+- product_last_price : DOUBLE (default : NULL, ko tính service_fee)
+- product_description : TEXT
+- product_status_id : INT (FK from table `product_status`)
+- product_register_time : DATETIME (ngày up product)
+- product_auction_time : INT(user tự nhập, đơn vị h, max = 24h) 
+- product_end_time :DATETIME(default : NULL, value = set sau khi thanh toán thành công)
+- account_id : INT (FK from table `account`)
+
+6.table `product_image`
+- product_image_id : INT (PK, AI)
+- image : TEXT
+- product_id : INT (FK from table `product`)
+
+7.table `product_status`
+- product_status_id : INT (PK, AI)
+- status_name : VARCHAR(50) (value : 1.'pending'-'đang chờ duyệt', --> là default sau khi up
+					2.'approved'-'đã duyệt/đang đấu giá',--> sau khi admin duyệt
+					3.'purchasing'-'đang chờ thanh toán'
+					4.'completed'-'đã thanh toán'
+					5.'failed'-'thanh toán thất bại'
+					6.'closed'-'khóa sản phẩm/ không đồng ý duyệt'
+
+8.table `auction`
