@@ -3,7 +3,7 @@ package com.auction_website.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order")
+@Table(name = "order_bill")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,13 @@ public class Order {
     private Double total;
 
     @Column(name = "method_pay")
-    private Boolean methodPay;
+    private Integer methodPay;
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "user_email")
+    private String userEmail;
 
     public Integer getOrderId() {
         return orderId;
@@ -89,11 +95,27 @@ public class Order {
         this.total = total;
     }
 
-    public Boolean isMethodPay() {
+    public Integer getMethodPay() {
         return methodPay;
     }
 
-    public void setMethodPay(Boolean methodPay) {
+    public void setMethodPay(Integer methodPay) {
         this.methodPay = methodPay;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }
