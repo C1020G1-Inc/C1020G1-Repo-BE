@@ -17,6 +17,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //Phuc: firebase dependency
+    implementation 'com.google.firebase:firebase-admin:7.2.0'
+    //Phuc: spring mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 test {
