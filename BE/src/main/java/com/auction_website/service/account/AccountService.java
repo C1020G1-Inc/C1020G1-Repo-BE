@@ -1,6 +1,9 @@
 package com.auction_website.service.account;
 
-import org.springframework.stereotype.Service;
+import com.auction_website.model.Account;
+
 
 public interface AccountService {
+
+    void updateEmail(String oldEmail, String newEmail);
 }
