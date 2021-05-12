@@ -7,6 +7,7 @@ import com.auction_website.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +76,7 @@ public class CommentController {
      * @param bindingResult
      */
     @PostMapping("")
+    @Transactional
     public ResponseEntity<Comment> createComment(@Validated @RequestBody Comment comment, BindingResult bindingResult) {
         comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
         if (bindingResult.hasErrors()) {
