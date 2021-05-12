@@ -14,4 +14,9 @@ public class AccountServiceImpl implements AccountService {
     public void updateEmail(String oldEmail, String newEmail) {
         accountRepository.updateEmail(oldEmail, newEmail);
     }
+
+    @Override
+    public Account findAccountById(Integer accountId) {
+        return accountRepository.findAccountByAccountId(accountId);
+    }
 }

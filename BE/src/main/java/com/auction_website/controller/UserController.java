@@ -15,8 +15,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PutMapping("/edit")
-    public void updateUser(@RequestBody User user){
+    @PutMapping("/edit/{userId}")
+    public void updateUser(@RequestBody User user, @PathVariable Integer userId){
         userService.updateUser(user);
     }
 

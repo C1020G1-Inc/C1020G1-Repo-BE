@@ -16,5 +16,10 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
             " SET account_email = ?2" +
             " WHERE account_email = ?1" , nativeQuery = true)
     void updateEmail(String oldEmail, String newEmail);
+
+    @Query(value = "SELECT *" +
+            " FROM account" +
+            " WHERE account_id = ?1", nativeQuery = true)
+    Account findAccountByAccountId(Integer accountId);
 }
 
