@@ -4,6 +4,8 @@ import com.auction_website.model.Auction;
 import com.auction_website.model.Product;
 import com.auction_website.model.ProductTransaction;
 import com.auction_website.service.auction.AuctionService;
+import com.auction_website.service.email.EmailService;
+import com.auction_website.service.notification.NotificationService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_transaction.ProductTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 
 @Service
@@ -23,6 +26,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     ProductService productService;
     @Autowired
     ProductTransactionService productTransactionService;
+    @Autowired
+    NotificationService notificationService;
+    @Autowired
+    EmailService emailService;
 
     /**
      * author: PhucPT
@@ -43,11 +50,19 @@ public class ScheduleServiceImpl implements ScheduleService {
                     productTransactionService.createProductTransaction(productId, auction.getAccount().getAccountId());
                     ProductTransaction productTransaction = productTransactionService.findCurrentTransactionByProductId(productId);
                     endOfTransactionSchedule(productTransaction.getTransactionId());
+                    notificationService.notifyAuctionWinner(productTransaction);
+                    notificationService.clearAuctionProgress(productId);
+                    try {
+                        emailService.sendMailToWinner(productTransaction);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     productService.resetProduct(productId);
                 }
             }
-        }, new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 60 * 1000));
+        }, new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
+        System.out.println(new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
 
     }
 
@@ -68,6 +83,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                     auctionService.setStatusAuctionByAuctionId(auctionService.getHighestAuctionInProgressByProductId(productTransaction.getProduct().getProductId()).getAuctionId(),"cancel");
                 }
             }
-        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 60 * 1000 + 24 * 60 * 60 * 1000));
+        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 10 * 60 * 1000));
     }
 }

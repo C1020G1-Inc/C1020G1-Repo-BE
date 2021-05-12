@@ -32,7 +32,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
      * @return
      */
     @Query(nativeQuery = true,
-            value = "SELECT * FROM auction WHERE product_id = :productId AND status = 'in_progress' ORDER BY time_auction DESC")
+            value = "SELECT * FROM auction WHERE product_id = :productId AND status = 'in_progress' ORDER BY price DESC")
     Iterable<Auction> getListAuctionInProgressByProductId(int productId);
 
     /**
@@ -66,7 +66,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
      * @return
      */
     @Query(nativeQuery = true,
-            value = "SELECT * FROM `auction` WHERE product_id = :productId AND status != 'fail' ORDER BY price LIMIT 1")
+            value = "SELECT * FROM `auction` WHERE product_id = :productId AND status != 'fail' AND status != 'cancel' ORDER BY price DESC LIMIT 1")
     Auction getHighestAuctionInProgressByProductId(int productId);
 
 }

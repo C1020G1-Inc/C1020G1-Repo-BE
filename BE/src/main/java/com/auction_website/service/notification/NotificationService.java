@@ -10,4 +10,6 @@ public interface NotificationService {
     void clearAuctionProgress(int productId);
 
     void notifyAuctionWinner(ProductTransaction productTransaction);
+
+    void notifyCancelTransaction(ProductTransaction productTransaction);
 }

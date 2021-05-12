@@ -63,6 +63,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
      * @param productTransactionId
      */
     @Override
+    @Transactional
     public void setStatusByTransactionId(String status, int productTransactionId) {
         productTransactionRepository.setStatusByTransactionId(status,productTransactionId);
     }

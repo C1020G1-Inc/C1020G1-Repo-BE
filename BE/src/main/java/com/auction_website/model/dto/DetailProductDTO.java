@@ -10,7 +10,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DetailProductDTO {
 
-    private static class AccountDTO {
+    public static class AccountDTO {
         private int accountId;
         private String accountName;
 
@@ -31,7 +31,7 @@ public class DetailProductDTO {
         }
     }
 
-    private static class ImageDTO {
+    public static class ImageDTO {
         private int id;
         private String image;
 
@@ -83,7 +83,7 @@ public class DetailProductDTO {
 
     private final Timestamp endTime;
 
-    private AccountDTO account;
+    private final AccountDTO account;
 
     private List<ImageDTO> images;
 
@@ -102,12 +102,10 @@ public class DetailProductDTO {
         this.registerTime = product.getRegisterTime();
         this.auctionTime = product.getAuctionTime();
         this.endTime = product.getEndTime();
-        if (this.account != null) {
-            this.account = new AccountDTO();
-            this.account.accountId = product.getAccount().getAccountId();
-            this.account.accountName = product.getAccount().getAccountName();
-        }
-        if (this.images != null) {
+        this.account = new AccountDTO();
+        this.account.accountId = product.getAccount().getAccountId();
+        this.account.accountName = product.getAccount().getAccountName();
+        if (productImages != null) {
             this.images = new ArrayList<>();
             for (ProductImage productImage : productImages) {
                 this.images.add(new ImageDTO(productImage.getId(), productImage.getImage()));

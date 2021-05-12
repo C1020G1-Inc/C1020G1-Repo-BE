@@ -1,3 +1,7 @@
+drop database if exists auction_website;
+create database auction_website;
+use auction_website;
+
 create table province (
 province_id int primary key auto_increment,
 province_name varchar(50) not null
@@ -139,3 +143,39 @@ product_id int,
 foreign key (account_id) references `account` (account_id),
 foreign key (product_id) references product (product_id)
 );
+
+
+insert into `account` (account_name,account_email) values ('phuc','truongphucdn@gmail.com'),('loc',''),('tho',''),('nhan',''), ('nghia',''), ('tri',''), ('tin','');
+insert into product_status (status_name) values ('pending'),('approved'),('purchasing'),('fail'),('close');
+insert into category (category_name) values ('smartphone'),('tablet'),('washing');
+insert into product (product_name, product_price, product_price_step, product_quantity, product_description, product_register_time, product_auction_time,account_id, category_id, product_status_id)
+values
+('Máy hút bụi Electrolux Z1230 (Loại O2B)', 2070000, 50000, 1, 'Máy hút bụi Electrolux EC31-2BB với công suất lên đến1800W cho lực hút mạnh mẽ dễ dàng hút sạch mọi bụi bẩn.', '2021-05-11 20:30:00.000+07:00', 9, 1, 1, 2),
+('PANASONIC 9.0KG NA-F90A4GRV', 7190000, 100000, 1, 'Với khối lượng giặt lên đến 9 kg cho một mẻ giặt, chiếc máy giặt Panasonic NA-F90A4GRV sẽ là một sự lựa chọn lý tưởng cho các gia đình có từ 6 người trở lên.', '2021-05-11 20:30:00.000+07:00', 7, 2, 1, 2),
+('iPhone 12 Mini 64GB, Đen (VN/A) ', 17190000, 200000, 1, 'iPhone 12 Mini - Smartphone kích thước nhỏ mạnh nhất hiện tại! Bên cạnh việc chạy theo các mẫu smartphone màn hình lớn thì Apple lại bất ngờ cho ra mắt thêm một phân khúc hoàn toàn mới với kích thước “mi nhon” hơn các đàn anh rất nhiều mang tên iPhone 12 Mini.', '2021-05-11 20:30:00.000+07:00', 10, 3, 2, 2),
+('Máy Tính Bảng HANET Smartlist 2016 ', 6690000, 100000, 1, 'Dung lượng pin cực lớn 12.000 mAh sẵn sàng cho mọi cuộc vui kéo dài 24h không ngừng nghỉ. Cùng với công nghệ sạc nhanh tiên tiến, thời gian sạc được rút ngắn chỉ còn 4-5h cho một lần sạc đầy', '2021-05-11 20:30:00', 12, 1, 1, 2),
+('Máy Giặt/Sấy SAMSUNG 10.5Kg/7Kg WD10N64FR2W/SV', 11690000, 100000, 1, 'Máy giặt/sấy Samsung 10.5kg/7kg WD10N64FR2W/SV được tích hợp chức năng giặt và sấy giúp quần áo được làm sạch, khô nhanh hơn, nhất là vào những ngày mưa gió. Tuy nhiên, quần sẽ không khô hoàn toàn khi sấy, bạn nên phơi ngoài gió thêm.', '2021-05-11 20:30:00.000+07:00', 15, 2, 2, 2);
+
+insert into product_image (image, product_id) values
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product14032/dmcl_450_product_14032_1.png', 1),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product14032/product_14032_3.png', 1),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product14032/product_14032_4.png', 1),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product14032/product_14032_5.png', 1),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product11438/dmcl_450_product_11438_1.png', 2),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product11438/product_11438_3.png', 2),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product11438/product_11438_4.png', 2),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product11438/product_11438_4.png', 2),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product17538/dmcl_450_product_17538_1.png', 3),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/color/color1981/color_1981_1.png', 3),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//userupload/images/image001(127).jpg', 3),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//userupload/images/image003(90).jpg', 3),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product11545/dmcl_450_product_11545_1.png', 4),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product11545/product_11545_3.png', 4),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product11545/product_11545_4.png', 4),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//userupload/images/may-tinh-bang-hanet-samrtlist-2016(2).png', 4),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product17290/dmcl_450_product_17290_1.png', 5),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product17290/product_17290_3.png', 5),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product17290/product_17290_4.png', 5),
+('https://cdn01.dienmaycholon.vn/filewebdmclnew/public//picture/product/product17290/product_17290_5.png', 5);
+
+

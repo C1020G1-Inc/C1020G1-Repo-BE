@@ -6,6 +6,7 @@ import com.auction_website.model.ProductTransaction;
 import com.auction_website.model.dto.AuctionSubmitDTO;
 import com.auction_website.model.dto.ListCurrentAuctionDTO;
 import com.auction_website.service.auction.AuctionService;
+import com.auction_website.service.email.EmailService;
 import com.auction_website.service.notification.NotificationService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_transaction.ProductTransactionService;
@@ -57,9 +58,9 @@ public class AuctionController {
             resultMap.put("error", "wrong_price");
             return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        System.out.println(new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 60 * 1000));
+        System.out.println(new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
         System.out.println(auctionSubmit.getTimeAuction());
-        if (new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 *60 * 1000).before(auctionSubmit.getTimeAuction())) {
+        if (new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000).before(auctionSubmit.getTimeAuction())) {
             resultMap.put("error", "auction_expired");
             return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -89,7 +90,6 @@ public class AuctionController {
         return new ResponseEntity<>(currentAuctions, HttpStatus.OK);
     }
 
-
     /**
      * author: PhucPT
      * method: check approved product at app start and schedule task when auction end
@@ -104,7 +104,7 @@ public class AuctionController {
 
     /**
      * author: PhucPT
-     * method: check transaction in progress at app start and schedule task when transaction end
+     * method: schedule task when transaction end
      */
     @EventListener(ContextRefreshedEvent.class)
     public void schedulingEndTransaction() {
