@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AccountRoleService {
     List<AccountRole> findAllByAccountId(Integer accountId);
+    void save(AccountRole accountRole);
 }

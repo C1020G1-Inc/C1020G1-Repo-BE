@@ -29,7 +29,7 @@ public class JwtAccountDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String accountName) throws UsernameNotFoundException {
-        Account account = accountService.getAccountByName(accountName);
+        Account account = accountService.findByAccountName(accountName);
         if(account == null) {
             throw new UsernameNotFoundException("Account not found with account name: " + accountName);
         }

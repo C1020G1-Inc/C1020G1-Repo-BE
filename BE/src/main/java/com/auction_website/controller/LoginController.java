@@ -66,7 +66,7 @@ public class LoginController {
                         .setAudience(Collections.singletonList(googleClientId));
         final GoogleIdToken googleIdToken = GoogleIdToken.parse(builder.getJsonFactory(), jwtResponseSocial.getJwtToken());
         final GoogleIdToken.Payload payload = googleIdToken.getPayload();
-        Account account = accountService.getAccountByEmail(payload.getEmail());
+        Account account = accountService.findByEmail(payload.getEmail());
         JwtResponse jwtResponse = new JwtResponse("");
         if (account == null) {
             account = new Account();
@@ -86,7 +86,7 @@ public class LoginController {
         final String[] fields = {"email", "name"};
         org.springframework.social.facebook.api.User user = facebook
                 .fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
-        Account account = accountService.getAccountByEmail(user.getEmail());
+        Account account = accountService.findByEmail(user.getEmail());
         JwtResponse jwtResponse = new JwtResponse("");
 
         if (account == null) {
@@ -137,7 +137,7 @@ public class LoginController {
             token = jwtTokenUtil.generateToken(userDetails);
         }
         JwtResponse jwtResponse = new JwtResponse(token);
-        Account account = accountService.getAccountByName(jwtRequest.getAccountName());
+        Account account = accountService.findByAccountName(jwtRequest.getAccountName());
         jwtResponse.setAccount(account);
         List<String> roleList = new ArrayList<>();
         for (AccountRole accountRole : accountRoleService.findAllByAccountId(account.getAccountId())) {
