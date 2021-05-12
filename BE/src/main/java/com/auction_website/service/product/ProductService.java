@@ -10,4 +10,5 @@ public interface ProductService {
     List<Product> getProductByDate(Integer monthSearch , Integer yearSearch);
     void editProduct(Product product);
     void approvedProduct(Integer idProduct);
+    Product getProductById(Integer productId);
 }

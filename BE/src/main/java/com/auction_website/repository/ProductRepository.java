@@ -31,6 +31,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select product from Product product" +
             " where ((:monthSearch is null) or ((function('month', product.endTime)) = :monthSearch)) and" +
-            " ((function('year', product.endTime)) = :yearSearch)")
+            " (function('year', product.endTime) = :yearSearch)")
     List<Product> getProductByDate(Integer monthSearch, Integer yearSearch);
+
+    @Query("select product from Product product " +
+            "where product.productId = :productId")
+    Product getProductById(Integer productId);
 }
