@@ -18,14 +18,14 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private ProductImageService productImageService;
-    @GetMapping("/{category}")
-    public ResponseEntity<?> showAllProductAuction(@PathVariable("category") Integer category) {
-        List<ProductImage> listProduct = productImageService.showAllProductAuction( category );
-        if (listProduct.isEmpty()) {
-            ProductImage productImage = new ProductImage();
-            listProduct.add( productImage );
-            return new ResponseEntity<>( listProduct, HttpStatus.BAD_REQUEST );
-        }
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<?> showAllProductAuction(@PathVariable("categoryId") Integer categoryId) {
+        List<ProductImage> listProduct = productImageService.showAllProductAuction( categoryId );
+        return new ResponseEntity<>( listProduct, HttpStatus.OK );
+    }
+    @GetMapping("/end/category/{categoryId}")
+    public ResponseEntity<?> showAllProductEndAuction(@PathVariable("categoryId") Integer categoryId) {
+        List<ProductImage> listProduct = productImageService.showAllProductEndAuction( categoryId );
         return new ResponseEntity<>( listProduct, HttpStatus.OK );
     }
 }
