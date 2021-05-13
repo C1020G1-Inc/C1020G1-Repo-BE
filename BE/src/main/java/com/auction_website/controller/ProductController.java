@@ -2,13 +2,17 @@ package com.auction_website.controller;
 
 import com.auction_website.model.Category;
 import com.auction_website.model.Product;
+import com.auction_website.model.ProductDTO;
+import com.auction_website.model.ProductImage;
 import com.auction_website.service.category.CategoryService;
 import com.auction_website.service.product.ProductService;
+import com.auction_website.service.product_image.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -19,6 +23,9 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProductImageService productImageService;
 
     /**
      * Author : TungNT
@@ -53,14 +60,22 @@ public class ProductController {
      * Edit product
      */
     @PutMapping("/admin/edit_product")
-    public ResponseEntity<Void> editProduct(@RequestBody Product product) {
+    public ResponseEntity<Void> editProduct(@RequestBody ProductDTO productDTO) {
         try {
-            productService.editProduct(product);
+            List<ProductImage> productImageList = productDTO.getProductImageList();
+            productService.editProduct(productDTO.getProduct());
+            productImageService.deleteImagesById(productDTO.getProduct().getProductId());
+
+            for(ProductImage productImage : productImageList){
+                productImageService.saveProductImage(productImage);
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     /**
      * Author : TungNT
@@ -120,10 +135,17 @@ public class ProductController {
      * Get product by product's id.
      */
     @GetMapping("/admin/product/{id}")
-    public ResponseEntity<Product> getIdProduct(@PathVariable Integer id) {
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Integer id) {
         try {
             Product product = productService.getProductById(id);
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            List<ProductImage> productImageList = productImageService.getImagesProductById(id);
+
+            ProductDTO productDTO = new ProductDTO();
+
+            productDTO.setProduct(product);
+            productDTO.setProductImageList(productImageList);
+
+            return new ResponseEntity<>(productDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -138,6 +160,20 @@ public class ProductController {
         try {
             List<Category> categoryList = categoryService.getAll();
             return new ResponseEntity<>(categoryList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Author : TungNT
+     * Get category by id.
+     */
+    @GetMapping("/admin/product_category/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
+        try {
+            Category category = this.categoryService.findById(id);
+            return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
