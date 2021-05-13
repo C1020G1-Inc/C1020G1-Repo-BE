@@ -1,3 +1,0 @@
-db : 
-bổ sung 2 cột user_name và user_email trong table order
-sửa method_pay thành INT (0 : trả tiền sau khi nhận hàng, 1 : thanh toán bằng ví điện tử Paypal)
