@@ -2,7 +2,6 @@ package com.auction_website.controller.account;
 
 import com.auction_website.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,7 +28,7 @@ public class JwtAuthenticationController {
     @Autowired
     public AccountService accountService ;
 
-    @GetMapping("/recover/{accountEmail}")
+    @GetMapping("/api/recover/{accountEmail}")
     public ResponseEntity<?> mailSender(@PathVariable("accountEmail") String accountEmail) throws MessagingException {
 
 
@@ -56,7 +55,7 @@ public class JwtAuthenticationController {
         MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "utf-8");
 
         String htmlMsg = "<h3>Your new password is <i>"+generatedString+"<i></h3>" +
-                "<h2><img src='https://apprecs.org/ios/images/app-icons/256/19/547702041.jpg'> C10tinder <h2>";
+                "<h2><img src='https://static.tapchitaichinh.vn/images/upload/hoangthuviet/2016_09_19/ban-dau-gia-tsdbgega_WHBQ.jpg'> C10_Auction <h2>";
 
         message.setContent(htmlMsg, "text/html");
 
