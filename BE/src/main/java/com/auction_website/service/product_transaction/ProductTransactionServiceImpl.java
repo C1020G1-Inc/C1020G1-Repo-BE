@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductTransactionServiceImpl implements ProductTransactionService {
     @Autowired
@@ -15,6 +17,11 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     @Override
     public Page<ProductTransaction> getAllTransaction(Pageable pageable) {
         return productTransactionRepository.getAllTransaction(pageable);
+    }
+
+    @Override
+    public List<ProductTransaction> getTransactionBySearch(String namePost, String nameBuy, String productName, Double price, String status) {
+        return productTransactionRepository.getTransactionBySearch(namePost, nameBuy, productName, price, status);
     }
 
     @Override
