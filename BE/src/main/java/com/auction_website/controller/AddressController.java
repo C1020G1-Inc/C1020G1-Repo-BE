@@ -1,12 +1,17 @@
 package com.auction_website.controller;
 
+import com.auction_website.model.District;
+import com.auction_website.model.Province;
+import com.auction_website.model.Ward;
 import com.auction_website.service.district.DistrictService;
 import com.auction_website.service.province.ProvinceService;
 import com.auction_website.service.ward.WardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -20,4 +25,49 @@ public class AddressController {
 
     @Autowired
     private WardService wardService;
+
+    /**
+     * author: CaoLPT
+     * method: get all provinces in database and attach an JSON in HTTP response
+     */
+    @GetMapping("/province")
+    public ResponseEntity<Iterable<Province>> listProvinces() {
+        try{
+            Iterable<Province> provinces = provinceService.getAllProvince();
+            return new ResponseEntity<>(provinces, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    /**
+     * author: CaoLPT
+     * method: get all districts in database by a province id as JSON in HTTP response
+     * @param provinceId
+     */
+    @GetMapping("/district/{id}")
+    public ResponseEntity<Iterable<District>> listDistrictByProvinceId(@PathVariable("id") int provinceId) {
+        try{
+            Iterable<District> districts = districtService.getDistrictByProvinceId(provinceId);
+            return new ResponseEntity<>(districts, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * author: CaoLPT
+     * method: get all wards in database by a district id as JSON in HTTP response
+     * @param districtId
+     */
+    @GetMapping("/ward/{id}")
+    public ResponseEntity<Iterable<Ward>> listWardByDistrictId(@PathVariable("id") int districtId) {
+        try{
+            Iterable<Ward> wards = wardService.getWardByDistrictId(districtId);
+            return new ResponseEntity<>(wards, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
