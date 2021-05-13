@@ -7,8 +7,8 @@ import com.auction_website.model.ProductTransaction;
 import com.auction_website.model.dto.AuctionSubmitDTO;
 import com.auction_website.model.dto.ListCurrentAuctionDTO;
 import com.auction_website.model.dto.ProductTransactionDTO;
+import com.auction_website.service.account.AccountService;
 import com.auction_website.service.auction.AuctionService;
-import com.auction_website.service.email.EmailService;
 import com.auction_website.service.notification.NotificationService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_image.ProductImageService;
@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.*;
 
 @RestController
@@ -40,6 +41,8 @@ public class AuctionController {
     private ScheduleService scheduleService;
     @Autowired
     private ProductImageService productImageService;
+    @Autowired
+    private AccountService accountService;
 
     /**
      * author: PhucPT
@@ -50,8 +53,9 @@ public class AuctionController {
      */
     @PostMapping("bidding")
     @Transactional
-    public ResponseEntity<?> setNewAuction(@RequestBody AuctionSubmitDTO auctionSubmit) {
-        int accountId = 1;
+    public ResponseEntity<?> setNewAuction(@RequestBody AuctionSubmitDTO auctionSubmit, Principal principal) {
+        String accountName = principal.getName();
+        int accountId = accountService.findByAccountName(accountName).getAccountId();
 
         Product product = productService.getProductById(auctionSubmit.getProductId());
         double currentPrice = (product.getLastPrice() == null) ? product.getPrice() : product.getLastPrice();
@@ -120,14 +124,21 @@ public class AuctionController {
         }
     }
 
+    /**
+     * author: PhucPT
+     * method: get all transaction in purchasing
+     *
+     * @return
+     */
     @GetMapping("/cart")
-    public ResponseEntity<?> getTransactionInPurchasing() {
-        int accountId = 1;
+    public ResponseEntity<?> getTransactionInPurchasing(Principal principal) {
+        String accountName = principal.getName();
+        int accountId = accountService.findByAccountName(accountName).getAccountId();
         Iterable<ProductTransaction> productTransactions = productTransactionService.getCurrentTransactionByAccountId(accountId);
         List<ProductTransactionDTO> productTransactionDTOList = new ArrayList<>();
         for (ProductTransaction productTransaction : productTransactions) {
             Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productTransaction.getProduct().getProductId());
-            productTransactionDTOList.add(new ProductTransactionDTO(productTransaction,productImages));
+            productTransactionDTOList.add(new ProductTransactionDTO(productTransaction, productImages));
         }
         return new ResponseEntity<>(productTransactionDTOList, HttpStatus.OK);
     }

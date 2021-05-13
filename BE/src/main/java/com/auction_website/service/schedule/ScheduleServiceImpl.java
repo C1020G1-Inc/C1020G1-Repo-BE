@@ -34,7 +34,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     /**
      * author: PhucPT
-     *
+     * method: schedule end of auction task
      * @param productId
      */
     @Override
@@ -71,7 +71,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     /**
      * author: PhucPT
-     *
+     * method: schedule end of transaction task
      * @param productTransactionId
      */
     @Override
@@ -84,7 +84,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 if (productTransaction.getStatus().equals("purchasing")) {
                     productTransactionService.setStatusByTransactionId("fail", productTransactionId);
                     productService.setProductStatus(productTransaction.getProduct().getProductId(), 4);
-                    auctionService.setStatusAuctionByAuctionId(auctionService.getHighestAuctionInProgressByProductId(productTransaction.getProduct().getProductId()).getAuctionId(), "cancel");
+                    auctionService.setStatusAuctionByAuctionId(productTransaction.getAuction().getAuctionId(), "cancel");
                 }
             }
         }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 30 * 60 * 1000));

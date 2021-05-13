@@ -34,7 +34,7 @@ user_address varchar(255)
 create table `account` (
 account_id int primary key auto_increment,
 account_name varchar(50),
-account_password varchar(50),
+account_password varchar(255),
 account_email varchar(50),
 account_enable bit,
 account_logout_time datetime,
@@ -147,8 +147,41 @@ foreign key (account_id) references `account` (account_id),
 foreign key (product_id) references product (product_id)
 );
 
+insert into `user` (user_name)
+values
+('phuc'),
+('loc'),
+('tho'),
+('nhan'),
+('nghia'),
+('tri'),
+('tin');
 
-insert into `account` (account_name,account_email) values ('phuc','truongphucdn@gmail.com'),('loc',''),('tho',''),('nhan',''), ('nghia',''), ('tri',''), ('tin','');
+insert into `account` (account_name,account_email,account_password,account_enable,user_id)
+values
+('phuc','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,1),
+('loc','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,2),
+('tho','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,3),
+('nhan','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,4), 
+('nghia','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,5), 
+('tri','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,6), 
+('tin','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,7);
+
+insert into `role` (role_name)
+values
+('ADMIN'),
+('MEMBER');
+
+insert into `account_role`(account_id,role_id)
+values
+(1,2),
+(2,2),
+(3,2),
+(4,2),
+(5,2),
+(6,2),
+(7,2);
+
 insert into product_status (status_name) values ('pending'),('approved'),('purchasing'),('fail'),('close');
 insert into category (category_name) values ('smartphone'),('tablet'),('washing');
 insert into product (product_name, product_price, product_price_step, product_quantity, product_description, product_register_time, product_auction_time,account_id, category_id, product_status_id)
