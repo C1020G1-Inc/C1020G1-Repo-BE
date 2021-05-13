@@ -10,7 +10,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public void changePassword(Integer accountId, String newPassword) {
-        accountRepository.changePassword(accountId , newPassword);
+    public void changePassword(String accountEmail, String newPassword) {
+        accountRepository.changePassword(accountEmail , newPassword);
     }
 }

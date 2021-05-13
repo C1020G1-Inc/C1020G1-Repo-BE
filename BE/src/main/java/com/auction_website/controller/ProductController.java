@@ -1,6 +1,6 @@
 package com.auction_website.controller;
 
-import com.auction_website.model.Auction;
+
 import com.auction_website.model.Product;
 import com.auction_website.model.ProductImage;
 import com.auction_website.service.product.ProductService;

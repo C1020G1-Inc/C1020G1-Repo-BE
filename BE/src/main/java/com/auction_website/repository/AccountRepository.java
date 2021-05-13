@@ -12,6 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Transactional
     @Modifying
 
-    @Query(value = " update Account set password = ?2 where accountId = ?1")
-    void changePassword(Integer accountId , String newPassword) ;
+    @Query(value = " update Account set password = ?2 where email = ?1")
+    void changePassword(String accountEmail , String newPassword) ;
 }
