@@ -15,8 +15,8 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     private ProductTransactionRepository productTransactionRepository;
 
     @Override
-    public Page<ProductTransaction> getAllTransaction(Pageable pageable) {
-        return productTransactionRepository.getAllTransaction(pageable);
+    public List<ProductTransaction> getAllTransaction() {
+        return productTransactionRepository.getAllTransaction();
     }
 
     @Override

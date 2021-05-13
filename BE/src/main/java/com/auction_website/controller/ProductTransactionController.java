@@ -21,9 +21,9 @@ public class ProductTransactionController {
     private ProductTransactionService productTransactionService;
 
     @GetMapping("/list")
-    public ResponseEntity<Page<ProductTransaction>> getAllTransaction(@PageableDefault(size = 5)Pageable pageable){
+    public ResponseEntity<List<ProductTransaction>> getAllTransaction(){
         try {
-            Page<ProductTransaction> productTransactions = productTransactionService.getAllTransaction(pageable);
+            List<ProductTransaction> productTransactions = productTransactionService.getAllTransaction();
             if (productTransactions == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

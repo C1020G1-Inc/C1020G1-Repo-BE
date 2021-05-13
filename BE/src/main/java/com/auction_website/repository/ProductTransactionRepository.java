@@ -17,7 +17,7 @@ public interface ProductTransactionRepository extends JpaRepository<ProductTrans
     @Query(value = "SELECT *" +
             " FROM product_transaction" +
             " WHERE status = 'Thành công' or status = 'Thất bại'", nativeQuery = true)
-    Page<ProductTransaction> getAllTransaction(Pageable pageable);
+    List<ProductTransaction> getAllTransaction();
 
     @Query(value = "SELECT *" +
             " FROM product_transaction" +
