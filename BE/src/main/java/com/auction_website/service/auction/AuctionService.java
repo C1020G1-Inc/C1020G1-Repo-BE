@@ -8,7 +8,7 @@ import java.util.Date;
 public interface AuctionService {
     boolean createAuction(double price, Date timeAuction, int accountId, int productId);
 
-    Iterable<Auction> getListAuctionInProgressByProductId(int productId);
+    Iterable<Auction> getListAuctionInProgressByProductId(Product product);
 
     boolean setStatusAuctionInProgressByProductId(int productId, String status);
 

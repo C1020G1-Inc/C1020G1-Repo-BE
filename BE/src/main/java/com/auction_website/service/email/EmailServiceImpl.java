@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true,"utf-8");
         String htmlMsg ="<h4>Chào bạn,</h4>\n" +
-                "<p>Chúc mừng bạn đã đấu giá thành công sản phẩm +'" + productTransaction.getProduct().getProductName() + "</p>\n" +
+                "<p>Chúc mừng bạn đã đấu giá thành công sản phẩm '" + productTransaction.getProduct().getProductName() + "</p>\n" +
                 "<p>Xin vui lòng đăng nhập thanh toán sản phảm.</p>" +
                 " <p>Lưu ý trong vòng 24h kể từ khi nhận mail này nếu không có bất kì thành toán nào thì sản phẩm sẽ bị khóa</p>\n" +
                 "<br>\n" +

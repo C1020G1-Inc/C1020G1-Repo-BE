@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Repository
@@ -32,8 +33,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
      * @return
      */
     @Query(nativeQuery = true,
-            value = "SELECT * FROM auction WHERE product_id = :productId AND status = 'in_progress' ORDER BY price DESC")
-    Iterable<Auction> getListAuctionInProgressByProductId(int productId);
+            value = "SELECT * FROM auction WHERE product_id = :productId  AND time_auction BETWEEN :start AND :end ORDER BY price DESC")
+    Iterable<Auction> getListAuctionInProgressByProductId(int productId, Timestamp start, Timestamp end);
 
     /**
      * author: PhucPT

@@ -1,6 +1,7 @@
 package com.auction_website.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "product_transaction")
@@ -21,6 +22,13 @@ public class ProductTransaction {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "transaction_time")
+    private Timestamp transactionTime;
+
+    @ManyToOne
+    @JoinColumn(name = "auction_id", referencedColumnName = "auction_id")
+    private Auction auction;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -54,5 +62,19 @@ public class ProductTransaction {
         this.status = status;
     }
 
+    public Timestamp getTransactionTime() {
+        return transactionTime;
+    }
 
+    public void setTransactionTime(Timestamp transactionTime) {
+        this.transactionTime = transactionTime;
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
 }

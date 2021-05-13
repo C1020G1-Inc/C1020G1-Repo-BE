@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+
 @Service
 public class ProductTransactionServiceImpl implements ProductTransactionService {
     @Autowired
@@ -22,8 +24,8 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
      */
     @Override
     @Transactional
-    public int createProductTransaction(int productId, int accountId) {
-        return productTransactionRepository.createProductTransaction(productId, accountId);
+    public int createProductTransaction(int productId, int accountId, int auctionId, Timestamp transactionTime) {
+        return productTransactionRepository.createProductTransaction(productId, accountId,auctionId,transactionTime);
     }
 
     /**
@@ -66,5 +68,10 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     @Transactional
     public void setStatusByTransactionId(String status, int productTransactionId) {
         productTransactionRepository.setStatusByTransactionId(status,productTransactionId);
+    }
+
+    @Override
+    public Iterable<ProductTransaction> getCurrentTransactionByAccountId(int accountId) {
+        return productTransactionRepository.getCurrentTransactionByAccountId(accountId);
     }
 }

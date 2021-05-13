@@ -34,6 +34,8 @@ public class ProductServiceImpl implements ProductService{
         else if (price < 10000000)
             currentStep = 100000;
         else if (price < 20000000)
+            currentStep = 200000;
+        else if (price < 50000000)
             currentStep = 500000;
         else if (price < 100000000)
             currentStep = 1000000;

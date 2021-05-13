@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
@@ -33,6 +34,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     /**
      * author: PhucPT
+     *
      * @param productId
      */
     @Override
@@ -47,7 +49,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     productService.setProductStatus(productId, 3);
                     auctionService.setStatusAuctionByAuctionId(auction.getAuctionId(), "win");
                     auctionService.setStatusAuctionInProgressByProductId(productId, "fail");
-                    productTransactionService.createProductTransaction(productId, auction.getAccount().getAccountId());
+                    Timestamp endTime = new Timestamp(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000);
+                    productTransactionService.createProductTransaction(productId, auction.getAccount().getAccountId(), auction.getAuctionId(), endTime);
                     ProductTransaction productTransaction = productTransactionService.findCurrentTransactionByProductId(productId);
                     endOfTransactionSchedule(productTransaction.getTransactionId());
                     notificationService.notifyAuctionWinner(productTransaction);
@@ -68,6 +71,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     /**
      * author: PhucPT
+     *
      * @param productTransactionId
      */
     @Override
@@ -77,12 +81,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             @Override
             @Transactional
             public void run() {
-                if(productTransaction.getStatus().equals("purchasing")){
-                    productTransactionService.setStatusByTransactionId("fail",productTransactionId);
-                    productService.setProductStatus(productTransaction.getProduct().getProductId(),4);
-                    auctionService.setStatusAuctionByAuctionId(auctionService.getHighestAuctionInProgressByProductId(productTransaction.getProduct().getProductId()).getAuctionId(),"cancel");
+                if (productTransaction.getStatus().equals("purchasing")) {
+                    productTransactionService.setStatusByTransactionId("fail", productTransactionId);
+                    productService.setProductStatus(productTransaction.getProduct().getProductId(), 4);
+                    auctionService.setStatusAuctionByAuctionId(auctionService.getHighestAuctionInProgressByProductId(productTransaction.getProduct().getProductId()).getAuctionId(), "cancel");
                 }
             }
-        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 10 * 60 * 1000));
+        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 30 * 60 * 1000));
     }
 }

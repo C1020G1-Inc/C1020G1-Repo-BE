@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
@@ -29,15 +30,17 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionRepository.createAuction(price, timeAuction, accountId, productId) > 0;
     }
 
+
     /**
      * author: PhucPT
-     * method: get all auction has been submit in current auction session by product id
-     * @param productId
+     * method: get all auction has been submit in current auction session by product
+     * @param product
      * @return
      */
     @Override
-    public Iterable<Auction> getListAuctionInProgressByProductId(int productId) {
-        return auctionRepository.getListAuctionInProgressByProductId(productId);
+    public Iterable<Auction> getListAuctionInProgressByProductId(Product product) {
+        Timestamp endTime = new Timestamp(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000);
+        return auctionRepository.getListAuctionInProgressByProductId(product.getProductId(),product.getRegisterTime(),endTime);
     }
 
     /**

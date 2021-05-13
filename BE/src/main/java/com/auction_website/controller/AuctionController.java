@@ -2,13 +2,16 @@ package com.auction_website.controller;
 
 import com.auction_website.model.Auction;
 import com.auction_website.model.Product;
+import com.auction_website.model.ProductImage;
 import com.auction_website.model.ProductTransaction;
 import com.auction_website.model.dto.AuctionSubmitDTO;
 import com.auction_website.model.dto.ListCurrentAuctionDTO;
+import com.auction_website.model.dto.ProductTransactionDTO;
 import com.auction_website.service.auction.AuctionService;
 import com.auction_website.service.email.EmailService;
 import com.auction_website.service.notification.NotificationService;
 import com.auction_website.service.product.ProductService;
+import com.auction_website.service.product_image.ProductImageService;
 import com.auction_website.service.product_transaction.ProductTransactionService;
 import com.auction_website.service.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,10 +38,13 @@ public class AuctionController {
     private NotificationService notificationService;
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private ProductImageService productImageService;
 
     /**
      * author: PhucPT
      * method: create new auction with information from client
+     *
      * @param auctionSubmit
      * @return
      */
@@ -58,8 +62,6 @@ public class AuctionController {
             resultMap.put("error", "wrong_price");
             return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        System.out.println(new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
-        System.out.println(auctionSubmit.getTimeAuction());
         if (new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000).before(auctionSubmit.getTimeAuction())) {
             resultMap.put("error", "auction_expired");
             return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -68,7 +70,7 @@ public class AuctionController {
         auctionService.createAuction(auctionSubmit.getPrice(), auctionSubmit.getTimeAuction(), accountId, auctionSubmit.getProductId());
         productService.setLastPrice(auctionSubmit.getProductId(), auctionSubmit.getPrice());
 
-        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(auctionSubmit.getProductId());
+        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
         product.setLastPrice(auctionSubmit.getPrice());
         currentStep = productService.findCurrentStepPrice(product);
 
@@ -79,13 +81,14 @@ public class AuctionController {
 
     /**
      * author: PhucPT
+     *
      * @param productId
      * @return
      */
     @GetMapping("list/{product}")
     public ResponseEntity<?> getListCurrentAuctionByProductId(@PathVariable("product") int productId) {
-        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(productId);
         Product product = productService.getProductById(productId);
+        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
         ListCurrentAuctionDTO currentAuctions = new ListCurrentAuctionDTO(productService.findCurrentStepPrice(product), auctions);
         return new ResponseEntity<>(currentAuctions, HttpStatus.OK);
     }
@@ -98,6 +101,9 @@ public class AuctionController {
     public void schedulingEndApprovedProduct() {
         Iterable<Product> products = productService.findAllProductApproved();
         for (Product product : products) {
+            Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
+            ListCurrentAuctionDTO currentAuctions = new ListCurrentAuctionDTO(productService.findCurrentStepPrice(product), auctions);
+            notificationService.updateAuctionProgress(currentAuctions, product.getProductId());
             scheduleService.endOfAuctionSchedule(product.getProductId());
         }
     }
@@ -112,5 +118,17 @@ public class AuctionController {
         for (ProductTransaction productTransaction : productTransactions) {
             scheduleService.endOfTransactionSchedule(productTransaction.getTransactionId());
         }
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity<?> getTransactionInPurchasing() {
+        int accountId = 1;
+        Iterable<ProductTransaction> productTransactions = productTransactionService.getCurrentTransactionByAccountId(accountId);
+        List<ProductTransactionDTO> productTransactionDTOList = new ArrayList<>();
+        for (ProductTransaction productTransaction : productTransactions) {
+            Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productTransaction.getProduct().getProductId());
+            productTransactionDTOList.add(new ProductTransactionDTO(productTransaction,productImages));
+        }
+        return new ResponseEntity<>(productTransactionDTOList, HttpStatus.OK);
     }
 }
