@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/address")
@@ -30,8 +32,13 @@ public class AddressController {
      */
     @GetMapping("/province")
     public ResponseEntity<Iterable<Province>> listProvinces() {
-        Iterable<Province> provinces = provinceService.getAllProvince();
-        return new ResponseEntity<>(provinces, HttpStatus.OK);
+        try{
+            Iterable<Province> provinces = provinceService.getAllProvince();
+            return new ResponseEntity<>(provinces, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     /**
@@ -41,8 +48,12 @@ public class AddressController {
      */
     @GetMapping("/district/{id}")
     public ResponseEntity<Iterable<District>> listDistrictByProvinceId(@PathVariable("id") int provinceId) {
-        Iterable<District> districts = districtService.getDistrictByProvinceId(provinceId);
-        return new ResponseEntity<>(districts, HttpStatus.OK);
+        try{
+            Iterable<District> districts = districtService.getDistrictByProvinceId(provinceId);
+            return new ResponseEntity<>(districts, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -52,7 +63,11 @@ public class AddressController {
      */
     @GetMapping("/ward/{id}")
     public ResponseEntity<Iterable<Ward>> listWardByDistrictId(@PathVariable("id") int districtId) {
-        Iterable<Ward> wards = wardService.getWardByDistrictId(districtId);
-        return new ResponseEntity<>(wards, HttpStatus.OK);
+        try{
+            Iterable<Ward> wards = wardService.getWardByDistrictId(districtId);
+            return new ResponseEntity<>(wards, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

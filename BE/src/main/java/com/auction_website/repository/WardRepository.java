@@ -9,10 +9,12 @@ import java.util.List;
 
 @Repository
 public interface WardRepository extends JpaRepository<Ward, Integer> {
-    @Query(value = "select * from ward", nativeQuery = true)
-    List<Ward> getWardList();
 
-
+    /**
+     * Author : CaoLPT
+     * Query get list wards by district_id from db
+     * @return
+     */
     @Query(value = "SELECT * FROM ward WHERE ward.district_id = :districtId", nativeQuery = true)
     Iterable<Ward> findAllByDistrictId(int districtId);
 }

@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, Integer> {
+    /**
+     * Author : CaoLPT
+     * Query get list provinces from db
+     * @return
+     */
     @Query(value = "SELECT * FROM province", nativeQuery = true)
     Iterable<Province> findAllProvince();
 }

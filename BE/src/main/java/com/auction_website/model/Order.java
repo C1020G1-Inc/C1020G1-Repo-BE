@@ -1,6 +1,9 @@
 package com.auction_website.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "order_bill")
@@ -18,9 +21,14 @@ public class Order {
     @JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
     private Ward ward;
 
+    @NotBlank
+    @NotNull
     @Column(name = "address")
     private String address;
 
+    @NotBlank
+    @NotNull
+    @Pattern(regexp = "(^(0)\\d{9}$)")
     @Column(name = "phone")
     private String phone;
 
