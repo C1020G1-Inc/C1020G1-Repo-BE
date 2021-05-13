@@ -11,9 +11,9 @@ import com.auction_website.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,8 +29,11 @@ public class AccountController {
     private UserService userService;
 
     @PostMapping("/guest/save")
-    public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
+    public ResponseEntity<Account> saveAccount(@RequestBody @Validated Account account, BindingResult bindingResult) {
         try {
+            if (bindingResult.hasErrors()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             userService.save(account.getUser());
             account.setUser(userService.findByPhone(account.getUser().getPhone()));
             accountService.save(account);
@@ -47,35 +50,35 @@ public class AccountController {
     }
 
     @GetMapping("/guest/exist/name")
-    public ResponseEntity<ValidationResponse> findAccountNameExist(@RequestParam String accountName){
+    public ResponseEntity<ValidationResponse> findAccountNameExist(@RequestParam String accountName) {
         try {
             Account account = accountService.findByAccountName(accountName);
             ValidationResponse validationResponse = new ValidationResponse();
-            if (account != null){
+            if (account != null) {
                 validationResponse.setAccountDuplicate(account.getAccountName());
             }
-            return new ResponseEntity<>(validationResponse,HttpStatus.OK);
-        } catch (Exception e){
+            return new ResponseEntity<>(validationResponse, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @GetMapping("/guest/exist/email")
-    public ResponseEntity<ValidationResponse> findEmailExist(@RequestParam String email){
+    public ResponseEntity<ValidationResponse> findEmailExist(@RequestParam String email) {
         try {
             Account account = accountService.findByEmail(email);
             ValidationResponse validationResponse = new ValidationResponse();
-            if (account != null){
+            if (account != null) {
                 validationResponse.setEmailDuplicate(account.getEmail());
             }
-            return new ResponseEntity<>(validationResponse,HttpStatus.OK);
-        } catch (Exception e){
+            return new ResponseEntity<>(validationResponse, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @PutMapping("/member/logout/{id}")
-    public ResponseEntity<Void> logout(@PathVariable Integer id){
+    public ResponseEntity<Void> logout(@PathVariable Integer id) {
         try {
             accountService.logout(id);
             return new ResponseEntity<>(HttpStatus.OK);
