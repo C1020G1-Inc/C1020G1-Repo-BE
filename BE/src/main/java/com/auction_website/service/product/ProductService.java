@@ -8,4 +8,5 @@ public interface ProductService {
     Page<Product> findAllProductRegister(Pageable pageable, Integer id);
     void updateStatus(Integer id);
     void updateProduct(Double price, String description, Integer id);
+//    Page<Product> searchProductRegister(String name,String time,Double price, Pageable pageable);
 }

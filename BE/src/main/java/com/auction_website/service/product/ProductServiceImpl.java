@@ -24,6 +24,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void updateProduct(Double price, String description, Integer id) {
+
         this.productRepository.updateProduct(price, description, id);
     }
+
+//    @Override
+//    public Page<Product> searchProductRegister(String name, String time, Double price, Pageable pageable) {
+//        return productRepository.findProductRegister(name, time, price, pageable);
+//    }
 }

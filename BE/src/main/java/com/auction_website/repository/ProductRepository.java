@@ -21,7 +21,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     void updateStatus(Integer id);
 
     @Modifying
-    @Query(value = "update product set product_status_id = 1 , product_price = :price, product_description = :description where product_id = :id",nativeQuery = true)
+    @Query(value = "update product set product_register_time = now(), product_status_id = 1 , product_price = :price, product_description = :description where product_id = :id",nativeQuery = true)
     void updateProduct(Double price, String description, Integer id);
+
+//    @Query(value = "select * from product where product.product_name = like :%name%  or product.product_price = like :price% ",nativeQuery = true)
+//    Page<Product> findProductRegister(String name,String time, Double price,Pageable pageable);
 }
 

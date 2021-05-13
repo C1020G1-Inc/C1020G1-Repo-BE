@@ -48,4 +48,15 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+//    @GetMapping("/product-register/search/{name}/{time}/{price}")
+//    public ResponseEntity<Page<Product>> searchProductRegister(@PathVariable String name,@PathVariable String time,
+//                                                               @PathVariable Double price, @PageableDefault (size =5)Pageable pageable ){
+//        try{
+//            Page<Product> product = productService.searchProductRegister(name, time, price, pageable);
+//            return new ResponseEntity<>(product, HttpStatus.OK);
+//        }catch(Exception e){
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 }
