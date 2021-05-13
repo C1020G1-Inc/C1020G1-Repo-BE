@@ -14,7 +14,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Query(value = "SELECT * \n" +
             "FROM comment \n" +
-            "WHERE product_id = ?1 ", nativeQuery = true)
+            "WHERE product_id = ?1 " +
+            "ORDER BY comment_time DESC ", nativeQuery = true)
     List<Comment> getAllCommentByProductId(Integer productId);
 
     @Query(value = "SELECT * \n" +
