@@ -21,7 +21,7 @@ public class Account {
     private String email;
 
     @Column(name = "account_enable")
-    private Integer enable;
+    private Boolean enable;
 
     @Column(name = "account_logout_time")
     private Timestamp logoutTime;
@@ -62,13 +62,14 @@ public class Account {
         this.email = email;
     }
 
-    public Integer getEnable() {
+    public Boolean isEnable() {
         return enable;
     }
 
-    public void setEnable(Integer enable) {
+    public void setEnable(Boolean enable) {
         this.enable = enable;
     }
+
 
     public Timestamp getLogoutTime() {
         return logoutTime;

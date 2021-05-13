@@ -3,7 +3,6 @@ package com.auction_website.service.account;
 import com.auction_website.model.Account;
 import com.auction_website.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +17,7 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAllUser();
     }
 
-    @Override
-    public void deleteUserById(Integer idUser) {
-        accountRepository.deleteUser(idUser);
-    }
+
 
     @Override
     public void lockUserById(Integer idUser) {
@@ -34,8 +30,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> searchUser(String userName, Integer userId, String address, String userEmail, Pageable pageable) {
-        return accountRepository.searchUser(userName, userId, address, userEmail, pageable);
+    public List<Account> searchUser(String userName, Integer userId, String address, String userEmail) {
+        return accountRepository.searchUser(userName, userId, address, userEmail);
+    }
+
+    @Override
+    public List<Account> getUserByDate(Integer month, Integer year) {
+        return accountRepository.getUserByDate(month,year);
     }
 
 
