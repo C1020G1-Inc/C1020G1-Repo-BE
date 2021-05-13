@@ -19,11 +19,33 @@ public class ProductController {
 
     @GetMapping("/product-register/{id}")
     public ResponseEntity<Page<Product>> getAllProductRegister(@PageableDefault(size = 5) Pageable pageable,@PathVariable Integer id){
-//        try{
+        try{
             Page<Product> product = productService.findAllProductRegister(pageable, id);
             return new ResponseEntity<>(product, HttpStatus.OK);
-//        }catch(Exception e){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/product-register/update/{id}")
+    public ResponseEntity<Void> updateStatus(@PathVariable Integer id){
+        try {
+            System.out.println("abc");
+            productService.updateStatus(id);
+            System.out.println("abc");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/product-register/update/{price}/{description}/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable Double price,@PathVariable String description , @PathVariable Integer id){
+        try {
+            productService.updateProduct(price,description, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -16,4 +16,14 @@ public class ProductServiceImpl implements ProductService{
     public Page<Product> findAllProductRegister(Pageable pageable, Integer id) {
         return productRepository.findAllProductRegisterByUserId(pageable,id);
     }
+
+    @Override
+    public void updateStatus(Integer id) {
+        this.productRepository.updateStatus(id);
+    }
+
+    @Override
+    public void updateProduct(Double price, String description, Integer id) {
+        this.productRepository.updateProduct(price, description, id);
+    }
 }
