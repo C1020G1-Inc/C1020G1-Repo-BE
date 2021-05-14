@@ -159,13 +159,13 @@ values
 
 insert into `account` (account_name,account_email,account_password,account_enable,user_id)
 values
-('phuc','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,1),
-('loc','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,2),
-('tho','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,3),
-('nhan','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,4), 
-('nghia','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,5), 
-('tri','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,6), 
-('tin','truongphucdn@gmail.com','$2y$12$LZQIX8LgvYYb.4ULVtKi8ecPhCM1BKmGWtMAFg52MQFVuSzWdXgBG',1,7);
+('phuc123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,1),
+('loc123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,2),
+('tho123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,3),
+('nhan123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,4), 
+('nghia123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,5), 
+('tri123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,6), 
+('tin123456','truongphucdn@gmail.com','$2y$12$zl1tVC73T8anhOY0VHDcVehT.ZM.6WYku1Z7tOb2gJkQaWtwVC1mm',1,7);
 
 insert into `role` (role_name)
 values
@@ -186,11 +186,11 @@ insert into product_status (status_name) values ('pending'),('approved'),('purch
 insert into category (category_name) values ('smartphone'),('tablet'),('washing');
 insert into product (product_name, product_price, product_price_step, product_quantity, product_description, product_register_time, product_auction_time,account_id, category_id, product_status_id)
 values
-('Máy hút bụi Electrolux Z1230 (Loại O2B)', 2070000, 50000, 1, 'Máy hút bụi Electrolux EC31-2BB với công suất lên đến1800W cho lực hút mạnh mẽ dễ dàng hút sạch mọi bụi bẩn.', '2021-05-13 15:37:00.000+07:00', 2, 1, 1, 2),
-('PANASONIC 9.0KG NA-F90A4GRV', 7190000, 100000, 1, 'Với khối lượng giặt lên đến 9 kg cho một mẻ giặt, chiếc máy giặt Panasonic NA-F90A4GRV sẽ là một sự lựa chọn lý tưởng cho các gia đình có từ 6 người trở lên.', '2021-05-13 15:03:00.000+07:00', 3, 2, 1, 2),
-('iPhone 12 Mini 64GB, Đen (VN/A) ', 17190000, 200000, 1, 'iPhone 12 Mini - Smartphone kích thước nhỏ mạnh nhất hiện tại! Bên cạnh việc chạy theo các mẫu smartphone màn hình lớn thì Apple lại bất ngờ cho ra mắt thêm một phân khúc hoàn toàn mới với kích thước “mi nhon” hơn các đàn anh rất nhiều mang tên iPhone 12 Mini.', '2021-05-13 15:03:00.000+07:00', 3, 3, 2, 2),
-('Máy Tính Bảng HANET Smartlist 2016 ', 6690000, 100000, 1, 'Dung lượng pin cực lớn 12.000 mAh sẵn sàng cho mọi cuộc vui kéo dài 24h không ngừng nghỉ. Cùng với công nghệ sạc nhanh tiên tiến, thời gian sạc được rút ngắn chỉ còn 4-5h cho một lần sạc đầy', '2021-05-13 15:03:00', 5, 1, 1, 2),
-('Máy Giặt/Sấy SAMSUNG 10.5Kg/7Kg WD10N64FR2W/SV', 11690000, 100000, 1, 'Máy giặt/sấy Samsung 10.5kg/7kg WD10N64FR2W/SV được tích hợp chức năng giặt và sấy giúp quần áo được làm sạch, khô nhanh hơn, nhất là vào những ngày mưa gió. Tuy nhiên, quần sẽ không khô hoàn toàn khi sấy, bạn nên phơi ngoài gió thêm.', '2021-05-13 15:03:00.000+07:00', 5, 2, 2, 2);
+('Máy hút bụi Electrolux Z1230 (Loại O2B)', 2070000, 50000, 1, 'Máy hút bụi Electrolux EC31-2BB với công suất lên đến1800W cho lực hút mạnh mẽ dễ dàng hút sạch mọi bụi bẩn.', '2021-05-13 21:34:00.000+07:00', 15, 1, 1, 2),
+('PANASONIC 9.0KG NA-F90A4GRV', 7190000, 100000, 1, 'Với khối lượng giặt lên đến 9 kg cho một mẻ giặt, chiếc máy giặt Panasonic NA-F90A4GRV sẽ là một sự lựa chọn lý tưởng cho các gia đình có từ 6 người trở lên.', '2021-05-13 21:34:00.000+07:00', 20, 2, 1, 2),
+('iPhone 12 Mini 64GB, Đen (VN/A) ', 17190000, 200000, 1, 'iPhone 12 Mini - Smartphone kích thước nhỏ mạnh nhất hiện tại! Bên cạnh việc chạy theo các mẫu smartphone màn hình lớn thì Apple lại bất ngờ cho ra mắt thêm một phân khúc hoàn toàn mới với kích thước “mi nhon” hơn các đàn anh rất nhiều mang tên iPhone 12 Mini.', '2021-05-13 21:35:00.000+07:00', 15, 3, 2, 2),
+('Máy Tính Bảng HANET Smartlist 2016 ', 6690000, 100000, 1, 'Dung lượng pin cực lớn 12.000 mAh sẵn sàng cho mọi cuộc vui kéo dài 24h không ngừng nghỉ. Cùng với công nghệ sạc nhanh tiên tiến, thời gian sạc được rút ngắn chỉ còn 4-5h cho một lần sạc đầy', '2021-05-13 21:35:00', 25, 1, 1, 2),
+('Máy Giặt/Sấy SAMSUNG 10.5Kg/7Kg WD10N64FR2W/SV', 11690000, 100000, 1, 'Máy giặt/sấy Samsung 10.5kg/7kg WD10N64FR2W/SV được tích hợp chức năng giặt và sấy giúp quần áo được làm sạch, khô nhanh hơn, nhất là vào những ngày mưa gió. Tuy nhiên, quần sẽ không khô hoàn toàn khi sấy, bạn nên phơi ngoài gió thêm.', '2021-05-13 21:36:00.000+07:00', 23, 2, 2, 2);
 
 insert into product_image (image, product_id) values
 ('https://cdn01.dienmaycholon.vn/filewebdmclnew/public/picture/product/product14032/dmcl_450_product_14032_1.png', 1),
