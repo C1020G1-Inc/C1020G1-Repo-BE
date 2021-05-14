@@ -15,21 +15,37 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * @author PhinNL
+     * find account by account name
+     */
     @Override
     public Account findByAccountName(String accountName) {
         return accountRepository.findByAccountName(accountName);
     }
 
+    /**
+     * @author PhinNL
+     * find account by email
+     */
     @Override
     public Account findByEmail(String email) {
         return accountRepository.findById(email);
     }
 
+    /**
+     * @author PhinNL
+     * find account by id
+     */
     @Override
     public Account findById(Integer id) {
         return accountRepository.findByAccountId(id);
     }
 
+    /**
+     * @author PhinNL
+     * save account (register)
+     */
     @Override
     public void save(Account account) {
         account.setLogoutTime(new Timestamp(System.currentTimeMillis()));
@@ -38,6 +54,10 @@ public class AccountServiceImpl implements AccountService {
                 account.getLogoutTime(),account.getUser().getUserId());
     }
 
+    /**
+     * @author PhinNL
+     * update logout time
+     */
     @Override
     public void logout(Integer id) {
         accountRepository.logout(new Timestamp(System.currentTimeMillis()),id);

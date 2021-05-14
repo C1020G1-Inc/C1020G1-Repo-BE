@@ -49,7 +49,7 @@ public class AccountController {
             accountRoleService.save(accountRole);
             return new ResponseEntity<Account>(account, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -67,7 +67,7 @@ public class AccountController {
             }
             return new ResponseEntity<>(validationResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -85,7 +85,7 @@ public class AccountController {
             }
             return new ResponseEntity<>(validationResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -98,14 +98,19 @@ public class AccountController {
         try {
             Account accountFind = accountService.findByAccountName(account.getAccountName());
             if (accountFind != null){
-                if (accountFind.getPassword().equals(account.getAccountName())){
+                if (accountFind.getPassword().equals(account.getPassword())){
                     accountService.logout(accountFind.getAccountId());
                     return new ResponseEntity<>(HttpStatus.OK);
                 }
             }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/member/test")
+    public ResponseEntity<Account> test() {
+        return new ResponseEntity<>(new Account(),HttpStatus.OK);
     }
 }

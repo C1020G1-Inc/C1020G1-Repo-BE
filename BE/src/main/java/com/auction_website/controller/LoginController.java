@@ -16,6 +16,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Value;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -51,34 +52,54 @@ public class LoginController {
     @Autowired
     private AccountService accountService;
 
+    /**
+     * @author PhinNL
+     * login with simple account
+     */
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) {
-        JwtResponse jwtResponse = login(jwtRequest);
-        return ResponseEntity.ok(jwtResponse);
+        try {
+            JwtResponse jwtResponse = login(jwtRequest);
+            return new ResponseEntity<>(jwtResponse,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
+    /**
+     * @author PhinNL
+     * login with google account
+     */
     @PostMapping("oauth/google")
     public ResponseEntity<?> google(@RequestBody SocialResponse jwtResponseSocial) throws IOException {
-        final NetHttpTransport netHttpTransport = new NetHttpTransport();
-        final JacksonFactory jacksonFactory = JacksonFactory.getDefaultInstance();
-        GoogleIdTokenVerifier.Builder builder =
-                new GoogleIdTokenVerifier.Builder(netHttpTransport, jacksonFactory)
-                        .setAudience(Collections.singletonList(googleClientId));
-        final GoogleIdToken googleIdToken = GoogleIdToken.parse(builder.getJsonFactory(), jwtResponseSocial.getJwtToken());
-        final GoogleIdToken.Payload payload = googleIdToken.getPayload();
-        Account account = accountService.findByEmail(payload.getEmail());
-        JwtResponse jwtResponse = new JwtResponse("");
-        if (account == null) {
-            account = new Account();
-            account.setEmail(payload.getEmail());
-            jwtResponse.setAccount(account);
-            return ResponseEntity.ok(jwtResponse);
+        try {
+            final NetHttpTransport netHttpTransport = new NetHttpTransport();
+            final JacksonFactory jacksonFactory = JacksonFactory.getDefaultInstance();
+            GoogleIdTokenVerifier.Builder builder =
+                    new GoogleIdTokenVerifier.Builder(netHttpTransport, jacksonFactory)
+                            .setAudience(Collections.singletonList(googleClientId));
+            final GoogleIdToken googleIdToken = GoogleIdToken.parse(builder.getJsonFactory(), jwtResponseSocial.getJwtToken());
+            final GoogleIdToken.Payload payload = googleIdToken.getPayload();
+            Account account = accountService.findByEmail(payload.getEmail());
+            JwtResponse jwtResponse = new JwtResponse("");
+            if (account == null) {
+                account = new Account();
+                account.setEmail(payload.getEmail());
+                jwtResponse.setAccount(account);
+                return ResponseEntity.ok(jwtResponse);
+            }
+            JwtRequest jwtRequest = new JwtRequest(account.getAccountName(), account.getPassword());
+            jwtResponse = loginSocial(jwtRequest, account);
+            return new ResponseEntity<>(jwtResponse,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        JwtRequest jwtRequest = new JwtRequest(account.getAccountName(), account.getPassword());
-        jwtResponse = loginSocial(jwtRequest, account);
-        return ResponseEntity.ok(jwtResponse);
     }
 
+    /**
+     * @author PhinNL
+     * login with facebook account
+     */
     @PostMapping("oauth/facebook")
     public ResponseEntity<?> facebook(@RequestBody SocialResponse jwtResponseSocial) {
         Facebook facebook = new FacebookTemplate(jwtResponseSocial.getJwtToken());
@@ -107,7 +128,7 @@ public class LoginController {
                 .loadUserByUsername(jwtRequest.getAccountName());
 
         String token = null;
-        if (userDetails.isEnabled()){
+        if (userDetails.isEnabled()) {
             token = jwtTokenUtil.generateToken(userDetails);
         }
         JwtResponse jwtResponse = new JwtResponse(token);
@@ -124,7 +145,7 @@ public class LoginController {
         try {
             authenticate(jwtRequest.getAccountName(), jwtRequest.getPassword());
         } catch (Exception e) {
-            if (e.getMessage().equals("INVALID_CREDENTIALS")){
+            if (e.getMessage().equals("INVALID_CREDENTIALS")) {
                 return new JwtResponse(e.getMessage());
             }
         }
@@ -133,7 +154,7 @@ public class LoginController {
                 .loadUserByUsername(jwtRequest.getAccountName());
 
         String token = null;
-        if (userDetails.isEnabled()){
+        if (userDetails.isEnabled()) {
             token = jwtTokenUtil.generateToken(userDetails);
         }
         JwtResponse jwtResponse = new JwtResponse(token);
