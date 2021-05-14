@@ -1,5 +1,6 @@
 package com.auction_website.repository;
 
+import com.auction_website.dto.ProductAuctionResultDTO;
 import com.auction_website.model.ProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -48,4 +49,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
             "group by  p.product_id\n" +
             "order by p.product_register_time desc", nativeQuery = true)
     List<ProductImage> showAllProductEndAuctionHot();
+
 }
