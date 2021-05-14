@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    /**
+     * Author : SonPH
+     * find product by productID
+     *
+     * @param productId
+     */
     @Override
-    public Product getProductByProductId(Integer id) {
-        return productRepository.getProductByProductId(id);
+    public Product getProductById(Integer productId) {
+        return productRepository.getProductById(productId);
     }
+
 }

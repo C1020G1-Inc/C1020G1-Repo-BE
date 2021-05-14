@@ -3,5 +3,13 @@ package com.auction_website.service.product;
 import com.auction_website.model.Product;
 
 public interface ProductService {
-    Product getProductByProductId(Integer id) ;
+    /**
+     * Author : SonPH
+     * find product by productID
+     *
+     * @param productId
+     */
+    Product getProductById(Integer productId);
+
+
 }
