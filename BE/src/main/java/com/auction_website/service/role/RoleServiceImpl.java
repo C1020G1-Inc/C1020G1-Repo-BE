@@ -1,5 +1,6 @@
 package com.auction_website.service.role;
 
+import com.auction_website.model.Role;
 import com.auction_website.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,4 +9,9 @@ import org.springframework.stereotype.Service;
 public class RoleServiceImpl implements RoleService{
     @Autowired
     private RoleRepository roleRepository;
+
+    @Override
+    public Role findById(Integer id) {
+        return roleRepository.findByRoleId(id);
+    }
 }
