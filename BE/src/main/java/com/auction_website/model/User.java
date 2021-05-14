@@ -15,7 +15,7 @@ public class User {
     private String userName;
 
     @Column(name = "user_birthday")
-    private Date birthday;
+    private String birthday;
 
     @Column(name = "user_phone")
     private String phone;
@@ -45,11 +45,11 @@ public class User {
         this.userName = userName;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
