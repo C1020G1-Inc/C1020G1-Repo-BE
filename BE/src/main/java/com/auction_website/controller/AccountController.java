@@ -28,6 +28,10 @@ public class AccountController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @author PhinNL
+     * register (save account)
+     */
     @PostMapping("/guest/save")
     public ResponseEntity<Account> saveAccount(@RequestBody @Validated Account account, BindingResult bindingResult) {
         try {
@@ -49,6 +53,10 @@ public class AccountController {
         }
     }
 
+    /**
+     * @author PhinNL
+     * validate accountName duplicate
+     */
     @GetMapping("/guest/exist/name")
     public ResponseEntity<ValidationResponse> findAccountNameExist(@RequestParam String accountName) {
         try {
@@ -63,6 +71,10 @@ public class AccountController {
         }
     }
 
+    /**
+     * @author PhinNL
+     * validate email duplicate
+     */
     @GetMapping("/guest/exist/email")
     public ResponseEntity<ValidationResponse> findEmailExist(@RequestParam String email) {
         try {
@@ -77,11 +89,21 @@ public class AccountController {
         }
     }
 
-    @PutMapping("/member/logout/{id}")
-    public ResponseEntity<Void> logout(@PathVariable Integer id) {
+    /**
+     * @author PhinNL
+     * update logout time
+     */
+    @PutMapping("/guest/logout")
+    public ResponseEntity<Void> logout(@RequestBody Account account) {
         try {
-            accountService.logout(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Account accountFind = accountService.findByAccountName(account.getAccountName());
+            if (accountFind != null){
+                if (accountFind.getPassword().equals(account.getAccountName())){
+                    accountService.logout(accountFind.getAccountId());
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
