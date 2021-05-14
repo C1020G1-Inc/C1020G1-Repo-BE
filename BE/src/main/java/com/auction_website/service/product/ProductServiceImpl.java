@@ -20,4 +20,5 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Integer productId) {
         return productRepository.getProductById(productId);
     }
+
 }
