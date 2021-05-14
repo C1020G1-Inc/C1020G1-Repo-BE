@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService{
     @Autowired
@@ -103,6 +105,4 @@ public class ProductServiceImpl implements ProductService{
     public Iterable<Product> findAllProductApproved() {
         return productRepository.findAllProductApproved();
     }
-
-
 }

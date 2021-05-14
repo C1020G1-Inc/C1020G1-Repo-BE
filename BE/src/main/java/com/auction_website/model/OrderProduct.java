@@ -19,6 +19,11 @@ public class OrderProduct {
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
 
+    public OrderProduct(Product product, Order order) {
+        this.product = product;
+        this.order = order;
+    }
+
     public Integer getId() {
         return id;
     }

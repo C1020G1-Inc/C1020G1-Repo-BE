@@ -1,0 +1,4 @@
+db : 
+bổ sung 2 cột user_name và user_email table order_bill
+sửa method_pay thành INT (0 : trả sau, 1 : trả paypal)
+bổ sung full data cho 3 bảng address
