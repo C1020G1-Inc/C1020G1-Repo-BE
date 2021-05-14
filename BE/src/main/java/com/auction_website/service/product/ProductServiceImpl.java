@@ -12,16 +12,28 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepository productRepository;
 
+    /**
+     * CuongNVM
+     * list product register
+     */
     @Override
     public Page<Product> findAllProductRegister(Pageable pageable, Integer id) {
         return productRepository.findAllProductRegisterByUserId(pageable,id);
     }
 
+    /**
+     * CuongNVM
+     * Update status for button Cancel items register
+     */
     @Override
     public void updateStatus(Integer id) {
         this.productRepository.updateStatus(id);
     }
 
+    /**
+     * CuongNVM
+     * Update status for button "Đăng kí lại" items
+     */
     @Override
     public void updateProduct(Double price, String description, Integer id) {
 

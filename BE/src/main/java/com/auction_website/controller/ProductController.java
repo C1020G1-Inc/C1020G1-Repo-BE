@@ -17,6 +17,10 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    /**
+     * Author: CuongNVM
+     * List History product register
+     */
     @GetMapping("/product-register/{id}")
     public ResponseEntity<Page<Product>> getAllProductRegister(@PageableDefault(size = 5) Pageable pageable,@PathVariable Integer id){
         try{
@@ -27,18 +31,24 @@ public class ProductController {
         }
     }
 
+    /**
+     * Author: CuongNVM
+     * Update status for button Cancel items register
+     */
     @PutMapping("/product-register/update/{id}")
     public ResponseEntity<Void> updateStatus(@PathVariable Integer id){
         try {
-            System.out.println("abc");
             productService.updateStatus(id);
-            System.out.println("abc");
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    /**
+     * Author: CuongNVM
+     * Update status for button "Đăng kí lại" items
+     */
     @PutMapping("/product-register/update/{price}/{description}/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable Double price,@PathVariable String description , @PathVariable Integer id){
         try {

@@ -12,6 +12,10 @@ public class AuctionServiceImpl implements AuctionService{
     @Autowired
     private AuctionRepository auctionRepository;
 
+    /**
+     * Author: CuongNVM
+     * List product auction
+     */
     @Override
     public Page<Auction> findAllProductAuction(Pageable pageable, Integer id) {
         return auctionRepository.findAllProductAuctionByUserId(pageable, id);

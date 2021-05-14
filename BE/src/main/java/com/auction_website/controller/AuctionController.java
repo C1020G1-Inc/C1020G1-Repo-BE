@@ -17,6 +17,10 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
+    /**
+     * Author: CuongNVM
+     * list product auction
+     */
     @GetMapping("/product-auction/{id}")
     public ResponseEntity<Page<Auction>> getAllProductAuction(@PageableDefault(size = 5)Pageable pageable, @PathVariable Integer id){
         try{
