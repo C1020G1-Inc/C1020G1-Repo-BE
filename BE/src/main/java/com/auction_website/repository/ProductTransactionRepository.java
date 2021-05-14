@@ -65,7 +65,12 @@ public interface ProductTransactionRepository extends JpaRepository<ProductTrans
     @Query(nativeQuery = true, value = "UPDATE product_transaction SET status = :status WHERE product_transaction_id = :productTransactionId")
     void setStatusByTransactionId(String status, int productTransactionId);
 
-
+    /**
+     * author: PhucPT
+     * method: 
+     * @param accountId
+     * @return
+     */
     @Query(nativeQuery = true, value = "SELECT * FROM product_transaction WHERE status = 'purchasing' AND account_id = :accountId")
     Iterable<ProductTransaction> getCurrentTransactionByAccountId(int accountId);
 }

@@ -54,33 +54,37 @@ public class AuctionController {
     @PostMapping("bidding")
     @Transactional
     public ResponseEntity<?> setNewAuction(@RequestBody AuctionSubmitDTO auctionSubmit, Principal principal) {
-        String accountName = principal.getName();
-        int accountId = accountService.findByAccountName(accountName).getAccountId();
+        try {
+            String accountName = principal.getName();
+            int accountId = accountService.findByAccountName(accountName).getAccountId();
 
-        Product product = productService.getProductById(auctionSubmit.getProductId());
-        double currentPrice = (product.getLastPrice() == null) ? product.getPrice() : product.getLastPrice();
-        double currentStep = productService.findCurrentStepPrice(product);
-        Map<String, Object> resultMap = new HashMap<>();
+            Product product = productService.getProductById(auctionSubmit.getProductId());
+            double currentPrice = (product.getLastPrice() == null) ? product.getPrice() : product.getLastPrice();
+            double currentStep = productService.findCurrentStepPrice(product);
+            Map<String, Object> resultMap = new HashMap<>();
 
-        if (auctionSubmit.getPrice() < currentPrice + currentStep || auctionSubmit.getPrice() % currentStep != 0) {
-            resultMap.put("error", "wrong_price");
-            return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
+            if (auctionSubmit.getPrice() < currentPrice + currentStep || auctionSubmit.getPrice() % currentStep != 0) {
+                resultMap.put("error", "wrong_price");
+                return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+            }
+            if (new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000).before(auctionSubmit.getTimeAuction())) {
+                resultMap.put("error", "auction_expired");
+                return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+            }
+
+            auctionService.createAuction(auctionSubmit.getPrice(), auctionSubmit.getTimeAuction(), accountId, auctionSubmit.getProductId());
+            productService.setLastPrice(auctionSubmit.getProductId(), auctionSubmit.getPrice());
+
+            Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
+            product.setLastPrice(auctionSubmit.getPrice());
+            currentStep = productService.findCurrentStepPrice(product);
+
+            notificationService.updateAuctionProgress(new ListCurrentAuctionDTO(currentStep, auctions), auctionSubmit.getProductId());
+            resultMap.put("message", "success");
+            return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000).before(auctionSubmit.getTimeAuction())) {
-            resultMap.put("error", "auction_expired");
-            return new ResponseEntity<>(resultMap, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
-        auctionService.createAuction(auctionSubmit.getPrice(), auctionSubmit.getTimeAuction(), accountId, auctionSubmit.getProductId());
-        productService.setLastPrice(auctionSubmit.getProductId(), auctionSubmit.getPrice());
-
-        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
-        product.setLastPrice(auctionSubmit.getPrice());
-        currentStep = productService.findCurrentStepPrice(product);
-
-        notificationService.updateAuctionProgress(new ListCurrentAuctionDTO(currentStep, auctions), auctionSubmit.getProductId());
-        resultMap.put("message", "success");
-        return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
     }
 
     /**
@@ -91,10 +95,14 @@ public class AuctionController {
      */
     @GetMapping("list/{product}")
     public ResponseEntity<?> getListCurrentAuctionByProductId(@PathVariable("product") int productId) {
-        Product product = productService.getProductById(productId);
-        Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
-        ListCurrentAuctionDTO currentAuctions = new ListCurrentAuctionDTO(productService.findCurrentStepPrice(product), auctions);
-        return new ResponseEntity<>(currentAuctions, HttpStatus.OK);
+        try {
+            Product product = productService.getProductById(productId);
+            Iterable<Auction> auctions = auctionService.getListAuctionInProgressByProductId(product);
+            ListCurrentAuctionDTO currentAuctions = new ListCurrentAuctionDTO(productService.findCurrentStepPrice(product), auctions);
+            return new ResponseEntity<>(currentAuctions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -127,19 +135,22 @@ public class AuctionController {
     /**
      * author: PhucPT
      * method: get all transaction in purchasing
-     *
      * @return
      */
     @GetMapping("/cart")
     public ResponseEntity<?> getTransactionInPurchasing(Principal principal) {
-        String accountName = principal.getName();
-        int accountId = accountService.findByAccountName(accountName).getAccountId();
-        Iterable<ProductTransaction> productTransactions = productTransactionService.getCurrentTransactionByAccountId(accountId);
-        List<ProductTransactionDTO> productTransactionDTOList = new ArrayList<>();
-        for (ProductTransaction productTransaction : productTransactions) {
-            Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productTransaction.getProduct().getProductId());
-            productTransactionDTOList.add(new ProductTransactionDTO(productTransaction, productImages));
+        try {
+            String accountName = principal.getName();
+            int accountId = accountService.findByAccountName(accountName).getAccountId();
+            Iterable<ProductTransaction> productTransactions = productTransactionService.getCurrentTransactionByAccountId(accountId);
+            List<ProductTransactionDTO> productTransactionDTOList = new ArrayList<>();
+            for (ProductTransaction productTransaction : productTransactions) {
+                Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productTransaction.getProduct().getProductId());
+                productTransactionDTOList.add(new ProductTransactionDTO(productTransaction, productImages));
+            }
+            return new ResponseEntity<>(productTransactionDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(productTransactionDTOList, HttpStatus.OK);
     }
 }

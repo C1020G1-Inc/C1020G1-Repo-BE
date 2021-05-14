@@ -2,7 +2,6 @@ package com.auction_website.service.email;
 
 import com.auction_website.model.ProductTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,18 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    /**
+     * author: PhucPT
+     * method: send email to winner
+     *
+     * @param productTransaction
+     * @throws MessagingException
+     */
     @Override
     public void sendMailToWinner(ProductTransaction productTransaction) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true,"utf-8");
-        String htmlMsg ="<h4>Chào bạn,</h4>\n" +
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        String htmlMsg = "<h4>Chào bạn,</h4>\n" +
                 "<p>Chúc mừng bạn đã đấu giá thành công sản phẩm '" + productTransaction.getProduct().getProductName() + "</p>\n" +
                 "<p>Xin vui lòng đăng nhập thanh toán sản phảm.</p>" +
                 " <p>Lưu ý trong vòng 24h kể từ khi nhận mail này nếu không có bất kì thành toán nào thì sản phẩm sẽ bị khóa</p>\n" +
@@ -32,19 +38,4 @@ public class EmailServiceImpl implements EmailService {
         helper.setSubject("[C10-Auction] Đấu giá thành công");
         this.javaMailSender.send(message);
     }
-
-    @Override
-    public void dummyMail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo("truongphucdn@gmail.com");
-        message.setSubject("Test Simple Email");
-        message.setText("Hello, Im testing Simple Email");
-
-        // Send Message!
-        this.javaMailSender.send(message);
-
-    }
-
-
 }

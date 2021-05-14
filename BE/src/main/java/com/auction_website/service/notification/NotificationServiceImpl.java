@@ -16,6 +16,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: update auction list to firebase
      * @param auctions
      * @param productId
      */
@@ -27,6 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: clear firebase database when auction complete
      * @param productId
      */
     @Override
@@ -37,6 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: send notify to firebase when auction end
      * @param productTransaction
      */
     @Override
@@ -49,6 +52,11 @@ public class NotificationServiceImpl implements NotificationService {
         reference.push().setValueAsync(message);
     }
 
+    /**
+     * author: PhucPT
+     * method: send notify to firebase when transaction cancel
+     * @param productTransaction
+     */
     @Override
     public void notifyCancelTransaction(ProductTransaction productTransaction) {
         DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId()+"/transaction_abort");
