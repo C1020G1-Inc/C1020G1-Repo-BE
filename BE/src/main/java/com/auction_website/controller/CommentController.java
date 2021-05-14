@@ -34,20 +34,24 @@ public class CommentController {
      */
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Comment>> getAllCommentByProductId(@PathVariable("productId") Integer productId) {
-        Product product = productService.getProductById(productId);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        List<Comment> commentList = commentService.getCommentByProductId(productId);
-
-        if (commentList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            for (Comment comment : commentList) {
-                comment.setContent(commentService.decodeString(comment.getContent()));
+        try {
+            Product product = productService.getProductById(productId);
+            if (product == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(commentList, HttpStatus.OK);
+
+            List<Comment> commentList = commentService.getCommentByProductId(productId);
+
+            if (commentList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                for (Comment comment : commentList) {
+                    comment.setContent(commentService.decodeString(comment.getContent()));
+                }
+                return new ResponseEntity<>(commentList, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -59,12 +63,16 @@ public class CommentController {
      */
     @GetMapping("/{commentId}")
     public ResponseEntity<Comment> getCommentByCommentId(@PathVariable("commentId") Integer commentId) {
-        Comment comment = commentService.getCommentById(commentId);
-        if (comment == null) {
+        try {
+            Comment comment = commentService.getCommentById(commentId);
+            if (comment == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                comment.setContent(commentService.decodeString(comment.getContent()));
+                return new ResponseEntity<>(comment, HttpStatus.OK);
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            comment.setContent(commentService.decodeString(comment.getContent()));
-            return new ResponseEntity<>(comment, HttpStatus.OK);
         }
     }
 
@@ -78,14 +86,18 @@ public class CommentController {
     @PostMapping("")
     @Transactional
     public ResponseEntity<Comment> createComment(@Validated @RequestBody Comment comment, BindingResult bindingResult) {
-        comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
-        if (bindingResult.hasErrors()) {
+        try {
+            comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
+            if (bindingResult.hasErrors()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                comment.setContent(commentService.encodeString(comment.getContent()));
+                commentService.createComment(comment);
+                Comment commentRecent = commentService.getRecentComment(comment.getProduct().getProductId());
+                return new ResponseEntity<>(commentRecent, HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            comment.setContent(commentService.encodeString(comment.getContent()));
-            commentService.createComment(comment);
-            Comment commentRecent = commentService.getRecentComment(comment.getProduct().getProductId());
-            return new ResponseEntity<>(commentRecent, HttpStatus.CREATED);
         }
     }
 
@@ -100,13 +112,17 @@ public class CommentController {
     @PutMapping("/edit/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable("commentId") Integer commentId,
                                                  @Validated @RequestBody Comment comment, BindingResult bindingResult) {
-        Comment commentTempt = commentService.getCommentById(commentId);
-        if (commentTempt == null || bindingResult.hasErrors()) {
+        try {
+            Comment commentTempt = commentService.getCommentById(commentId);
+            if (commentTempt == null || bindingResult.hasErrors()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                comment.setContent(commentService.encodeString(comment.getContent()));
+                commentService.updateComment(comment);
+                return new ResponseEntity<>(comment, HttpStatus.OK);
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            comment.setContent(commentService.encodeString(comment.getContent()));
-            commentService.updateComment(comment);
-            return new ResponseEntity<>(comment, HttpStatus.OK);
         }
     }
 
@@ -118,12 +134,16 @@ public class CommentController {
      */
     @DeleteMapping("/delete/{commentId}")
     public ResponseEntity<Comment> deleteComment(@PathVariable("commentId") Integer commentId) {
-        Comment comment = commentService.getCommentById(commentId);
-        if (comment == null) {
+        try {
+            Comment comment = commentService.getCommentById(commentId);
+            if (comment == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                commentService.deleteCommentById(commentId);
+                return new ResponseEntity<>(comment, HttpStatus.OK);
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            commentService.deleteCommentById(commentId);
-            return new ResponseEntity<>(comment, HttpStatus.OK);
         }
     }
 }
