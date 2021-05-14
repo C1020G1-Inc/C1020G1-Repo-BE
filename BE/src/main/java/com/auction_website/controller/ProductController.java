@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -66,7 +64,7 @@ public class ProductController {
             productService.editProduct(productDTO.getProduct());
             productImageService.deleteImagesById(productDTO.getProduct().getProductId());
 
-            for(ProductImage productImage : productImageList){
+            for (ProductImage productImage : productImageList) {
                 productImageService.saveProductImage(productImage);
             }
 

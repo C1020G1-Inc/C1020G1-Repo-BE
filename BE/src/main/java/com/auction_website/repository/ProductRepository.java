@@ -11,9 +11,19 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    /**
+     * Author : TungNT
+     * Get all product
+     */
     @Query(value = "select * from product", nativeQuery = true)
     List<Product> getAllProduct();
 
+
+    /**
+     * Author : TungNT
+     * Search product multi cases
+     */
     @Query("select product from Product product " +
             "join Account account on product.account.accountId = account.accountId " +
             "join User user on account.user.userId = user.userId " +
@@ -24,16 +34,28 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> getProductBySearch(String productName, Integer categoryId,
                                      String userName, Integer productStatusId);
 
+    /**
+     * Author : TungNT
+     * Approved product to auction;
+     */
     @Transactional
     @Modifying
     @Query("update Product product set product.productStatus.id = 2 where product.productId = :idProduct")
     void approvedProduct(Integer idProduct);
 
+    /**
+     * Author : TungNT
+     * Statistics product by month or by year
+     */
     @Query("select product from Product product" +
             " where ((:monthSearch is null) or ((function('month', product.endTime)) = :monthSearch)) and" +
             " (function('year', product.endTime) = :yearSearch)")
     List<Product> getProductByDate(Integer monthSearch, Integer yearSearch);
 
+    /**
+     * Author : TungNT
+     * Get product by product's id.
+     */
     @Query("select product from Product product " +
             "where product.productId = :productId")
     Product getProductById(Integer productId);
