@@ -12,31 +12,50 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    /**
+     * Author : ThinhHN
+     * Get all user
+     */
     @Override
     public List<Account> findAllUser() {
         return accountRepository.findAllUser();
     }
 
-
+    /**
+     * Author : ThinhHN
+     * Lock user by id
+     */
 
     @Override
     public void lockUserById(Integer idUser) {
         accountRepository.lockUser(idUser);
     }
 
+    /**
+     * Author : ThinhHN
+     * Unlock user by id
+     */
     @Override
     public void unLockUserById(Integer idUser) {
         accountRepository.unLockUser(idUser);
     }
 
+    /**
+     * Author : ThinhHN
+     * Search advance
+     */
     @Override
     public List<Account> searchUser(String userName, Integer userId, String address, String userEmail) {
         return accountRepository.searchUser(userName, userId, address, userEmail);
     }
 
+    /**
+     * Author : ThinhHN
+     * Get all user by date
+     */
     @Override
     public List<Account> getUserByDate(Integer month, Integer year) {
-        return accountRepository.getUserByDate(month,year);
+        return accountRepository.getUserByDate(month, year);
     }
 
 

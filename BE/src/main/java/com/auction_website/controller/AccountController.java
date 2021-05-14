@@ -16,6 +16,10 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Author : ThinhHN
+     * Get all user
+     */
     @RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllUser() {
         try {
@@ -27,19 +31,30 @@ public class AccountController {
 
     }
 
-
+    /**
+     * Author : ThinhHN
+     * Lock user by id
+     */
     @PutMapping("/admin/lock-user/{idUser}")
     public ResponseEntity<Void> lockUserById(@PathVariable Integer idUser) {
         accountService.lockUserById(idUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Author : ThinhHN
+     * Unlock user by id
+     */
     @PutMapping("/admin/unlock-user/{idUser}")
     public ResponseEntity<Void> unLockUserById(@PathVariable Integer idUser) {
         accountService.unLockUserById(idUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Author : ThinhHN
+     * Search advance
+     */
     @GetMapping("/admin/search-user")
     public ResponseEntity<List<Account>> searchUser(@RequestParam String userName, @RequestParam Integer userId,
                                                     @RequestParam String address, @RequestParam String userEmail) {
@@ -70,6 +85,10 @@ public class AccountController {
 
     }
 
+    /**
+     * Author : ThinhHN
+     * Get all user by date
+     */
     @GetMapping("/admin/user-chart")
     public ResponseEntity<List<Account>> getUserByDate(
             @RequestParam(value = "month", required = false) Integer month,
