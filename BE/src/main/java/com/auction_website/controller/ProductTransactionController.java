@@ -20,6 +20,11 @@ public class ProductTransactionController {
     @Autowired
     private ProductTransactionService productTransactionService;
 
+    /**
+     * Author: DungNV
+     * Lấy danh sách giao dịch
+     * @return
+     */
     @GetMapping("/list")
     public ResponseEntity<List<ProductTransaction>> getAllTransaction(){
         try {
@@ -33,6 +38,17 @@ public class ProductTransactionController {
         }
     }
 
+
+    /**
+     * Author: DungNv
+     * Tìm kiếm nâng cao giao dịch
+     * @param namePost
+     * @param nameBuy
+     * @param productName
+     * @param price
+     * @param status
+     * @return
+     */
     @GetMapping("/search")
     public ResponseEntity<List<ProductTransaction>> getTransactionBySearch(@RequestParam String namePost,
                                                                            @RequestParam String nameBuy,
@@ -66,6 +82,12 @@ public class ProductTransactionController {
         }
     }
 
+    /**
+     * Author: DungNV
+     * Xóa 1 giao dịch
+     * @param transactionId
+     * @return
+     */
     @DeleteMapping("/delete/{transactionId}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Integer transactionId) {
         try {

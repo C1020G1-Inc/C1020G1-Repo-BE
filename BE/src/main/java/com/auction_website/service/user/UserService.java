@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface UserService {
 
+    /**
+     * Author: DungNV
+     * @param user
+     */
     void updateUser(User user);
 
 

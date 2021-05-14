@@ -15,6 +15,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Author: DungNV
+     * Cập nhật thông tin người dùng.
+     * @param user
+     * @param userId
+     */
     @PutMapping("/edit/{userId}")
     public void updateUser(@RequestBody User user, @PathVariable Integer userId){
         userService.updateUser(user);

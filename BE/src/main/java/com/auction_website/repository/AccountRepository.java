@@ -10,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
+    /**
+     * Author: DungNV
+     * @param oldEmail
+     * @param newEmail
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE account" +
@@ -17,6 +22,11 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
             " WHERE account_email = ?1" , nativeQuery = true)
     void updateEmail(String oldEmail, String newEmail);
 
+    /**
+     * Author: DungNV
+     * @param accountId
+     * @return
+     */
     @Query(value = "SELECT *" +
             " FROM account" +
             " WHERE account_id = ?1", nativeQuery = true)

@@ -14,22 +14,44 @@ import java.util.List;
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransaction, Integer> {
 
+    /**
+     * Author: DungNV
+     * @return
+     */
     @Query(value = "SELECT *" +
             " FROM product_transaction" +
             " WHERE status = 'Thành công' or status = 'Thất bại'", nativeQuery = true)
     List<ProductTransaction> getAllTransaction();
 
+    /**
+     * Author: DungNV
+     * @param transactionId
+     * @return
+     */
     @Query(value = "SELECT *" +
             " FROM product_transaction" +
             " WHERE product_transaction_id = ?1", nativeQuery = true)
     ProductTransaction findTransaction(Integer transactionId);
 
+    /**
+     * Author: DungNV
+     * @param transactionId
+     */
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM product_transaction" +
             " WHERE product_transaction_id = ?1", nativeQuery = true)
     void deleteTransaction(Integer transactionId);
 
+    /**
+     * Author: DungNV
+     * @param namePost
+     * @param nameBuy
+     * @param productName
+     * @param price
+     * @param status
+     * @return
+     */
     @Query(value = "SELECT pt" +
             " FROM ProductTransaction pt" +
             " JOIN Auction a on pt.auction.auctionId = a.auctionId" +

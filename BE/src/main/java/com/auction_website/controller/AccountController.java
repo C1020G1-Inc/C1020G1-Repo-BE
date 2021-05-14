@@ -14,12 +14,25 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Author: DungNV
+     * Cập nhật email.
+     * @param oldEmail
+     * @param newEmail
+     * @return
+     */
     @PutMapping("/update-email/{oldEmail}/{newEmail}")
     public ResponseEntity<?> updateAccountEmail(@PathVariable("oldEmail") String oldEmail,@PathVariable("newEmail") String newEmail){
         accountService.updateEmail(oldEmail, newEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Author: DungNV
+     * Tìm kiếm Account.
+     * @param accountId
+     * @return
+     */
     @GetMapping("/find/{accountId}")
     public ResponseEntity<Account> findAccount(@PathVariable Integer accountId){
         Account account = accountService.findAccountById(accountId);

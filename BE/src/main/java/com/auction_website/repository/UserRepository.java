@@ -12,6 +12,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+    /**
+     * Author: DungNV
+     * @param user
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE user u" +
