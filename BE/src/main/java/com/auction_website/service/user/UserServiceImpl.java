@@ -10,6 +10,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * @author PhinNL
+     * save user (register)
+     */
     @Override
     public void save(User user) {
         StringBuilder birthday = new StringBuilder("");
