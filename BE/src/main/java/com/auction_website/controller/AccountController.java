@@ -108,9 +108,4 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    @GetMapping("/member/test")
-    public ResponseEntity<Account> test() {
-        return new ResponseEntity<>(new Account(),HttpStatus.OK);
-    }
 }
