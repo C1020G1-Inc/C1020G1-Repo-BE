@@ -19,6 +19,13 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private ProductImageService productImageService;
+
+    /**
+     * Method: Get all data product auction by category
+     * Author: HanTH
+     * @param categoryId
+     * @return
+     */
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<?> showAllProductAuction(@PathVariable("categoryId") Integer categoryId) {
         try {
@@ -29,6 +36,13 @@ public class ProductController {
         }
 
     }
+
+    /**
+     * Method: Get all data product end auction
+     * Author: HanTH
+     * @param categoryId
+     * @return
+     */
     @GetMapping("/end/category/{categoryId}")
     public ResponseEntity<?> showAllProductEndAuction(@PathVariable("categoryId") Integer categoryId) {
         try {
@@ -38,6 +52,13 @@ public class ProductController {
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
         }
     }
+
+    /**
+     * Method: Get data result auction by category
+     * Author: HanTH
+     * @param categoryId
+     * @return
+     */
     @GetMapping("/result/category/{categoryId}")
     public ResponseEntity<?> showAllProductResult(@PathVariable("categoryId") Integer categoryId) {
         try {

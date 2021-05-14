@@ -12,6 +12,12 @@ public class ProductImageServiceImpl implements ProductImageService {
     @Autowired
     private ProductImageRepository productImageRepository;
 
+    /**
+     * Method: Get all data product auction by category.
+     * Author: HanTH
+     * @param category
+     * @return
+     */
     @Override
     public List<ProductImage> showAllProductAuction(Integer category) {
         switch (category) {
@@ -24,6 +30,12 @@ public class ProductImageServiceImpl implements ProductImageService {
         }
     }
 
+    /**
+     * Method: Get all data product end auction by category
+     * Author: HanTH
+     * @param category
+     * @return
+     */
     @Override
     public List<ProductImage> showAllProductEndAuction(Integer category) {
         switch (category) {

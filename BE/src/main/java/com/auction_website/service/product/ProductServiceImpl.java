@@ -12,6 +12,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    /**
+     * Method: Get all result auction by category
+     * Author: HanTH
+     * @param categoryId
+     * @return
+     */
     @Override
     public List<ProductAuctionResultDTO> showAllProductResult(Integer categoryId) {
         switch (categoryId) {
