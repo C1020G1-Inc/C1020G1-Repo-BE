@@ -1,4 +1,3 @@
-
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: auction_website
@@ -210,7 +209,7 @@ CREATE TABLE `order_bill` (
   KEY `ward_id` (`ward_id`),
   CONSTRAINT `order_bill_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`),
   CONSTRAINT `order_bill_ibfk_2` FOREIGN KEY (`ward_id`) REFERENCES `ward` (`ward_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +218,7 @@ CREATE TABLE `order_bill` (
 
 LOCK TABLES `order_bill` WRITE;
 /*!40000 ALTER TABLE `order_bill` DISABLE KEYS */;
-INSERT INTO `order_bill` VALUES (1,'testet','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(2,'create ','121121','create',322,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(3,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(4,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(5,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(6,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(7,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(8,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(9,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(10,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(11,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(12,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(13,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(14,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(15,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(16,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(17,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(18,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(19,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(20,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(21,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(22,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(23,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(24,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(25,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(26,'123 Nguyễn Lương Bằng','0777542581','vào ngõ rẽ trái 300m',32131233121,1,1,40,NULL,NULL),(27,'111 Lê Lợi','0798788787','nothing',32131233121,1,1,2230,NULL,NULL),(28,'fdsf','0123131212','fdafs',32131233121,0,1,7108,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(29,'fsa','0121121211',NULL,32131233121,0,1,3397,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(30,'dsadsa','0122222222',NULL,2000,1,1,7009,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(31,'asdsa','0122222222',NULL,10,1,1,5620,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(32,'asdasd','0122222222',NULL,10000000,1,1,1306,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(33,'fdsafs','0122222222',NULL,100000,1,1,7015,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(34,'fdfdsf','0122222222','adadaa',100000,0,1,7657,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(35,'Thôn Phước Lộc','0777542581','Vào cổng Phước Lộc 50m, rẽ trái, đi tới 20m',100000,1,1,20152,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(36,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(37,'create test',NULL,'fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(38,'create test',NULL,'fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(39,'dsadá','0122222222',NULL,10000000,1,1,5515,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(40,'ádá','0122222222',NULL,10000000,1,1,8524,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(41,'ádsad','0122755381',NULL,10000000,1,1,781,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(42,'sdá','0122222222',NULL,10000000,1,1,1294,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com');
+INSERT INTO `order_bill` VALUES (1,'testet','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(2,'create ','121121','create',322,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(3,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(4,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(5,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(6,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(7,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(8,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(9,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(10,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(11,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(12,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(13,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(14,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(15,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(16,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(17,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(18,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(19,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(20,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(21,'test address','231312','guide',32323,1,1,NULL,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(22,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(23,'create test','321422','fdsafsdf',322,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(24,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(25,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(26,'123 Nguyễn Lương Bằng','0777542581','vào ngõ rẽ trái 300m',32131233121,1,1,40,NULL,NULL),(27,'111 Lê Lợi','0798788787','nothing',32131233121,1,1,2230,NULL,NULL),(28,'fdsf','0123131212','fdafs',32131233121,0,1,7108,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(29,'fsa','0121121211',NULL,32131233121,0,1,3397,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(30,'dsadsa','0122222222',NULL,2000,1,1,7009,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(31,'asdsa','0122222222',NULL,10,1,1,5620,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(32,'asdasd','0122222222',NULL,10000000,1,1,1306,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(33,'fdsafs','0122222222',NULL,100000,1,1,7015,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(34,'fdfdsf','0122222222','adadaa',100000,0,1,7657,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(35,'Thôn Phước Lộc','0777542581','Vào cổng Phước Lộc 50m, rẽ trái, đi tới 20m',100000,1,1,20152,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(36,'create test','321422','fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(37,'create test',NULL,'fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(38,'create test',NULL,'fdsafsdf',29000000,1,1,1,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(39,'dsadá','0122222222',NULL,10000000,1,1,5515,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(40,'ádá','0122222222',NULL,10000000,1,1,8524,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(41,'ádsad','0122755381',NULL,10000000,1,1,781,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(42,'sdá','0122222222',NULL,10000000,1,1,1294,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(43,'adsad','0122222222',NULL,10000000,1,1,778,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(44,'asd','0122222222',NULL,10000000,0,1,1354,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com'),(45,'sadasdas','0122222222',NULL,10000000,0,1,7942,'Lê Phước Thanh Cao','lephuocthanhcao@gmail.com');
 /*!40000 ALTER TABLE `order_bill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +238,7 @@ CREATE TABLE `order_product` (
   KEY `order_id` (`order_id`),
   CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order_bill` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +247,7 @@ CREATE TABLE `order_product` (
 
 LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
-INSERT INTO `order_product` VALUES (1,1,25),(2,2,25),(3,1,26),(4,2,26),(5,1,27),(6,2,27),(7,1,28),(8,2,28),(9,1,29),(10,2,29),(11,1,30),(12,2,30),(13,1,31),(14,2,31),(15,1,32),(16,2,32),(17,1,33),(18,2,33),(19,1,34),(20,2,34),(21,1,35),(22,2,35),(23,1,36),(24,2,36),(25,1,37),(26,2,37),(27,1,38),(28,2,38),(29,1,39),(30,2,39),(31,1,40),(32,2,40),(33,1,41),(34,2,41),(35,1,42),(36,2,42);
+INSERT INTO `order_product` VALUES (1,1,25),(2,2,25),(3,1,26),(4,2,26),(5,1,27),(6,2,27),(7,1,28),(8,2,28),(9,1,29),(10,2,29),(11,1,30),(12,2,30),(13,1,31),(14,2,31),(15,1,32),(16,2,32),(17,1,33),(18,2,33),(19,1,34),(20,2,34),(21,1,35),(22,2,35),(23,1,36),(24,2,36),(25,1,37),(26,2,37),(27,1,38),(28,2,38),(29,1,39),(30,2,39),(31,1,40),(32,2,40),(33,1,41),(34,2,41),(35,1,42),(36,2,42),(37,1,43),(38,2,43),(39,1,44),(40,2,44),(41,1,45),(42,2,45);
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,9 +355,13 @@ CREATE TABLE `product_transaction` (
   `status` varchar(50) DEFAULT NULL,
   `product_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
+  `auction_id` int DEFAULT NULL,
+  `transaction_time` datetime DEFAULT NULL,
   PRIMARY KEY (`product_transaction_id`),
   KEY `product_id` (`product_id`),
   KEY `account_id` (`account_id`),
+  KEY `auction_idx` (`auction_id`),
+  CONSTRAINT `auction` FOREIGN KEY (`auction_id`) REFERENCES `auction` (`auction_id`),
   CONSTRAINT `product_transaction_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `product_transaction_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -485,5 +488,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-14  8:21:33
-
+-- Dump completed on 2021-05-14 10:15:03
