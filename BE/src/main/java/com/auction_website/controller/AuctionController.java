@@ -31,6 +31,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/auction")
 public class AuctionController {
     @Autowired
     private AuctionService auctionService;
@@ -177,7 +178,7 @@ public class AuctionController {
      * @param productId
      * @return
      */
-    @GetMapping("/api/auction/{productId}")
+    @GetMapping("/{productId}")
     public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId) {
         List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
 

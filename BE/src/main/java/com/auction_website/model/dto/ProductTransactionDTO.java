@@ -10,36 +10,35 @@ import java.sql.Timestamp;
 public class ProductTransactionDTO {
 
     private final int transactionId;
-    private final DetailProductDTO detailProductDTO;
+    private final Product product;
     private final String status;
     private final Timestamp transactionTime;
     private final AuctionDTO auction;
-
+    private final Iterable<ProductImage> images;
     public ProductTransactionDTO(ProductTransaction productTransaction, Iterable<ProductImage> productImages) {
         this.transactionId = productTransaction.getTransactionId();
-        this.detailProductDTO = new DetailProductDTO(productTransaction.getProduct(), productImages);
+        this.product = productTransaction.getProduct();
+        this.images = productImages;
         this.status = productTransaction.getStatus();
         this.transactionTime = productTransaction.getTransactionTime();
         this.auction = new AuctionDTO(productTransaction.getAuction());
     }
-
     public int getTransactionId() {
         return transactionId;
     }
-
-    public DetailProductDTO getDetailProductDTO() {
-        return detailProductDTO;
+    public Product getProduct() {
+        return product;
     }
-
     public String getStatus() {
         return status;
     }
-
     public Timestamp getTransactionTime() {
         return transactionTime;
     }
-
     public AuctionDTO getAuction() {
         return auction;
+    }
+    public Iterable<ProductImage> getImages() {
+        return images;
     }
 }
