@@ -9,6 +9,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+    /**
+     * Author : CaoLPT
+     * function to change status of product
+     * @param productStatusId
+     */
+    @Modifying
+    @Query(value = "UPDATE product SET product_status_id = :productStatusId WHERE product_id = :productId", nativeQuery = true)
+    void changeProductStatus(@Param("productStatusId") Integer productStatusId, @Param("productId") Integer productId);
 
     /**
      * author: PhucPT
@@ -61,6 +69,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      */
     @Modifying
     @Query(nativeQuery = true,
-            value = "UPDATE `product` SET product_status_id = 4, product_last_price = NULL WHERE product_id  = :productId")
+            value = "UPDATE `product` SET product_status_id = 5, product_last_price = NULL WHERE product_id  = :productId")
     int setFailProduct(@Param("productId") int productId);
 }

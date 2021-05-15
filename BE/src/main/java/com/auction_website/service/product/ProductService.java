@@ -18,5 +18,4 @@ public interface ProductService {
     boolean resetProduct(@Param("productId") int productId);
 
     Iterable<Product> findAllProductApproved();
-
 }
