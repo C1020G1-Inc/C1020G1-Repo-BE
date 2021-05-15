@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+
+
+
+
 
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<User, Integer> {
-
     /**
      * Author: DungNV
      * @param user
@@ -39,3 +41,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from `user` where user_identity = ?1",nativeQuery = true)
     User findByIdentity(String identity);
 }
+

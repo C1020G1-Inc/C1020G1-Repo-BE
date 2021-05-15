@@ -8,10 +8,8 @@ import com.auction_website.security.ValidationResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -64,3 +62,4 @@ public class UserController {
         }
     }
 }
+

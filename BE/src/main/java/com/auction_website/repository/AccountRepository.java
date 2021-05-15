@@ -8,10 +8,59 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 @Transactional
 public interface AccountRepository extends JpaRepository<Account, Integer> {
+
+    /**
+     * Author : ThinhHN
+     * Get all user
+     */
+    @Query("Select account from  Account account")
+    List<Account> findAllUser();
+
+    /**
+     * Author : ThinhHN
+     * Lock user by id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update Account account set account.enable=0 where account.user.userId = :idUser")
+    void lockUser(Integer idUser);
+
+    /**
+     * Author : ThinhHN
+     * Unlock user by id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update Account account set account.enable=1 where account.user.userId = :idUser")
+    void unLockUser(Integer idUser);
+
+    /**
+     * Author : ThinhHN
+     * Search advance
+     */
+    @Query(value = "select account" +
+            " from Account account " +
+            "where (:userName is null or account.user.userName like %:userName%) and " +
+            "(:userId is null or account.user.userId = :userId) and" +
+            "(:address is null or account.user.address = :address) and " +
+            "(:userEmail is null or account.email = :userEmail)")
+    List<Account> searchUser(String userName, Integer userId, String address, String userEmail);
+
+    /**
+     * Author : ThinhHN
+     * Get all user by date
+     */
+    @Query(value = "select  account" +
+            " from Account account" +
+            " where ((:month is null ) or ((function('month',account.logoutTime)) = :month)) and" +
+            "(function('year',account.logoutTime)=:year )")
+    List<Account> getUserByDate(Integer month, Integer year);
+
 
     /**
      * Author: DungNV
@@ -59,6 +108,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "insert into account(account_name,account_password,account_email,account_enable," +
             "account_logout_time,user_id) values(?1,?2,?3,?4,?5,?6)", nativeQuery = true)
     void save(String accountName, String password, String email, boolean enable, Timestamp logoutTime, Integer userId);
-
 }
 
