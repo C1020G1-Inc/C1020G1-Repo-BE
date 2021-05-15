@@ -5,6 +5,6 @@ import com.auction_website.model.Category;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getAll();
+    List<Category> findAll();
     Category findById(Integer categoryId);
 }

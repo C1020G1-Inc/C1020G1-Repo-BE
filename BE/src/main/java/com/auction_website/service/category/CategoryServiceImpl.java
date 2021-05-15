@@ -14,19 +14,15 @@ public class CategoryServiceImpl implements CategoryService{
 
     /**
      * Author : TungNT
-     * Get all category.
-     */
-    @Override
-    public List<Category> getAll() {
-        return categoryRepository.findAll();
-    }
-
-    /**
-     * Author : TungNT
      * Get category by id.
      */
     @Override
     public Category findById(Integer categoryId) {
         return categoryRepository.findById(categoryId).orElse(null);
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return categoryRepository.findAllCategory();
     }
 }

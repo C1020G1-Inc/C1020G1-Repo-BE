@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+
     /**
      * Author : TungNT
      * Get all product

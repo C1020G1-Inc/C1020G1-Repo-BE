@@ -11,7 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -54,6 +60,22 @@ public class ProductController {
     }
 
     /**
+     * Author : SonPH
+     * find product by productId
+     *
+     * @param productId
+     */
+    @GetMapping("api/product/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable("productId") Integer productId) {
+        Product product = productService.getProductById(productId);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+    }
+
+    /**
      * Author : TungNT
      * Edit product
      */
@@ -62,7 +84,7 @@ public class ProductController {
         try {
 
             if (productDTO == null) {
-             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             List<ProductImage> productImageList = productDTO.getProductImageList();
@@ -113,6 +135,23 @@ public class ProductController {
         }
     }
 
+    /**
+     * Author: DungHA
+     *
+     * @param productId
+     * @return
+     */
+    @GetMapping("/api/productImage/{productId}")
+    public ResponseEntity<List<ProductImage>> getAllProductImage(@PathVariable("productId") Integer productId) {
+        List<ProductImage> productImages = productImageService.getAllProductImageByProductId(productId);
+
+        if (productImages == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(productImages, HttpStatus.OK);
+    }
+
 
     /**
      * Author : TungNT
@@ -138,7 +177,7 @@ public class ProductController {
      * Get product by product's id.
      */
     @GetMapping("/admin/product/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Integer id) {
+    public ResponseEntity<ProductDTO> getProductByIdForAdmin(@PathVariable Integer id) {
         try {
             Product product = productService.getProductById(id);
             List<ProductImage> productImageList = productImageService.getImagesProductById(id);
@@ -161,7 +200,7 @@ public class ProductController {
     @GetMapping("/admin/product_category")
     public ResponseEntity<List<Category>> getAllCategory() {
         try {
-            List<Category> categoryList = categoryService.getAll();
+            List<Category> categoryList = categoryService.findAll();
             return new ResponseEntity<>(categoryList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -179,6 +218,32 @@ public class ProductController {
             return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Author: HanTH
+     *
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/end/category/{categoryId}")
+    public ResponseEntity<?> showAllProductEndAuction(@PathVariable("categoryId") Integer categoryId) {
+        List<ProductImage> listProduct = productImageService.showAllProductEndAuction(categoryId);
+        return new ResponseEntity<>(listProduct, HttpStatus.OK);
+    }
+
+    /**
+     * @author PhinNL
+     * find all category for header
+     */
+    @GetMapping("/guest/category")
+    public ResponseEntity<List<Category>> findAllCategory() {
+        try {
+            List<Category> list = categoryService.findAll();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }
