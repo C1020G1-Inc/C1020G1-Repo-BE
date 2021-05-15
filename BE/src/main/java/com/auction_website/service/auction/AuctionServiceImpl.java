@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class AuctionServiceImpl implements AuctionService{
+public class AuctionServiceImpl implements AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
@@ -19,5 +21,11 @@ public class AuctionServiceImpl implements AuctionService{
     @Override
     public Page<Auction> findAllProductAuction(Pageable pageable, Integer id) {
         return auctionRepository.findAllProductAuctionByUserId(pageable, id);
+    }
+
+    @Override
+    public List<Auction> getAllAuctionByProductId(Integer productId) {
+        return auctionRepository.getAllAuctionByProductId(productId);
+
     }
 }

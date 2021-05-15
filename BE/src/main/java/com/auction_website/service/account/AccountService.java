@@ -18,4 +18,11 @@ public interface AccountService {
      * @return
      */
     Account findAccountById(Integer accountId);
+
+    Account findByAccountName(String name);
+    Account findByEmail(String email);
+    Account findById(Integer id);
+    void save(Account account);
+    void logout(Integer id);
+    void changePassword(String accountEmail , String newPassword) ;
 }
