@@ -24,6 +24,9 @@ public class OrderProduct {
         this.order = order;
     }
 
+    public OrderProduct() {
+    }
+
     public Integer getId() {
         return id;
     }

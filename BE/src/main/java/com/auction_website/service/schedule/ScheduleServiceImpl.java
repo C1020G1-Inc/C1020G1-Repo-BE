@@ -35,6 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * author: PhucPT
      * method: schedule end of auction task
+     *
      * @param productId
      */
     @Override
@@ -72,6 +73,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * author: PhucPT
      * method: schedule end of transaction task
+     *
      * @param productTransactionId
      */
     @Override
@@ -88,6 +90,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                     notificationService.notifyCancelTransaction(productTransaction);
                 }
             }
-        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 60 * 1000));
+        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 30 * 60 * 1000));
     }
 }
