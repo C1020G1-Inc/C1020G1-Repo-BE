@@ -16,6 +16,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @author PhinNL
+     * validate phone duplicate
+     */
     @GetMapping("/guest/exist/phone")
     public ResponseEntity<ValidationResponse> findEmailExist(@RequestParam String phone){
         try {
@@ -30,6 +34,10 @@ public class UserController {
         }
     }
 
+    /**
+     * @author PhinNL
+     * validate identity duplicate
+     */
     @GetMapping("/guest/exist/identity")
     public ResponseEntity<ValidationResponse> findByIdentity(@RequestParam String identity){
         try {

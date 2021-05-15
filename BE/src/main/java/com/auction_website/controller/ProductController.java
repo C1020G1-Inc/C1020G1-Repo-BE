@@ -85,6 +85,11 @@ public class ProductController {
     }
 
 
+
+    /**
+     * @author PhinNL
+     * find all category for header
+     */
     @GetMapping("/guest/category")
     public ResponseEntity<List<Category>> findAllCategory() {
         try {

@@ -28,6 +28,10 @@ public class AccountController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @author PhinNL
+     * register (save account)
+     */
     @PostMapping("/guest/save")
     public ResponseEntity<Account> saveAccount(@RequestBody @Validated Account account, BindingResult bindingResult) {
         try {
@@ -45,10 +49,14 @@ public class AccountController {
             accountRoleService.save(accountRole);
             return new ResponseEntity<Account>(account, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    /**
+     * @author PhinNL
+     * validate accountName duplicate
+     */
     @GetMapping("/guest/exist/name")
     public ResponseEntity<ValidationResponse> findAccountNameExist(@RequestParam String accountName) {
         try {
@@ -59,10 +67,14 @@ public class AccountController {
             }
             return new ResponseEntity<>(validationResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    /**
+     * @author PhinNL
+     * validate email duplicate
+     */
     @GetMapping("/guest/exist/email")
     public ResponseEntity<ValidationResponse> findEmailExist(@RequestParam String email) {
         try {
@@ -73,17 +85,27 @@ public class AccountController {
             }
             return new ResponseEntity<>(validationResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/member/logout/{id}")
-    public ResponseEntity<Void> logout(@PathVariable Integer id) {
+    /**
+     * @author PhinNL
+     * update logout time
+     */
+    @PutMapping("/guest/logout")
+    public ResponseEntity<Void> logout(@RequestBody Account account) {
         try {
-            accountService.logout(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
+            Account accountFind = accountService.findByAccountName(account.getAccountName());
+            if (accountFind != null){
+                if (accountFind.getPassword().equals(account.getPassword())){
+                    accountService.logout(accountFind.getAccountId());
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+            }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -12,11 +12,19 @@ public class AccountRoleImpl implements AccountRoleService {
     @Autowired
     private AccountRoleRepository accountRoleRepository;
 
+    /**
+     * @author PhinNL
+     * find all account role by account id
+     */
     @Override
     public List<AccountRole> findAllByAccountId(Integer accountId) {
         return accountRoleRepository.findAllByAccountId(accountId);
     }
 
+    /**
+     * @author PhinNL
+     * save account role (register)
+     */
     @Override
     public void save(AccountRole accountRole) {
         accountRoleRepository.save(accountRole.getAccount().getAccountId(),accountRole.getRole().getRoleId());
