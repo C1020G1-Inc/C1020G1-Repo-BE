@@ -3,12 +3,12 @@ package com.auction_website.service.product_transaction;
 import com.auction_website.model.ProductTransaction;
 import com.auction_website.repository.ProductTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+
+import java.util.List;
 
 @Service
 public class ProductTransactionServiceImpl implements ProductTransactionService {
@@ -81,5 +81,47 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     @Override
     public Iterable<ProductTransaction> getCurrentTransactionByAccountId(int accountId) {
         return productTransactionRepository.getCurrentTransactionByAccountId(accountId);
+    }
+
+    /**
+     * Author: DungNV
+     * @return
+     */
+    @Override
+    public List<ProductTransaction> getAllTransaction() {
+        return productTransactionRepository.getAllTransaction();
+    }
+
+    /**
+     * Author: DungNV
+     * @param namePost
+     * @param nameBuy
+     * @param productName
+     * @param price
+     * @param status
+     * @return
+     */
+    @Override
+    public List<ProductTransaction> getTransactionBySearch(String namePost, String nameBuy, String productName, Double price, String status) {
+        return productTransactionRepository.getTransactionBySearch(namePost, nameBuy, productName, price, status);
+    }
+
+    /**
+     * Author: DungNV
+     * @param transactionId
+     * @return
+     */
+    @Override
+    public ProductTransaction findTransaction(Integer transactionId) {
+        return productTransactionRepository.findTransaction(transactionId);
+    }
+
+    /**
+     * Author: DungNV
+     * @param transactionId
+     */
+    @Override
+    public void deleteTransaction(Integer transactionId) {
+        productTransactionRepository.deleteTransaction(transactionId);
     }
 }

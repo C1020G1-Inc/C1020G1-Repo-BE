@@ -4,11 +4,13 @@ import com.auction_website.model.Auction;
 import com.auction_website.model.Product;
 import com.auction_website.repository.AuctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AuctionServiceImpl implements AuctionService {
@@ -29,7 +31,6 @@ public class AuctionServiceImpl implements AuctionService {
     public boolean createAuction(double price, Date timeAuction, int accountId, int productId) {
         return auctionRepository.createAuction(price, timeAuction, accountId, productId) > 0;
     }
-
 
     /**
      * author: PhucPT
@@ -80,4 +81,23 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionRepository.getHighestAuctionInProgressByProductId(productId);
     }
 
+    /**
+     * Author: CuongNVM
+     * List product auction
+     */
+    @Override
+    public Page<Auction> findAllProductAuction(Pageable pageable, Integer id) {
+        return auctionRepository.findAllProductAuctionByUserId(pageable, id);
+    }
+
+    /**
+     * Author: Unknown
+     * @param productId
+     * @return
+     */
+    @Override
+    public List<Auction> getAllAuctionByProductId(Integer productId) {
+        return auctionRepository.getAllAuctionByProductId(productId);
+
+    }
 }

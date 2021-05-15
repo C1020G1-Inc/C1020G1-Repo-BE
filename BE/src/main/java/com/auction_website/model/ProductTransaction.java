@@ -20,15 +20,15 @@ public class ProductTransaction {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "auction_id", referencedColumnName = "auction_id")
+    private Auction auction;
+
     @Column(name = "status")
     private String status;
 
     @Column(name = "transaction_time")
     private Timestamp transactionTime;
-
-    @ManyToOne
-    @JoinColumn(name = "auction_id", referencedColumnName = "auction_id")
-    private Auction auction;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -77,4 +77,6 @@ public class ProductTransaction {
     public void setAuction(Auction auction) {
         this.auction = auction;
     }
+
+
 }

@@ -6,12 +6,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
-
 @Configuration
 public class MailConfig {
-
-    private final String MY_EMAIL = "c10.auctionwebsite@gmail.com";
-    private final String MY_PASSWORD = "c1020g1@";
+    private static final String MY_EMAIL =  "c10tinder@gmail.com";
+    private static final String MY_PASSWORD =  "Duongthuhp01";
 
     @Bean
     public JavaMailSender getJavaMailSender() {

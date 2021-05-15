@@ -17,6 +17,9 @@ import com.auction_website.service.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +27,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.*;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/auction")
 public class AuctionController {
     @Autowired
     private AuctionService auctionService;
@@ -88,6 +91,20 @@ public class AuctionController {
     }
 
     /**
+     * Author: CuongNVM
+     * list product auction
+     */
+    @GetMapping("/product-auction/{id}")
+    public ResponseEntity<Page<Auction>> getAllProductAuction(@PageableDefault(size = 5) Pageable pageable, @PathVariable Integer id) {
+        try {
+            Page<Auction> auctions = auctionService.findAllProductAuction(pageable, id);
+            return new ResponseEntity<>(auctions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * author: PhucPT
      *
      * @param productId
@@ -135,6 +152,7 @@ public class AuctionController {
     /**
      * author: PhucPT
      * method: get all transaction in purchasing
+     *
      * @return
      */
     @GetMapping("/cart")
@@ -152,5 +170,21 @@ public class AuctionController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * Author: Unknown
+     * @param productId
+     * @return
+     */
+    @GetMapping("/api/auction/{productId}")
+    public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId) {
+        List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
+
+        if (auctionList == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(auctionList, HttpStatus.OK);
     }
 }
