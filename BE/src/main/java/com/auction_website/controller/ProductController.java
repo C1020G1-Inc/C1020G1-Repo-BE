@@ -39,9 +39,13 @@ public class ProductController {
      */
     @GetMapping("/detail/{productId}")
     public ResponseEntity<?> getProductById(@PathVariable("productId") int productId) {
-        Product product = productService.getProductById(productId);
-        Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productId);
-        return new ResponseEntity<>(new DetailProductDTO(product, productImages), HttpStatus.OK);
+        try{
+            Product product = productService.getProductById(productId);
+            Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productId);
+            return new ResponseEntity<>(new DetailProductDTO(product, productImages), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/guest/category")
@@ -51,6 +55,26 @@ public class ProductController {
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
+     * Author : CaoLPT
+     * get full product by id
+     * @param productId
+     * @return
+     */
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getFullProductById(@PathVariable("productId") int productId) {
+        try{
+            Product product = productService.getProductById(productId);
+            if (product == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
