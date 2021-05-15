@@ -16,6 +16,16 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
+    public void updateEmail(String oldEmail, String newEmail) {
+        accountRepository.updateEmail(oldEmail, newEmail);
+    }
+
+    @Override
+    public Account findAccountById(Integer accountId) {
+        return accountRepository.findAccountByAccountId(accountId);
+    }
+
     /**
      * @author PhinNL
      * find account by account name

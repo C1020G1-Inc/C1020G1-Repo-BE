@@ -1,20 +1,32 @@
 package com.auction_website.controller;
 
-import com.auction_website.model.Account;
 import com.auction_website.model.User;
-import com.auction_website.security.ValidationResponse;
 import com.auction_website.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.auction_website.security.ValidationResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
+
+    /**
+     * Author: DungNV
+     * Cập nhật thông tin người dùng.
+     * @param user
+     * @param userId
+     */
+    @PutMapping("/edit/{userId}")
+    public void updateUser(@RequestBody User user, @PathVariable Integer userId){
+        userService.updateUser(user);
+    }
 
     /**
      * @author PhinNL

@@ -1,5 +1,4 @@
 package com.auction_website.controller;
-
 import com.auction_website.model.Account;
 import com.auction_website.model.AccountRole;
 import com.auction_website.model.Role;
@@ -21,12 +20,41 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
     @Autowired
     private RoleService roleService;
     @Autowired
     private AccountRoleService accountRoleService;
     @Autowired
     private UserService userService;
+
+    /**
+     * Author: DungNV
+     * Cập nhật email.
+     * @param oldEmail
+     * @param newEmail
+     * @return
+     */
+    @PutMapping("/update-email/{oldEmail}/{newEmail}")
+    public ResponseEntity<?> updateAccountEmail(@PathVariable("oldEmail") String oldEmail,@PathVariable("newEmail") String newEmail){
+        accountService.updateEmail(oldEmail, newEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Author: DungNV
+     * Tìm kiếm Account.
+     * @param accountId
+     * @return
+     */
+    @GetMapping("/find/{accountId}")
+    public ResponseEntity<Account> findAccount(@PathVariable Integer accountId) {
+        Account account = accountService.findAccountById(accountId);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
     /**
      * @author PhinNL
