@@ -3,6 +3,7 @@ package com.auction_website.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -52,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // tắt csrf
         httpSecurity.cors().and().csrf().disable()
                 // tắt xác thực cho các trang này
-                .authorizeRequests().antMatchers("/login", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll().
-                antMatchers( "/*/*/admin/**").hasAuthority("ADMIN").antMatchers("/*/*/member/**").hasAnyAuthority("ADMIN","MEMBER").
+                .authorizeRequests().antMatchers("/login", "/user/create","/misc/**", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
+                antMatchers( "/api/account/admin").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực
                         anyRequest().fullyAuthenticated().and().
                 // đảm bảo sử dụng đúng session Stateless;

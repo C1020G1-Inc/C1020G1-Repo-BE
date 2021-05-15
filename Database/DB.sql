@@ -1,3 +1,7 @@
+drop database if exists auction_website;
+create database auction_website;
+use auction_website;
+
 create table province (
 province_id int primary key auto_increment,
 province_name varchar(50) not null
@@ -133,6 +137,7 @@ foreign key (order_id) references `order` (order_id)
 create table comment (
 comment_id int primary key auto_increment,
 content text,
+image varchar(100),
 comment_time datetime,
 account_id int,
 product_id int,

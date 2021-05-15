@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -19,6 +20,11 @@ public class AccountServiceImpl implements AccountService {
      * @author PhinNL
      * find account by account name
      */
+    @Override
+    public void changePassword(String accountEmail, String newPassword) {
+        accountRepository.changePassword(accountEmail, newPassword);
+    }
+
     @Override
     public Account findByAccountName(String accountName) {
         return accountRepository.findByAccountName(accountName);

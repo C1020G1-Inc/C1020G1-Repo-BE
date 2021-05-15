@@ -1,11 +1,10 @@
 package com.auction_website.repository;
 
 import com.auction_website.model.Account;
-import com.auction_website.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +13,10 @@ import java.sql.Timestamp;
 @Repository
 @Transactional
 public interface AccountRepository extends JpaRepository<Account, Integer> {
+    @Transactional
+    @Modifying
+    @Query(value = " update Account set password = ?2 where email = ?1")
+    void changePassword(String accountEmail , String newPassword) ;
     @Query(value = "select * from account where account_name = ?1", nativeQuery = true)
     Account findByAccountName(String accountName);
 
