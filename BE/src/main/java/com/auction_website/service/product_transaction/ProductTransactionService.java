@@ -1,12 +1,23 @@
 package com.auction_website.service.product_transaction;
 
 import com.auction_website.model.ProductTransaction;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ProductTransactionService {
+
+    int createProductTransaction(int productId, int accountId, int auctionId, Timestamp transactionTime);
+
+    Iterable<ProductTransaction> findAllPurchasingTransaction();
+
+    ProductTransaction findCurrentTransactionByProductId(int productId);
+
+    ProductTransaction getTransactionById(int productTransactionId);
+
+    void setStatusByTransactionId(String status, int productTransactionId);
+
+    Iterable<ProductTransaction> getCurrentTransactionByAccountId(int accountId);
+
     /**
      * Author: DungNv
      * @return
@@ -36,4 +47,5 @@ public interface ProductTransactionService {
      * @param transactionId
      */
     void deleteTransaction(Integer transactionId);
+
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ProductImageService {
 
+    Iterable<ProductImage> getAllImageByProductId(int productId);
+
     List<ProductImage> getImagesProductById(Integer productId);
 
     void deleteImagesById(Integer productId);

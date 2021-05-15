@@ -1,4 +1,4 @@
-package com.auction_website.config;
+package com.auction_website.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

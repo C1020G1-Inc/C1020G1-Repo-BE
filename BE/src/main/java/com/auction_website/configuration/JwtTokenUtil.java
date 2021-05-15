@@ -1,4 +1,4 @@
-package com.auction_website.config;
+package com.auction_website.configuration;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,6 +1,6 @@
 package com.auction_website.controller;
 
-import com.auction_website.config.JwtTokenUtil;
+import com.auction_website.configuration.JwtTokenUtil;
 import com.auction_website.model.Account;
 import com.auction_website.model.AccountRole;
 import com.auction_website.model.User;

@@ -30,22 +30,6 @@ public class ProductTransaction {
     @Column(name = "transaction_time")
     private Timestamp transactionTime;
 
-    public Auction getAuction() {
-        return auction;
-    }
-
-    public void setAuction(Auction auction) {
-        this.auction = auction;
-    }
-
-    public Timestamp getTransactionTime() {
-        return transactionTime;
-    }
-
-    public void setTransactionTime(Timestamp transactionTime) {
-        this.transactionTime = transactionTime;
-    }
-
     public Integer getTransactionId() {
         return transactionId;
     }
@@ -76,6 +60,22 @@ public class ProductTransaction {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Timestamp getTransactionTime() {
+        return transactionTime;
+    }
+
+    public void setTransactionTime(Timestamp transactionTime) {
+        this.transactionTime = transactionTime;
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
     }
 
 

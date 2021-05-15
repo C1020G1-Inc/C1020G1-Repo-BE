@@ -21,6 +21,11 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //Phuc: firebase dependency
+    implementation 'com.google.firebase:firebase-admin:7.2.0'
+    //Phuc: spring mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security'

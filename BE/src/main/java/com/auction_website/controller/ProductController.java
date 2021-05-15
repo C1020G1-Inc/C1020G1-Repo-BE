@@ -1,8 +1,10 @@
 package com.auction_website.controller;
-import com.auction_website.model.Category;
+
 import com.auction_website.model.Product;
-import com.auction_website.model.ProductDTO;
 import com.auction_website.model.ProductImage;
+import com.auction_website.model.dto.DetailProductDTO;
+import com.auction_website.model.Category;
+import com.auction_website.model.ProductDTO;
 import com.auction_website.service.category.CategoryService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_image.ProductImageService;
@@ -24,19 +26,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @Autowired
-    private CategoryService categoryService;
 
     @Autowired
     private ProductImageService productImageService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    /**
+     * author: PhucPT
+     * method: get product detail
+     * @param productId
+     * @return
+     */
+    @GetMapping("/api/product/detail/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable("productId") int productId) {
+        try{
+            Product product = productService.getProductById(productId);
+            Iterable<ProductImage> productImages = productImageService.getAllImageByProductId(productId);
+            return new ResponseEntity<>(new DetailProductDTO(product, productImages), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     /**
      * Author: CuongNVM
      * List History product register
      */
     @GetMapping("/product-register/{id}")
-    public ResponseEntity<Page<Product>> getAllProductRegister(@PageableDefault(size = 5) Pageable pageable,@PathVariable Integer id) {
+    public ResponseEntity<Page<Product>> getAllProductRegister(@PageableDefault(size = 5) Pageable pageable, @PathVariable Integer id) {
         try {
             Page<Product> product = productService.findAllProductRegister(pageable, id);
             return new ResponseEntity<>(product, HttpStatus.OK);
@@ -102,22 +121,6 @@ public class ProductController {
     }
 
     /**
-     * Author : SonPH
-     * find product by productId
-     *
-     * @param productId
-     */
-    @GetMapping("api/product/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable("productId") Integer productId) {
-        Product product = productService.getProductById(productId);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(product, HttpStatus.OK);
-        }
-    }
-
-    /**
      * Author : TungNT
      * Edit product
      */
@@ -177,18 +180,6 @@ public class ProductController {
         }
     }
 
-
-//    @GetMapping("/product-register/search/{name}/{time}/{price}")
-//    public ResponseEntity<Page<Product>> searchProductRegister(@PathVariable String name,@PathVariable String time,
-//                                                               @PathVariable Double price, @PageableDefault (size =5)Pageable pageable ){
-//        try{
-//            Page<Product> product = productService.searchProductRegister(name, time, price, pageable);
-//            return new ResponseEntity<>(product, HttpStatus.OK);
-//        }catch(Exception e){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
     /**
      * Author: DungHA
      *
@@ -205,7 +196,6 @@ public class ProductController {
 
         return new ResponseEntity<>(productImages, HttpStatus.OK);
     }
-
 
     /**
      * Author : TungNT
@@ -298,6 +288,26 @@ public class ProductController {
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
+     * Author : CaoLPT
+     * get full product by id
+     * @param productId
+     * @return
+     */
+    @GetMapping("/api/product/{productId}")
+    public ResponseEntity<?> getFullProductById(@PathVariable("productId") int productId) {
+        try{
+            Product product = productService.getProductById(productId);
+            if (product == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

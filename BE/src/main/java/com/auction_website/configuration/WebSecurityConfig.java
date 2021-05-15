@@ -1,4 +1,4 @@
-package com.auction_website.config;
+package com.auction_website.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // tắt csrf
         httpSecurity.cors().and().csrf().disable()
                 // tắt xác thực cho các trang này
-                .authorizeRequests().antMatchers("/login", "/user/create","/misc/**", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
+                .authorizeRequests().antMatchers("/login", "/user/create","/misc/**", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
                 antMatchers( "/api/account/admin").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực
                         anyRequest().fullyAuthenticated().and().

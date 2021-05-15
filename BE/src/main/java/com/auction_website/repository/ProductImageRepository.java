@@ -11,7 +11,20 @@ import java.util.List;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
 
+    /**
+     * author: PhucPT
+     * method: get all product image by product id
+     * @param productId
+     * @return
+     */
+    @Query(nativeQuery = true, value = "SELECT * FROM product_image WHERE product_id = :productId")
+    Iterable<ProductImage> getAllImageByProductId(int productId);
 
+    /**
+     * Author: TungNT
+     * @param productId
+     * @return
+     */
     @Query("select productImage from ProductImage productImage " +
             "where productImage.product.productId = :productId")
     List<ProductImage> getAllProductImageByProductId(Integer productId);
