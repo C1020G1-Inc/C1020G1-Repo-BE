@@ -51,6 +51,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
 
     /**
      * author: PhucPT
+     * method: get transaction by id
      * @param productTransactionId
      * @return
      */
@@ -61,6 +62,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
 
     /**
      * author: PhucPT
+     * method: set status of a transaction
      * @param status
      * @param productTransactionId
      */
@@ -70,6 +72,12 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         productTransactionRepository.setStatusByTransactionId(status,productTransactionId);
     }
 
+    /**
+     * author: PhucPT
+     * method: get current transactions by account id
+     * @param accountId
+     * @return
+     */
     @Override
     public Iterable<ProductTransaction> getCurrentTransactionByAccountId(int accountId) {
         return productTransactionRepository.getCurrentTransactionByAccountId(accountId);

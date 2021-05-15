@@ -16,6 +16,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: update auction list to firebase
      * @param auctions
      * @param productId
      */
@@ -27,6 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: clear firebase database when auction complete
      * @param productId
      */
     @Override
@@ -37,25 +39,33 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * author: PhucPT
+     * method: send notify to firebase when auction end
      * @param productTransaction
      */
     @Override
     public void notifyAuctionWinner(ProductTransaction productTransaction) {
-        DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId()+"/winner");
+        DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId());
         MessageNotificationDTO message = new MessageNotificationDTO();
         message.setContent("Bạn đã đấu giá thành công sản phẩm '"+productTransaction.getProduct().getProductName()+"'");
         message.setTitle("Đấu giá thành công");
-        message.setUrl("/cart/"+productTransaction.getAccount().getAccountId());
+        message.setUrl("/auction/cart");
+        message.setType("winner");
         reference.push().setValueAsync(message);
     }
 
+    /**
+     * author: PhucPT
+     * method: send notify to firebase when transaction cancel
+     * @param productTransaction
+     */
     @Override
     public void notifyCancelTransaction(ProductTransaction productTransaction) {
-        DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId()+"/transaction_abort");
+        DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId());
         MessageNotificationDTO message = new MessageNotificationDTO();
         message.setContent("Phiên giao dịch sản phẩm '"+productTransaction.getProduct().getProductName()+"' đã bị hủy bỏ");
         message.setTitle("[Cảnh báo] Giao dịch hủy bỏ");
         message.setUrl("/history/"+productTransaction.getAccount().getAccountId());
+        message.setType("abort");
         reference.push().setValueAsync(message);
     }
 }

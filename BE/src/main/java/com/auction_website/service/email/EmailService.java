@@ -8,5 +8,4 @@ public interface EmailService {
 
     void sendMailToWinner(ProductTransaction productTransaction) throws MessagingException;
 
-    void dummyMail();
 }

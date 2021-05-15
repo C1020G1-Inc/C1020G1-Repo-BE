@@ -69,6 +69,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      */
     @Modifying
     @Query(nativeQuery = true,
-            value = "UPDATE `product` SET product_status_id = 4, product_last_price = NULL WHERE product_id  = :productId")
+            value = "UPDATE `product` SET product_status_id = 5, product_last_price = NULL WHERE product_id  = :productId")
     int setFailProduct(@Param("productId") int productId);
 }

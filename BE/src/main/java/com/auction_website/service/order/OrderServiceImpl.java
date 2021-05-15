@@ -3,10 +3,12 @@ package com.auction_website.service.order;
 import com.auction_website.model.Order;
 import com.auction_website.model.OrderProduct;
 import com.auction_website.model.Product;
+import com.auction_website.model.ProductTransaction;
 import com.auction_website.model.dto.OrderDTO;
 import com.auction_website.repository.OrderProductRepository;
 import com.auction_website.repository.OrderRepository;
 import com.auction_website.repository.ProductRepository;
+import com.auction_website.repository.ProductTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductTransactionRepository productTransactionRepository;
 
     /**
      * Author : CaoLPT
@@ -50,6 +55,9 @@ public class OrderServiceImpl implements OrderService{
             for(Product product : orderDTO.getProducts()){
                 // change status of product from purchasing(3) to completed(4)
                 productRepository.changeProductStatus(4, product.getProductId());
+                // change transaction status from 'purchasing' to 'success' , Phuc
+                ProductTransaction productTransaction = productTransactionRepository.findCurrentTransactionByProductId(product.getProductId());
+                productTransactionRepository.setStatusByTransactionId("success",productTransaction.getTransactionId());
 
                 orderProductList.add(new OrderProduct(product, newOrder));
             }
