@@ -60,6 +60,11 @@ public class ProductController {
     @PutMapping("/admin/edit_product")
     public ResponseEntity<Void> editProduct(@RequestBody ProductDTO productDTO) {
         try {
+
+            if (productDTO == null) {
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
             List<ProductImage> productImageList = productDTO.getProductImageList();
             productService.editProduct(productDTO.getProduct());
             productImageService.deleteImagesById(productDTO.getProduct().getProductId());

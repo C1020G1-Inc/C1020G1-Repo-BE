@@ -16,7 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      * Author : TungNT
      * Get all product
      */
-    @Query(value = "select * from product", nativeQuery = true)
+    @Query(value = "select product from Product product " +
+            "where product.productStatus.id not in(5 , 6)")
     List<Product> getAllProduct();
 
 
