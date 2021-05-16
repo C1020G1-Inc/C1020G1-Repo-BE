@@ -5,6 +5,7 @@ import com.auction_website.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -16,6 +17,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Override
+    public void updateEmail(String oldEmail, String newEmail) {
+        accountRepository.updateEmail(oldEmail, newEmail);
+    }
+
+    @Override
+    public Account findAccountById(Integer accountId) {
+        return accountRepository.findAccountByAccountId(accountId);
+    }
 
     /**
      * @author PhinNL

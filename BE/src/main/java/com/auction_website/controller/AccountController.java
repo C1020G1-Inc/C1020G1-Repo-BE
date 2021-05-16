@@ -1,11 +1,8 @@
 package com.auction_website.controller;
-
 import com.auction_website.model.Account;
-
 import com.auction_website.model.AccountRole;
 import com.auction_website.model.Role;
 import com.auction_website.security.ValidationResponse;
-
 import com.auction_website.service.account.AccountService;
 import com.auction_website.service.account_role.AccountRoleService;
 import com.auction_website.service.role.RoleService;
@@ -13,7 +10,6 @@ import com.auction_website.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +28,34 @@ public class AccountController {
     private AccountRoleService accountRoleService;
     @Autowired
     private UserService userService;
+
+    /**
+     * Author: DungNV
+     * Cập nhật email.
+     * @param oldEmail
+     * @param newEmail
+     * @return
+     */
+    @PutMapping("/update-email/{oldEmail}/{newEmail}")
+    public ResponseEntity<?> updateAccountEmail(@PathVariable("oldEmail") String oldEmail,@PathVariable("newEmail") String newEmail){
+        accountService.updateEmail(oldEmail, newEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Author: DungNV
+     * Tìm kiếm Account.
+     * @param accountId
+     * @return
+     */
+    @GetMapping("/find/{accountId}")
+    public ResponseEntity<Account> findAccount(@PathVariable Integer accountId) {
+        Account account = accountService.findAccountById(accountId);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
     /**
      * @author PhinNL
@@ -190,6 +214,7 @@ public class AccountController {
             }
             List<Account> accountList = accountService.getUserByDate(month, year);
             return new ResponseEntity<>(accountList, HttpStatus.OK);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -1,4 +1,4 @@
-package com.auction_website.config;
+package com.auction_website.configuration;
 
 import com.auction_website.service.jwt.JwtAccountDetailService;
 import io.jsonwebtoken.ExpiredJwtException;

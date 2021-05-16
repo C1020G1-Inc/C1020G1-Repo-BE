@@ -5,6 +5,15 @@ import com.auction_website.model.ProductImage;
 import java.util.List;
 
 public interface ProductImageService {
+
+    Iterable<ProductImage> getAllImageByProductId(int productId);
+
+    List<ProductImage> getImagesProductById(Integer productId);
+
+    void deleteImagesById(Integer productId);
+
+    void saveProductImage(ProductImage productImage);
+
     /**
      * Author: DungHA
      * @param productId
@@ -25,5 +34,4 @@ public interface ProductImageService {
      * @return
      */
     List<ProductImage> showAllProductEndAuction(Integer category);
-
 }

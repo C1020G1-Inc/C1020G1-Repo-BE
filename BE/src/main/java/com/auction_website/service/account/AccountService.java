@@ -1,6 +1,5 @@
 package com.auction_website.service.account;
 
-
 import com.auction_website.model.Account;
 
 import java.util.List;
@@ -24,4 +23,19 @@ public interface AccountService {
     List<Account> searchUser(String userName, String address, String userEmail);
 
     List<Account> getUserByDate(Integer month, Integer year);
+
+    /**
+     * Author: DungNV
+     * @param oldEmail
+     * @param newEmail
+     */
+    void updateEmail(String oldEmail, String newEmail);
+
+    /**
+     * Author: DungNV
+     * @param accountId
+     * @return
+     */
+    Account findAccountById(Integer accountId);
+
 }

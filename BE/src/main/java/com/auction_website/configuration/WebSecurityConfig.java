@@ -1,4 +1,4 @@
-package com.auction_website.config;
+package com.auction_website.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/product/category/**",
                 "/api/product/end/category/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
-                antMatchers( "/api/account/admin").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
+                antMatchers( "/api/account/admin/**").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực
                         anyRequest().fullyAuthenticated().and().
                 // đảm bảo sử dụng đúng session Stateless;

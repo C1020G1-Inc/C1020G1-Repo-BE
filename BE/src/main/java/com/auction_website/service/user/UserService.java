@@ -6,4 +6,10 @@ public interface UserService {
     void save(User user);
     User findByPhone(String phone);
     User findByIdentity(String identity);
+
+    /**
+     * Author: DungNV
+     * @param user
+     */
+    void updateUser(User user);
 }
