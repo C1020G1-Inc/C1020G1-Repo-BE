@@ -39,7 +39,6 @@ public class AccountController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
     }
 
     /**

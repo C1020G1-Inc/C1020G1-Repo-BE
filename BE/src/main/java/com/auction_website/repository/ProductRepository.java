@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Transactional
@@ -106,8 +108,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      */
     @Transactional
     @Modifying
-    @Query("update Product product set product.productStatus.id = 2 where product.productId = :idProduct")
-    void approvedProduct(Integer idProduct);
+    @Query("update Product product set product.productStatus.id = 2 , product.registerTime = :registerTime  where product.productId = :idProduct")
+    void approvedProduct(Integer idProduct , Timestamp registerTime);
 
     /**
      * Author : TungNT

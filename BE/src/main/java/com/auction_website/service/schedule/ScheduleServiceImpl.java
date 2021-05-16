@@ -32,6 +32,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     EmailService emailService;
 
+
     /**
      * author: PhucPT
      * method: schedule end of auction task
@@ -67,7 +68,6 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         }, new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
         System.out.println(new Date(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000));
-
     }
 
     /**
