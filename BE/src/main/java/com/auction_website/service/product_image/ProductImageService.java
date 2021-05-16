@@ -8,4 +8,8 @@ public interface ProductImageService {
     List<ProductImage> showAllProductAuction(Integer category);
 
     List<ProductImage> showAllProductEndAuction(Integer category);
+
+    ProductImage findOneByProductId(Integer productId);
+
+    List<ProductImage> searchProductAuction(String keySearch, Integer category,Integer priceRange);
 }

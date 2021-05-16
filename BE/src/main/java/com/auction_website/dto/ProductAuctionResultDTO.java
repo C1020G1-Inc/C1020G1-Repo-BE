@@ -2,16 +2,23 @@ package com.auction_website.dto;
 
 public class ProductAuctionResultDTO {
 
+    private String productImage;
     private Integer productId;
     private String productName;
-    private double lastPrice;
+    private Double lastPrice;
     private String userName;
-    public ProductAuctionResultDTO(Integer productId, String productName, Double lastPrice, String userName) {
-        this.productId = productId;
-        this.productName = productName;
-        this.lastPrice = lastPrice;
-        this.userName = userName;
+
+    public ProductAuctionResultDTO() {
     }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
     public Integer getProductId() {
         return productId;
     }
