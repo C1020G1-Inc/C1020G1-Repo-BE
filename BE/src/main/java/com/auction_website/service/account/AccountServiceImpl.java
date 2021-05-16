@@ -5,8 +5,9 @@ import com.auction_website.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
+import java.util.List;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -67,5 +68,51 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void logout(Integer id) {
         accountRepository.logout(new Timestamp(System.currentTimeMillis()),id);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Get all user
+     */
+    @Override
+    public List<Account> findAllUser() {
+        return accountRepository.findAllUser();
+    }
+
+    /**
+     * Author : ThinhHN
+     * Lock user by id
+     */
+
+    @Override
+    public void lockUserById(Integer idUser) {
+        accountRepository.lockUser(idUser);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Unlock user by id
+     */
+    @Override
+    public void unLockUserById(Integer idUser) {
+        accountRepository.unLockUser(idUser);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Search advance
+     */
+    @Override
+    public List<Account> searchUser(String userName, String address, String userEmail) {
+        return accountRepository.searchUser(userName, address, userEmail);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Get all user by date
+     */
+    @Override
+    public List<Account> getUserByDate(Integer month, Integer year) {
+        return accountRepository.getUserByDate(month, year);
     }
 }

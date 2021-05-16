@@ -74,6 +74,7 @@ public class Account {
         this.enable = enable;
     }
 
+
     public Timestamp getLogoutTime() {
         return logoutTime;
     }

@@ -1,5 +1,4 @@
 package com.auction_website.service.user;
-
 import com.auction_website.model.User;
 import com.auction_website.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
