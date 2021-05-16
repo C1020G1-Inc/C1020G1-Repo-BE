@@ -14,7 +14,8 @@ public class ProductImageServiceImpl implements ProductImageService{
      * author: ThinhTHB
      * method: post image
      * */
-    public void postImage(ProductImage image) {
-        productImageRepository.postImage();
+    @Override
+    public void postImage(ProductImage productImage) {
+        productImageRepository.includeImage(productImage);
     }
 }

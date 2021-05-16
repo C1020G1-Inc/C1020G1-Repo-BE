@@ -16,7 +16,9 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
      * method: post image
      * */
     @Modifying
-    @Query(value = "insert into product_image (image, product_id) values ( #{#productImage.image} ,#{#productImage.product})"  ,nativeQuery = true)
-    void postImage();
+    @Query(value = "insert into product_image (image, product_id)" +
+            " value (:#{#productImage.image} ,:#{#productImage.product})" ,nativeQuery = true)
+    void includeImage(ProductImage productImage);
 
 }
+

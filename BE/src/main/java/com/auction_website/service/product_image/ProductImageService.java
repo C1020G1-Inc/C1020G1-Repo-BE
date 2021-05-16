@@ -8,5 +8,5 @@ public interface ProductImageService {
      * author: ThinhTHB
      * method: post image
      * */
-    void postImage(ProductImage productId);
+    void postImage(ProductImage productImage);
 }

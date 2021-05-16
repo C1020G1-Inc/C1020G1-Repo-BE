@@ -3,14 +3,18 @@ package com.auction_website.controller;
 import com.auction_website.model.Category;
 import com.auction_website.model.Product;
 import com.auction_website.model.ProductImage;
+import com.auction_website.model.dto.ProductDTO;
 import com.auction_website.service.category.CategoryService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_image.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductController {
     @Autowired
@@ -27,17 +31,20 @@ public class ProductController {
      * method: get category
      * */
     @GetMapping("/category")
-    public Iterable<Category> getCategory(){ return categoryService.getCategory(); }
+    public List<Category> getCategory(){ return categoryService.getCategory(); }
 
     /**
      * author: ThinhTHB
      * method: create product & image
      * */
     @PostMapping("/create")
-    public void postProduct(Product product, ProductImage image){
+    public void createProduct(@RequestBody Product product){
         productService.postProduct(product);
-        productImageService.postImage(image);
-
     }
 
+
+//    @PostMapping("/image")
+//    public void createImage(@RequestBody ProductImage image){
+//        productImageService.postImage(image);
+//    }
 }

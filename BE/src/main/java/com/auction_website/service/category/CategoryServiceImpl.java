@@ -5,6 +5,8 @@ import com.auction_website.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService{
     @Autowired
@@ -14,7 +16,7 @@ public class CategoryServiceImpl implements CategoryService{
      * author: ThinhTHB
      * method: get category
      * */
-    public Iterable<Category> getCategory(){
+    public List<Category> getCategory(){
       return categoryRepository.getCategory();
     };
 }
