@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class AccountController {
     @Autowired
     private AccountService accountService;
@@ -40,7 +39,6 @@ public class AccountController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
     }
 
     /**

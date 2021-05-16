@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // tắt xác thực cho các trang này
                 .authorizeRequests().antMatchers("/login", "/user/create","/misc/**", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
-                antMatchers( "/api/account/admin").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
+                antMatchers( "/api/account/admin/**").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực
                         anyRequest().fullyAuthenticated().and().
                 // đảm bảo sử dụng đúng session Stateless;

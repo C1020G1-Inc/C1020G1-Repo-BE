@@ -22,8 +22,13 @@ public class UserController {
      * @param userId
      */
     @PutMapping("/edit/{userId}")
-    public void updateUser(@RequestBody User user, @PathVariable Integer userId){
-        userService.updateUser(user);
+    public ResponseEntity<Void> updateUser(@RequestBody User user, @PathVariable Integer userId){
+        try{
+            this.userService.updateUser(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import com.auction_website.model.ProductDTO;
 import com.auction_website.service.category.CategoryService;
 import com.auction_website.service.product.ProductService;
 import com.auction_website.service.product_image.ProductImageService;
+import com.auction_website.service.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,9 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ScheduleService scheduleService;
 
     /**
      * author: PhucPT
@@ -68,7 +72,7 @@ public class ProductController {
      * Author : TungNT
      * Get all product
      */
-    @GetMapping("/admin/list_product")
+    @GetMapping("/api/account/admin/list_product")
     public ResponseEntity<List<Product>> getAllProduct() {
         try {
             List<Product> productList = productService.getAllProduct();
@@ -96,10 +100,11 @@ public class ProductController {
      * Author : TungNT
      * Approved product to auction;
      */
-    @PutMapping("/admin/approve/{productId}")
+    @GetMapping("/api/account/admin/approve/{productId}")
     public ResponseEntity<Void> approvedProduct(@PathVariable Integer productId) {
         try {
             productService.approvedProduct(productId);
+            scheduleService.endOfAuctionSchedule(productId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -124,7 +129,7 @@ public class ProductController {
      * Author : TungNT
      * Edit product
      */
-    @PutMapping("/admin/edit_product")
+    @PutMapping("/api/account/admin/edit_product")
     public ResponseEntity<Void> editProduct(@RequestBody ProductDTO productDTO) {
         try {
 
@@ -151,7 +156,7 @@ public class ProductController {
      * Author : TungNT
      * Search product multi cases
      */
-    @GetMapping("/admin/search")
+    @GetMapping("/api/account/admin/search")
     public ResponseEntity<List<Product>> getProductBySearch(
             @RequestParam String productName,
             @RequestParam Integer categoryId,
@@ -201,7 +206,7 @@ public class ProductController {
      * Author : TungNT
      * Statistics product by month or by year
      */
-    @GetMapping("/admin/statistic")
+    @GetMapping("/api/account/admin/statistic")
     public ResponseEntity<List<Product>> getProductByDate(
             @RequestParam(value = "monthSearch", required = false) Integer monthSearch,
             @RequestParam(value = "yearSearch", required = false) Integer yearSearch) {
@@ -220,7 +225,7 @@ public class ProductController {
      * Author : TungNT
      * Get product by product's id.
      */
-    @GetMapping("/admin/product/{id}")
+    @GetMapping("/api/account/admin/product/{id}")
     public ResponseEntity<ProductDTO> getProductByIdForAdmin(@PathVariable Integer id) {
         try {
             Product product = productService.getProductById(id);
@@ -241,7 +246,7 @@ public class ProductController {
      * Author : TungNT
      * Get all category.
      */
-    @GetMapping("/admin/product_category")
+    @GetMapping("/api/account/admin/product_category")
     public ResponseEntity<List<Category>> getAllCategory() {
         try {
             List<Category> categoryList = categoryService.findAll();
@@ -255,7 +260,7 @@ public class ProductController {
      * Author : TungNT
      * Get category by id.
      */
-    @GetMapping("/admin/product_category/{id}")
+    @GetMapping("/api/account/admin/product_category/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
         try {
             Category category = this.categoryService.findById(id);
