@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class AccountController {
     @Autowired
     private AccountService accountService;
