@@ -53,7 +53,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // tắt csrf
         httpSecurity.cors().and().csrf().disable()
                 // tắt xác thực cho các trang này
-                .authorizeRequests().antMatchers("/login", "/user/create","/misc/**", "/recover/**", "/oauth/**","/*/*/guest/**").permitAll()
+                .authorizeRequests().antMatchers("/login",
+                "/user/create",
+                "/misc/**",
+                "/recover/**",
+                "/oauth/**",
+                "/*/*/guest/**",
+                "/api/product/read/**",
+                "/api/auction/read/**",
+                "/api/productImage/read/**",
+                "/api/recover/**",
+                "/api/product/category/**",
+                "/api/product/end/category/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
                 antMatchers( "/api/account/admin/**").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực

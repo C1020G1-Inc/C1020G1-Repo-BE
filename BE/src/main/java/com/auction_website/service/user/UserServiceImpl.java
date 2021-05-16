@@ -10,6 +10,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Author: DungNV
+     * @param user
+     */
     @Override
     public void updateUser(User user) {
         userRepository.updateUser(user);

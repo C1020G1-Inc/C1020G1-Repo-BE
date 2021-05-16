@@ -48,6 +48,18 @@ public class AuctionController {
     @Autowired
     private AccountService accountService;
 
+
+    @GetMapping("/api/auction/read/{productId}")
+    public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId){
+        List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
+
+        if(auctionList == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(auctionList, HttpStatus.OK);
+    }
+
     /**
      * author: PhucPT
      * method: create new auction with information from client
@@ -171,21 +183,5 @@ public class AuctionController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
-
-    /**
-     * Author: Unknown
-     * @param productId
-     * @return
-     */
-    @GetMapping("/{productId}")
-    public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId) {
-        List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
-
-        if (auctionList == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(auctionList, HttpStatus.OK);
     }
 }

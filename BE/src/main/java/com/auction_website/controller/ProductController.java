@@ -38,6 +38,22 @@ public class ProductController {
     private ScheduleService scheduleService;
 
     /**
+     * Author : SonPH
+     * find product by productId
+     *
+     * @param productId
+     */
+    @GetMapping("api/product/read/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable("productId") Integer productId) {
+        Product product = productService.getProductById(productId);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+    }
+
+    /**
      * author: PhucPT
      * method: get product detail
      * @param productId
@@ -191,7 +207,8 @@ public class ProductController {
      * @param productId
      * @return
      */
-    @GetMapping("/api/productImage/{productId}")
+
+    @GetMapping("/api/productImage/read/{productId}")
     public ResponseEntity<List<ProductImage>> getAllProductImage(@PathVariable("productId") Integer productId) {
         List<ProductImage> productImages = productImageService.getAllProductImageByProductId(productId);
 
@@ -256,6 +273,18 @@ public class ProductController {
         }
     }
 
+
+    /**
+     * Author: HanTH
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("api/product/category/{categoryId}")
+    public ResponseEntity<?> showAllProductAuction(@PathVariable("categoryId") Integer categoryId) {
+        List<ProductImage> listProduct = productImageService.showAllProductAuction(categoryId);
+        return new ResponseEntity<>(listProduct, HttpStatus.OK);
+    }
+
     /**
      * Author : TungNT
      * Get category by id.
@@ -276,7 +305,7 @@ public class ProductController {
      * @param categoryId
      * @return
      */
-    @GetMapping("/end/category/{categoryId}")
+    @GetMapping("api/product/end/category/{categoryId}")
     public ResponseEntity<?> showAllProductEndAuction(@PathVariable("categoryId") Integer categoryId) {
         List<ProductImage> listProduct = productImageService.showAllProductEndAuction(categoryId);
         return new ResponseEntity<>(listProduct, HttpStatus.OK);

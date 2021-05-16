@@ -10,13 +10,15 @@ import com.auction_website.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping(value = "api/account")
 public class AccountController {
     @Autowired
     private AccountService accountService;
@@ -26,94 +28,6 @@ public class AccountController {
     private AccountRoleService accountRoleService;
     @Autowired
     private UserService userService;
-
-    /**
-     * Author : ThinhHN
-     * Get all user
-     */
-    @RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
-    public ResponseEntity<List<Account>> getAllUser() {
-        try {
-            List<Account> userList = accountService.findAllUser();
-            return new ResponseEntity<>(userList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    /**
-     * Author : ThinhHN
-     * Lock user by id
-     */
-    @PutMapping("/admin/lock-user/{idUser}")
-    public ResponseEntity<Void> lockUserById(@PathVariable Integer idUser) {
-        accountService.lockUserById(idUser);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    /**
-     * Author : ThinhHN
-     * Unlock user by id
-     */
-    @PutMapping("/admin/unlock-user/{idUser}")
-    public ResponseEntity<Void> unLockUserById(@PathVariable Integer idUser) {
-        accountService.unLockUserById(idUser);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    /**
-     * Author : ThinhHN
-     * Search advance
-     */
-    @GetMapping("/admin/search-user")
-    public ResponseEntity<List<Account>> searchUser(@RequestParam String userName, @RequestParam Integer userId,
-                                                    @RequestParam String address, @RequestParam String userEmail) {
-        try {
-            if (userName.equals("undefined")) {
-                userName = null;
-            }
-            if (address.equals("undefined")) {
-                address = null;
-            }
-            if (userEmail.equals("undefined")) {
-                userEmail = null;
-            }
-            if (userId == 0) {
-                userId = null;
-            }
-            System.out.println(userName);
-            System.out.println(userId);
-            System.out.println(userEmail);
-            System.out.println(userId);
-            List<Account> userList = accountService.searchUser(userName, userId, address, userEmail);
-            System.out.println(userList);
-            return new ResponseEntity<>(userList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-
-    }
-
-    /**
-     * Author : ThinhHN
-     * Get all user by date
-     */
-    @GetMapping("/admin/user-chart")
-    public ResponseEntity<List<Account>> getUserByDate(
-            @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year) {
-        try {
-            if (month == 0) {
-                month = null;
-            }
-            List<Account> accountList = accountService.getUserByDate(month, year);
-            return new ResponseEntity<>(accountList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
 
     /**
      * Author: DungNV
@@ -150,7 +64,7 @@ public class AccountController {
     @PostMapping("/guest/save")
     public ResponseEntity<Account> saveAccount(@RequestBody @Validated Account account, BindingResult bindingResult) {
         try {
-            if (bindingResult.hasErrors()){
+            if (bindingResult.hasErrors()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             userService.save(account.getUser());
@@ -212,13 +126,95 @@ public class AccountController {
     public ResponseEntity<Void> logout(@RequestBody Account account) {
         try {
             Account accountFind = accountService.findByAccountName(account.getAccountName());
-            if (accountFind != null){
-                if (accountFind.getPassword().equals(account.getPassword())){
+            if (accountFind != null) {
+                if (accountFind.getPassword().equals(account.getPassword())) {
                     accountService.logout(accountFind.getAccountId());
                     return new ResponseEntity<>(HttpStatus.OK);
                 }
             }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Author : ThinhHN
+     * Get all user
+     */
+    @GetMapping(value = "/admin/user-list")
+    public ResponseEntity<List<Account>> getAllUser() {
+        try {
+            List<Account> userList = accountService.findAllUser();
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+    }
+
+    /**
+     * Author : ThinhHN
+     * Lock user by id
+     */
+    @PutMapping("/admin/lock-user")
+    public ResponseEntity<Void> lockUserById(@RequestBody Integer userId) {
+        accountService.lockUserById(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Unlock user by id
+     */
+    @PutMapping("/admin/unlock-user")
+    public ResponseEntity<Void> unLockUserById(@RequestBody Integer userId) {
+        accountService.unLockUserById(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Author : ThinhHN
+     * Search advance
+     */
+    @GetMapping("/admin/search-user")
+    public ResponseEntity<List<Account>> searchUser(@RequestParam String userName,
+                                                    @RequestParam String address, @RequestParam String userEmail) {
+        try {
+            if (userName.equals("undefined")) {
+                userName = null;
+            }
+            if (address.equals("undefined")) {
+                address = null;
+            }
+            if (userEmail.equals("undefined")) {
+                userEmail = null;
+            }
+            List<Account> userList = accountService.searchUser(userName, address, userEmail);
+            System.out.println(userList);
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+
+    }
+
+    /**
+     * Author : ThinhHN
+     * Get all user by date
+     */
+    @GetMapping("/admin/user-chart")
+    public ResponseEntity<List<Account>> getUserByDate(
+            @RequestParam(value = "month", required = false) Integer month,
+            @RequestParam(value = "year", required = false) Integer year) {
+        try {
+            if (month == 0) {
+                month = null;
+            }
+            List<Account> accountList = accountService.getUserByDate(month, year);
+            return new ResponseEntity<>(accountList, HttpStatus.OK);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

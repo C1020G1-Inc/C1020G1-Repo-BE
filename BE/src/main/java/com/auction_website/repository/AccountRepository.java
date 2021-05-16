@@ -46,10 +46,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "select account" +
             " from Account account " +
             "where (:userName is null or account.user.userName like %:userName%) and " +
-            "(:userId is null or account.user.userId = :userId) and" +
             "(:address is null or account.user.address = :address) and " +
             "(:userEmail is null or account.email = :userEmail)")
-    List<Account> searchUser(String userName, Integer userId, String address, String userEmail);
+    List<Account> searchUser(String userName, String address, String userEmail);
 
     /**
      * Author : ThinhHN
@@ -60,7 +59,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
             " where ((:month is null ) or ((function('month',account.logoutTime)) = :month)) and" +
             "(function('year',account.logoutTime)=:year )")
     List<Account> getUserByDate(Integer month, Integer year);
-
 
     /**
      * Author: DungNV
@@ -108,5 +106,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "insert into account(account_name,account_password,account_email,account_enable," +
             "account_logout_time,user_id) values(?1,?2,?3,?4,?5,?6)", nativeQuery = true)
     void save(String accountName, String password, String email, boolean enable, Timestamp logoutTime, Integer userId);
+
+
 }
 

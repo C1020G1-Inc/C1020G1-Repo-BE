@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -21,7 +19,6 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     /**
-<<<<<<< HEAD
      * author: PhucPT
      * method: get current step price of a product
      * @param product
