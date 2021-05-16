@@ -15,7 +15,7 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
-    @GetMapping("/api/auction/{productId}")
+    @GetMapping("/api/auction/read/{productId}")
     public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId){
         List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
 
