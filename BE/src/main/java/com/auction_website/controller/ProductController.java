@@ -43,8 +43,8 @@ public class ProductController {
     }
 
 
-//    @PostMapping("/image")
-//    public void createImage(@RequestBody ProductImage image){
-//        productImageService.postImage(image);
-//    }
+    @PostMapping("/image")
+    public void createImage(@RequestBody ProductImage image){
+        productImageService.postImage(image);
+    }
 }
