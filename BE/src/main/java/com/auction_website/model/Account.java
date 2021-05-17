@@ -1,6 +1,7 @@
 package com.auction_website.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 
 @Entity
@@ -12,12 +13,15 @@ public class Account {
     private Integer accountId;
 
     @Column(name = "account_name")
+    @Pattern(regexp = "[a-zA-Z]{1,5}[a-zA-Z0-9]{7,15}")
     private String accountName;
 
     @Column(name = "account_password")
+    @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}")
     private String password;
 
     @Column(name = "account_email")
+    @Pattern(regexp = "[a-zA-z]\\w{6,20}[@][a-zA-Z]{2,10}([.][a-zA-Z]{2,5}){1,2}")
     private String email;
 
     @Column(name = "account_enable")
@@ -69,6 +73,7 @@ public class Account {
     public void setEnable(Boolean enable) {
         this.enable = enable;
     }
+
 
     public Timestamp getLogoutTime() {
         return logoutTime;

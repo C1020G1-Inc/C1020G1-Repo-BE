@@ -2,6 +2,7 @@ package com.auction_website.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "comment")
@@ -12,7 +13,11 @@ public class Comment {
     private Integer commentId;
 
     @Column(name = "content")
+    @NotBlank
     private String content;
+
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "comment_time")
     private Timestamp commentTime;
@@ -39,6 +44,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Timestamp getCommentTime() {

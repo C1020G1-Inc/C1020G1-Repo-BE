@@ -1,4 +1,4 @@
-package com.auction_website.dto;
+package com.auction_website.model.dto;
 
 import java.sql.Timestamp;
 
