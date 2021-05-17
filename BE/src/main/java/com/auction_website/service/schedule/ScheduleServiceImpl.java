@@ -85,7 +85,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             public void run() {
                 if (productTransaction.getStatus().equals("purchasing")) {
                     productTransactionService.setStatusByTransactionId("fail", productTransactionId);
-                    productService.setProductStatus(productTransaction.getProduct().getProductId(), 4);
+                    productService.setProductStatus(productTransaction.getProduct().getProductId(), 5);
                     auctionService.setStatusAuctionByAuctionId(productTransaction.getAuction().getAuctionId(), "cancel");
                     notificationService.notifyCancelTransaction(productTransaction);
                 }

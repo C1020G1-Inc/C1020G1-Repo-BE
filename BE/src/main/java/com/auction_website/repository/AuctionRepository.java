@@ -72,7 +72,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     Auction getHighestAuctionInProgressByProductId(int productId);
 
     /**
-     * Author: unknown
+     * Author: CuongNVM
      * @param pageable
      * @param id
      * @return
@@ -81,7 +81,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     Page<Auction> findAllProductAuctionByUserId(Pageable pageable, Integer id);
 
     /**
-     * Author: unknown
+     * Author: CuongNVM
      * @param productId
      * @return
      */
