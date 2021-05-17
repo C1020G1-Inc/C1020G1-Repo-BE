@@ -12,13 +12,31 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+
 @Service
 public class AuctionServiceImpl implements AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
     /**
-     * author: PhucPT
+     * Method: get top product auction.
+     * Author: HanTH
+     * @param category
+     * @return
+     */
+    @Override
+    public List<Auction> showTopProductAuction(Integer category) {
+        switch (category){
+            case 0:
+                return auctionRepository.showTopProductAuctionAll();
+            case 4:
+                return auctionRepository.showTopProductAuctionByHot();
+            default:
+                return auctionRepository.showTopProductAuctionByCategory( category );
+        }
+        }
+
+     /** author: PhucPT
      * method: save new auction with given price, timeAuction, accountId and productId
      * @param price
      * @param timeAuction
@@ -98,6 +116,5 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public List<Auction> getAllAuctionByProductId(Integer productId) {
         return auctionRepository.getAllAuctionByProductId(productId);
-
     }
 }

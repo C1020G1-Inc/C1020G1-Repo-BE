@@ -7,15 +7,59 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     /**
+     * Method: get top product auction all
+     * Author: HanTH
+     *
+     * @return
+     */
+    @Query(value = "SELECT * FROM auction_website.auction a\n" +
+            "join product p on p.product_id = a.product_id\n" +
+            "group by p.product_id\n" +
+            "order by count(p.product_id) desc\n" +
+            "limit 5", nativeQuery = true)
+    List<Auction> showTopProductAuctionAll();
+
+    /**
+     * Method: get top product auction by category
+     * AuthorL HanTH
+     *
+     * @param category
+     * @return
+     */
+    @Query(value = "SELECT * FROM auction_website.auction a\n" +
+            "join product p on p.product_id = a.product_id\n" +
+            "where p.category_id = ?1\n" +
+            "group by p.product_id\n" +
+            "order by count(p.product_id) desc\n" +
+            "limit 5", nativeQuery = true)
+    List<Auction> showTopProductAuctionByCategory(Integer category);
+
+    /**
+     * Method: get top product auction by hot
+     * Author: HanTH
+     * @return
+     */
+    @Query(value = "SELECT * FROM auction_website.auction a\n" +
+            "join product p on p.product_id = a.product_id\n" +
+            "where p.category_id = 1\n" +
+            "group by p.product_id\n" +
+            "order by count(p.product_id) desc\n" +
+            "limit 5", nativeQuery = true)
+    List<Auction> showTopProductAuctionByHot();
+
+    /**
      * author: PhucPT
      * method: save new auction with given price, timeAuction, accountId and productId
+     *
      * @param price
      * @param timeAuction
      * @param accountId
@@ -30,6 +74,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     /**
      * author: PhucPT
      * method: get all auction has been submit in current auction session by product id
+     *
      * @param productId
      * @return
      */
@@ -40,6 +85,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     /**
      * author: PhucPT
      * method: set status all auction in progress by productId
+     *
      * @param productId
      * @param status
      * @return
@@ -52,6 +98,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     /**
      * author: PhucPT
      * method: set status of specific auction
+     *
      * @param auctionId
      * @param status
      * @return
@@ -64,6 +111,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
     /**
      * author: PhucPT
      * method: get highest auction of a product
+     *
      * @param productId
      * @return
      */
@@ -73,6 +121,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
 
     /**
      * Author: CuongNVM
+     *
      * @param pageable
      * @param id
      * @return
@@ -82,9 +131,10 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
 
     /**
      * Author: CuongNVM
+     *
      * @param productId
      * @return
      */
-    @Query(value = "SELECT * FROM auction Where product_id = ?1" , nativeQuery = true)
-    List<Auction> getAllAuctionByProductId(Integer productId) ;
+    @Query(value = "SELECT * FROM auction Where product_id = ?1", nativeQuery = true)
+    List<Auction> getAllAuctionByProductId(Integer productId);
 }

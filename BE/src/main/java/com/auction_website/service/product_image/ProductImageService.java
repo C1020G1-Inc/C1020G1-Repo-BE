@@ -34,4 +34,8 @@ public interface ProductImageService {
      * @return
      */
     List<ProductImage> showAllProductEndAuction(Integer category);
+
+    ProductImage findOneByProductId(Integer productId);
+
+    List<ProductImage> searchProductAuction(String keySearch, Integer category,Integer priceRange);
 }
