@@ -1,10 +1,13 @@
 package com.auction_website.service.product_transaction;
 
 import com.auction_website.model.ProductTransaction;
-import java.sql.Timestamp;
+
 import java.util.List;
+import java.sql.Timestamp;
 
 public interface ProductTransactionService {
+
+    List<ProductTransaction> showAllProductResult(Integer category);
 
     int createProductTransaction(int productId, int accountId, int auctionId, Timestamp transactionTime);
 

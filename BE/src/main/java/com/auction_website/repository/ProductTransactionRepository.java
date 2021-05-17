@@ -1,12 +1,11 @@
 package com.auction_website.repository;
 
 import com.auction_website.model.ProductTransaction;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import org.springframework.data.jpa.repository.Modifying;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -14,6 +13,36 @@ import java.util.List;
 
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransaction, Integer> {
+    /**
+     * Method: get result product auction all
+     * Author: HanTH
+     *
+     * @return
+     */
+    @Query(value = "select * from  product_transaction t where t.status = 'success'", nativeQuery = true)
+    List<ProductTransaction> showAllProductResult();
+
+    /**
+     * Method: get result product auction by category.
+     * Author: HanTH
+     *
+     * @param categoryId
+     * @return
+     */
+    @Query(value = "select * from auction_website.product_transaction t join auction_website.product " +
+            "p on t.product_id = p.product_id where t.status = 'success' and p.category_id = ?1 ", nativeQuery = true)
+    List<ProductTransaction> showAllProductResultByCategory(Integer categoryId);
+
+    /**
+     * Method: get result product auction by hot.
+     * Author:HanTH
+     *
+     * @return
+     */
+    @Query(value = "select * from auction_website.product_transaction t join auction_website.product " +
+            "p on t.product_id = p.product_id where t.status = 'success' and p.product_last_price > 10000000", nativeQuery = true)
+    List<ProductTransaction> showAllProductResultByHot();
+
     /**
      * author: PhucPT
      * method: create new product transaction
@@ -134,5 +163,4 @@ public interface ProductTransactionRepository extends JpaRepository<ProductTrans
             " (:status is null or pt.status = :status) and" +
             " pt.status <> 'Đang chờ'")
     List<ProductTransaction> getTransactionBySearch(String namePost, String nameBuy, String productName, Double price, String status);
-
 }

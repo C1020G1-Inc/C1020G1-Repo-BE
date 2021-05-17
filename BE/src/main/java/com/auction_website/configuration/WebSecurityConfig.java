@@ -64,7 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/productImage/read/**",
                 "/api/recover/**",
                 "/api/product/category/**",
-                "/api/product/end/category/**").permitAll()
+                "/api/product/end/category/**",
+                "/api/product/result/category/**",
+                "/api/product/top/category/**",
+                "/api/product/search").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
                 antMatchers( "/api/account/admin/**").hasAuthority("ADMIN").antMatchers("/api/account/test").hasAnyAuthority("ADMIN","MEMBER").
                 // các trang còn lại phải xác thực

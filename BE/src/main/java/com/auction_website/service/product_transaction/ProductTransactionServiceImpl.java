@@ -10,13 +10,31 @@ import java.sql.Timestamp;
 
 import java.util.List;
 
+import java.util.List;
+
 @Service
 public class ProductTransactionServiceImpl implements ProductTransactionService {
     @Autowired
     private ProductTransactionRepository productTransactionRepository;
 
     /**
-     * author: PhucPT
+     * Method: Get result product auction.
+     * Author: HanTH
+     * @param category
+     * @return
+     */
+    @Override
+    public List<ProductTransaction> showAllProductResult(Integer category) {
+        switch (category) {
+            case 0:
+                return productTransactionRepository.showAllProductResult();
+            case 4:
+                return productTransactionRepository.showAllProductResultByHot();
+            default:
+                return productTransactionRepository.showAllProductResultByCategory( category );
+        }
+    }
+     /** author: PhucPT
      * method: create new product transaction with given productId and accountID
      * @param productId
      * @param accountId
