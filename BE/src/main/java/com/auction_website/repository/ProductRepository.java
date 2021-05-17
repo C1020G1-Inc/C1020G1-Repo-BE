@@ -19,17 +19,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      * */
     @Modifying
     @Query(value = "insert into product (product_name, category_id, product_quantity, product_price, " +
-            "product_price_step, product_description, product_status_id, account_id, product_register_time) " +
+            "product_price_step, product_description, product_status_id, product_register_time, product_auction_time) " +
             "value " +
             "(:#{#product.productName}, " +
             ":#{#product.category.id}, " +
-            ":#{#product.priceStep}," +
-            ":#{#product.quantity}," +
+            ":#{#product.quantity}, " +
             ":#{#product.price}, " +
+            ":#{#product.priceStep}, " +
             ":#{#product.description}, " +
             ":#{#product.productStatus.id}, " +
-            ":#{#product.account.accountId}, " +
-            ":#{#product.registerTime})"
+            ":#{#product.registerTime}, " +
+            ":#{#product.auctionTime})"
             , nativeQuery = true)
     void createProduct(Product product);
 

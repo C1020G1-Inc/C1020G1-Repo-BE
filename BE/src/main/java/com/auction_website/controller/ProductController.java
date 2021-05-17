@@ -39,6 +39,7 @@ public class ProductController {
      * */
     @PostMapping("/create")
     public void createProduct(@RequestBody Product product){
+//        product.setAccount();
         productService.postProduct(product);
     }
 
