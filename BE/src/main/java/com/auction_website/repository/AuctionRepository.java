@@ -13,7 +13,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
             "join product p on p.product_id = a.product_id\n" +
             "group by p.product_id\n" +
             "order by count(p.product_id) desc\n" +
-            "limit 10", nativeQuery = true)
+            "limit 5", nativeQuery = true)
     List<Auction> showTopProductAuctionAll();
 
     @Query(value = "SELECT * FROM auction_website.auction a\n" +
@@ -21,7 +21,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
             "where p.category_id = ?1\n" +
             "group by p.product_id\n" +
             "order by count(p.product_id) desc\n" +
-            "limit 10", nativeQuery = true)
+            "limit 5", nativeQuery = true)
     List<Auction> showTopProductAuctionByCategory(Integer category);
 
     @Query(value = "SELECT * FROM auction_website.auction a\n" +
@@ -29,6 +29,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
             "where p.category_id = 1\n" +
             "group by p.product_id\n" +
             "order by count(p.product_id) desc\n" +
-            "limit 10", nativeQuery = true)
+            "limit 5", nativeQuery = true)
     List<Auction> showTopProductAuctionByHot();
 }

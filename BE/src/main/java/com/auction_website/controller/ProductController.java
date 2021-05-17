@@ -3,7 +3,6 @@ package com.auction_website.controller;
 import com.auction_website.dto.ProductAuctionResultDTO;
 import com.auction_website.dto.ProductAuctionTopDTO;
 import com.auction_website.model.Auction;
-import com.auction_website.model.Product;
 import com.auction_website.model.ProductImage;
 import com.auction_website.model.ProductTransaction;
 import com.auction_website.service.auction.AuctionService;
@@ -122,7 +121,7 @@ public class ProductController {
      * @param category
      * @return
      */
-    @GetMapping("/top/{category}")
+    @GetMapping("/top/category/{category}")
     public ResponseEntity<?> showTopProductAuction(@PathVariable Integer category) {
         try {
             List<ProductAuctionTopDTO> listProduct = new ArrayList<>();
@@ -133,7 +132,7 @@ public class ProductController {
                 productAuctionTopDTO.setProductId( auction.getProduct().getProductId() );
                 productAuctionTopDTO.setProductName( auction.getProduct().getProductName() );
                 productAuctionTopDTO.setProductLastPrice( auction.getProduct().getLastPrice() );
-                productAuctionTopDTO.setProductTimeEnd( auction.getProduct().getEndTime() );
+                productAuctionTopDTO.setProductEndTime( auction.getProduct().getEndTime() );
                 productAuctionTopDTO.setProductImage( productImageService.findOneByProductId( auction.getProduct().getProductId() ).getImage() );
                 listProduct.add( productAuctionTopDTO );
             }

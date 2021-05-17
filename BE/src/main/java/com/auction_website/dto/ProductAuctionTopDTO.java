@@ -7,7 +7,7 @@ public class ProductAuctionTopDTO {
     private String productImage;
     private String productName;
     private Double productLastPrice;
-    private Timestamp productTimeEnd;
+    private Timestamp productEndTime;
 
     public ProductAuctionTopDTO() {
     }
@@ -44,11 +44,11 @@ public class ProductAuctionTopDTO {
         this.productLastPrice = productLastPrice;
     }
 
-    public Timestamp getProductTimeEnd() {
-        return productTimeEnd;
+    public Timestamp getProductEndTime() {
+        return productEndTime;
     }
 
-    public void setProductTimeEnd(Timestamp productTimeEnd) {
-        this.productTimeEnd = productTimeEnd;
+    public void setProductEndTime(Timestamp productEndTime) {
+        this.productEndTime = productEndTime;
     }
 }
