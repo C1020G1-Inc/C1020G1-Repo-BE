@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -62,6 +59,31 @@ public class JwtAuthenticationController {
         helper.setTo(accountEmail);
 
         helper.setSubject("Auction Support Recover Password");
+
+
+        mailSender.send(message);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/api/account/admin/confirm")
+    public ResponseEntity<?> mailSenderConfirm( @RequestParam String accountEmail,
+                                                @RequestParam String confirmContent,
+                                                @RequestParam String userName) throws MessagingException {
+
+
+        MimeMessage message = mailSender.createMimeMessage();
+
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+
+        String htmlMsg = "<h3>Dear "+userName+"</h3>" +
+                "<span>" + confirmContent + "</span>";
+
+        message.setContent(htmlMsg,"text/html; charset=utf-8");
+
+        helper.setTo(accountEmail);
+
+        helper.setSubject("Thư phản hồi từ C10Auction");
 
 
         mailSender.send(message);
