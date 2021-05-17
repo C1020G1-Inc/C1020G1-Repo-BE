@@ -48,8 +48,12 @@ public class AuctionController {
     @Autowired
     private AccountService accountService;
 
-
-    @GetMapping("/api/auction/read/{productId}")
+    /**
+     * @author: DungHA
+     * @param productId
+     * @return
+     */
+    @GetMapping("/read/{productId}")
     public ResponseEntity<List<Auction>> getAllPostInWallUser(@PathVariable("productId") Integer productId){
         List<Auction> auctionList = auctionService.getAllAuctionByProductId(productId);
 
