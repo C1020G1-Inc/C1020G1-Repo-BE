@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void changePassword(String accountEmail, String newPassword) {
-        accountRepository.changePassword(accountEmail, newPassword);
+        accountRepository.changePassword(accountEmail, passwordEncoder.encode(newPassword));
     }
 
     @Override

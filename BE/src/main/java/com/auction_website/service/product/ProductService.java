@@ -40,4 +40,12 @@ public interface ProductService {
 
     Product getProductById(Integer productId);
 
+    List<Product> getProductByDateForDonutChart(Integer daySearch , Integer monthSearch , Integer yearSearch);
+
+    /**
+     * author: ThinhTHB
+     * method: create product
+     * */
+    void postProduct(Product product);
+
 }

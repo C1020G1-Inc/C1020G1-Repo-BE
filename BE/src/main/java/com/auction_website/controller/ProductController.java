@@ -51,6 +51,44 @@ public class ProductController {
     private ScheduleService scheduleService;
 
     /**
+     * author: ThinhTHB
+     * method: get category
+     * */
+    @GetMapping("/api/product/categories")
+    public List<Category> getCategory(){ return categoryService.getCategory(); }
+    /**
+     * author: ThinhTHB
+     * method: create product & image
+     * */
+    @PostMapping("/api/product//create")
+    public void createProduct(@RequestBody Product product){
+        productService.postProduct(product);
+    }
+
+    /**
+     * Author : TungNT
+     * Statistics product by day , by month or by year
+     */
+    @GetMapping("/api/account/admin/statistic/donut")
+    public ResponseEntity<List<Product>> getProductByDateForDonutChart(
+            @RequestParam(value = "daySearch", required = false) Integer daySearch,
+            @RequestParam(value = "monthSearch", required = false) Integer monthSearch,
+            @RequestParam(value = "yearSearch", required = false) Integer yearSearch) {
+        try {
+            if (monthSearch == 0) {
+                monthSearch = null;
+            }
+            if (daySearch == 0){
+                daySearch = null;
+            }
+            List<Product> productList = productService.getProductByDateForDonutChart(daySearch,monthSearch, yearSearch);
+            return new ResponseEntity<>(productList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * Method: Get all data product auction by category
      * Author: HanTH
      *

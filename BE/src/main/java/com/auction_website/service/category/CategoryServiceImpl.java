@@ -13,6 +13,14 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepository;
 
     /**
+     * author: ThinhTHB
+     * method: get category
+     * */
+    public List<Category> getCategory() {
+        return categoryRepository.getCategory();
+    }
+
+    /**
      * Author : TungNT
      * Get category by id.
      */

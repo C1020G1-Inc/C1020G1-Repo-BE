@@ -16,6 +16,29 @@ import java.util.List;
 @Transactional
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    @Transactional
+/**
+ * author: ThinhTHB
+ * method: create product
+ * */
+    @Modifying
+    @Query(value = "insert into product (product_name, category_id, product_quantity, product_price, " +
+            "product_price_step, product_description, product_status_id, product_register_time, product_auction_time) " +
+            "value " +
+            "(:#{#product.productName}, " +
+            ":#{#product.category.id}, " +
+            ":#{#product.quantity}, " +
+            ":#{#product.price}, " +
+            ":#{#product.priceStep}, " +
+            ":#{#product.description}, " +
+            ":#{#product.productStatus.id}, " +
+            ":#{#product.registerTime}, " +
+            ":#{#product.auctionTime})"
+            , nativeQuery = true)
+    void createProduct(Product product);
+
+
     /**
      * Author : CaoLPT
      * function to change status of product
@@ -155,6 +178,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Query(value = "update product set product_register_time = now(), product_status_id = 1 , product_price = :price, product_description = :description where product_id = :id",nativeQuery = true)
     void updateProduct(Double price, String description, Integer id);
+
+    /**
+     * Author : TungNT
+     * Statistics product by month , by year or by day
+     */
+    @Query("select product from Product product" +
+            " where ((:monthSearch is null) or ((function('month', product.endTime)) = :monthSearch)) and" +
+            " ((:daySearch is null) or ((function('day', product.endTime)) = :daySearch)) and" +
+            " (function('year', product.endTime) = :yearSearch)")
+    List<Product> getProductByDateForDonutChart(Integer daySearch,Integer monthSearch, Integer yearSearch);
 
 }
 

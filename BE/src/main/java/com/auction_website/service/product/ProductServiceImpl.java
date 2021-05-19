@@ -20,6 +20,25 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     /**
+     * author: ThinhTHB
+     * method: create product
+     * */
+    @Override
+    @Transactional
+    public void postProduct(Product product) {
+        productRepository.createProduct(product);
+    }
+
+    /**
+     * Author : TungNT
+     * Statistics product by month , by year or by day
+     */
+    @Override
+    public List<Product> getProductByDateForDonutChart(Integer daySearch, Integer monthSearch, Integer yearSearch) {
+        return productRepository.getProductByDateForDonutChart(daySearch,monthSearch,yearSearch);
+    }
+
+    /**
      * author: PhucPT
      * method: get current step price of a product
      * @param product

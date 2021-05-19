@@ -7,4 +7,10 @@ import java.util.List;
 public interface CategoryService {
     List<Category> findAll();
     Category findById(Integer categoryId);
+
+    /**
+     * author: ThinhTHB
+     * method: get category
+     * */
+    List<Category> getCategory();
 }

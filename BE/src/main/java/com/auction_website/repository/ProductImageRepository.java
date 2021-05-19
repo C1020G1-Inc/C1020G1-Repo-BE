@@ -78,7 +78,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
      */
     @Query(value = "select * from auction_website.product_image img\n" +
             "right join product p on p.product_id = img.product_id\n" +
-            "where p.product_status_id = 3\n" +
+            "where (p.product_status_id = 3 or p.product_status_id = 4 or p.product_status_id = 5)\n" +
             "group by  p.product_id", nativeQuery = true)
     List<ProductImage> showAllProductEndAuction();
 
@@ -90,7 +90,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
      */
     @Query(value = "select * from auction_website.product_image img\n" +
             "right join product p on p.product_id = img.product_id\n" +
-            "where (p.category_id = ?1 and p.product_status_id = 3)\n" +
+            "where (p.category_id = ?1 and (p.product_status_id = 3 or p.product_status_id = 4 or p.product_status_id = 5))\n" +
             "group by  p.product_id", nativeQuery = true)
     List<ProductImage> showAllProductEndAuctionByCategory(Integer category);
 
@@ -101,7 +101,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
      */
     @Query(value = "select * from auction_website.product_image img\n" +
             "right join product p on p.product_id = img.product_id\n" +
-            "where (p.product_price > 10000000 and p.product_status_id = 3)\n" +
+            "where (p.product_price > 10000000 and (p.product_status_id = 3 or p.product_status_id = 4 or p.product_status_id = 5))\n" +
             "group by  p.product_id\n" +
             "order by p.product_register_time desc", nativeQuery = true)
     List<ProductImage> showAllProductEndAuctionHot();

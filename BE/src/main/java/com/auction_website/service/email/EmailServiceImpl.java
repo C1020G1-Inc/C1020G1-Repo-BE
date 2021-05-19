@@ -28,8 +28,8 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
         String htmlMsg = "<h4>Chào bạn,</h4>\n" +
                 "<p>Chúc mừng bạn đã đấu giá thành công sản phẩm '" + productTransaction.getProduct().getProductName() + "</p>\n" +
-                "<p>Xin vui lòng đăng nhập thanh toán sản phảm.</p>" +
-                " <p>Lưu ý trong vòng 24h kể từ khi nhận mail này nếu không có bất kì thành toán nào thì sản phẩm sẽ bị khóa</p>\n" +
+                "<p>Đăng nhập vào giỏ hàng để theo dõi chi tiết đơn hàng: </p><a href='http://localhost:4200/auction/cart'>Giỏ hàng</a>" +
+                " <p>Lưu ý trong vòng 24h kể từ khi nhận mail này nếu không có bất kì thành toán nào thì giao dịch sẽ bị hủy</p>\n" +
                 "<br>\n" +
                 "<p>C10 Auction Support Team</p>";
         System.out.println(htmlMsg);
