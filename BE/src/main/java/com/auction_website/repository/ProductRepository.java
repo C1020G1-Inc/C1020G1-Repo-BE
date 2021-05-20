@@ -95,7 +95,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      * Get all product
      */
     @Query(value = "select product from Product product " +
-            "where product.productStatus.id not in(5 , 6)")
+            "where product.productStatus.id not in(4 ,5 , 6)")
     List<Product> getAllProduct();
 
 
@@ -109,7 +109,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "where (:productName is null or product.productName like %:productName%) and " +
             "(:categoryId is null or product.category.id = :categoryId) and " +
             "(:userName is null or user.userName like %:userName%) and " +
-            "(:productStatusId is null or product.productStatus.id = :productStatusId)")
+            "(:productStatusId is null or product.productStatus.id = :productStatusId) and " +
+            "product.productStatus.id not in(4, 5 , 6)")
     List<Product> getProductBySearch(String productName, Integer categoryId,
                                      String userName, Integer productStatusId);
 

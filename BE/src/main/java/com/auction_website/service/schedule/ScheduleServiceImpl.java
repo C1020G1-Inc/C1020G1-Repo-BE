@@ -90,6 +90,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                     notificationService.notifyCancelTransaction(productTransaction);
                 }
             }
-        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 60 * 1000 * 30));
+        }, new Date(productTransaction.getProduct().getRegisterTime().getTime() + (long) productTransaction.getProduct().getAuctionTime() * 60 * 1000 + 60 * 1000 * 1));
     }
 }
