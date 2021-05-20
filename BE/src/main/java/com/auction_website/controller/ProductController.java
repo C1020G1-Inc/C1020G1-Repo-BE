@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -50,20 +53,31 @@ public class ProductController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @PostMapping("/api/product/create")
+    public ResponseEntity<Void> createProduct(@RequestBody ProductDTO productDTO){
+        try {
+            if (productDTO == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            List<ProductImage> productImageList = productDTO.getProductImageList();
+            System.out.println(productImageList.size());
+            Product newProduct = productService.createProduct(productDTO.getProduct());
+            for (ProductImage productImage : productImageList) {
+                productImage.setProduct(newProduct);
+                productImageService.saveProductImage(productImage);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     /**
      * author: ThinhTHB
      * method: get category
      * */
     @GetMapping("/api/product/categories")
     public List<Category> getCategory(){ return categoryService.getCategory(); }
-    /**
-     * author: ThinhTHB
-     * method: create product & image
-     * */
-    @PostMapping("/api/product//create")
-    public void createProduct(@RequestBody Product product){
-        productService.postProduct(product);
-    }
 
     /**
      * Author : TungNT
@@ -204,6 +218,21 @@ public class ProductController {
     public ResponseEntity<Void> updateProduct(@PathVariable Double price,@PathVariable String description , @PathVariable Integer id) {
         try {
             productService.updateProduct(price, description, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }/**
+     * Author: CuongNVM
+     * Update status for button "Đăng kí lại" items
+     */
+    @PutMapping("/product-register/update")
+    public ResponseEntity<Void> updateProduct(@RequestBody @Valid Product product, BindingResult bindingResult) {
+        try {
+            if ( bindingResult.hasErrors()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            productService.updateProduct(product.getPrice(),product.getDescription(),product.getProductId());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

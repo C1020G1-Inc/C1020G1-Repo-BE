@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Query(value = "UPDATE user u" +
             " SET u.user_name = :#{#user.getUserName()}," +
+            " u.user_avatar = :#{#user.getAvatar()}," +
             " u.user_birthday = :#{#user.getBirthday()}," +
             " u.user_identity = :#{#user.getIdentity()}," +
             " u.user_phone = :#{#user.getPhone()}," +

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ProductService {
+    Product createProduct(Product product);
 
     double findCurrentStepPrice(Product product);
 
@@ -41,11 +42,5 @@ public interface ProductService {
     Product getProductById(Integer productId);
 
     List<Product> getProductByDateForDonutChart(Integer daySearch , Integer monthSearch , Integer yearSearch);
-
-    /**
-     * author: ThinhTHB
-     * method: create product
-     * */
-    void postProduct(Product product);
 
 }

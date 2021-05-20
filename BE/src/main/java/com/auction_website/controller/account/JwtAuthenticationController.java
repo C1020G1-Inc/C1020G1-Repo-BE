@@ -80,7 +80,7 @@ public class JwtAuthenticationController {
 
         String htmlMsg = "<h3>Dear "+userName+"</h3>" +
                 "<span>" + confirmContent + "</span>" +
-                "<h2><img src='https://static.tapchitaichinh.vn/images/upload/hoangthuviet/2016_09_19/ban-dau-gia-tsdbgega_WHBQ.jpg%27%3E></h2>";
+                "<h2><img src='https://static.tapchitaichinh.vn/images/upload/hoangthuviet/2016_09_19/ban-dau-gia-tsdbgega_WHBQ.jpg%27%3E'></h2>";
 
         message.setContent(htmlMsg,"text/html; charset=utf-8");
 

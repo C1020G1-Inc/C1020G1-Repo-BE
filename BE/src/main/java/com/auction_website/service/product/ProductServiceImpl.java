@@ -19,15 +19,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    /**
-     * author: ThinhTHB
-     * method: create product
-     * */
-    @Override
-    @Transactional
-    public void postProduct(Product product) {
-        productRepository.createProduct(product);
-    }
 
     /**
      * Author : TungNT
@@ -36,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductByDateForDonutChart(Integer daySearch, Integer monthSearch, Integer yearSearch) {
         return productRepository.getProductByDateForDonutChart(daySearch,monthSearch,yearSearch);
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
 
     /**

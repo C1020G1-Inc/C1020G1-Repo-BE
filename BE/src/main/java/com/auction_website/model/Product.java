@@ -1,6 +1,8 @@
 package com.auction_website.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
@@ -16,6 +18,7 @@ public class Product {
     private String productName;
 
     @Column(name = "product_price")
+    @Min(0)
     private Double price;
 
     @ManyToOne
@@ -35,6 +38,7 @@ public class Product {
     private Double lastPrice;
 
     @Column(name = "product_description")
+    @NotBlank
     private String description;
 
     @ManyToOne

@@ -17,31 +17,14 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Transactional
-/**
- * author: ThinhTHB
- * method: create product
- * */
-    @Modifying
-    @Query(value = "insert into product (product_name, category_id, product_quantity, product_price, " +
-            "product_price_step, product_description, product_status_id, product_register_time, product_auction_time) " +
-            "value " +
-            "(:#{#product.productName}, " +
-            ":#{#product.category.id}, " +
-            ":#{#product.quantity}, " +
-            ":#{#product.price}, " +
-            ":#{#product.priceStep}, " +
-            ":#{#product.description}, " +
-            ":#{#product.productStatus.id}, " +
-            ":#{#product.registerTime}, " +
-            ":#{#product.auctionTime})"
-            , nativeQuery = true)
-    void createProduct(Product product);
+    @Query(value = "SELECT * FROM product WHERE product.account_id = :accountId ORDER BY product.product_id DESC LIMIT 1", nativeQuery = true)
+    Product getRecentProductByUserId(Integer accountId);
 
 
     /**
      * Author : CaoLPT
      * function to change status of product
+     *
      * @param productStatusId
      */
     @Modifying
@@ -51,6 +34,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * author: PhucPT
      * method: get product from DB by productId
+     *
      * @param productId
      * @return
      */
@@ -61,6 +45,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * author: PhucPT
      * method: find all product currently in auction
+     *
      * @return
      */
     @Query(nativeQuery = true,
@@ -70,6 +55,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * author: PhucPT
      * method: set last price has been bidding to product
+     *
      * @param productId
      * @param lastPrice
      * @return
@@ -82,6 +68,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * author: PhucPT
      * method: set product status by product Id
+     *
      * @param productId
      * @param statusId
      * @return
@@ -94,6 +81,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * author: PhucPT
      * method: set status product to fail and reset last price
+     *
      * @param productId
      * @return
      */
@@ -132,7 +120,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Transactional
     @Modifying
     @Query("update Product product set product.productStatus.id = 2 , product.registerTime = :registerTime  where product.productId = :idProduct")
-    void approvedProduct(Integer idProduct , Timestamp registerTime);
+    void approvedProduct(Integer idProduct, Timestamp registerTime);
 
     /**
      * Author : TungNT
@@ -153,6 +141,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     /**
      * Author: CuongNVM
+     *
      * @param pageable
      * @param id
      * @return
@@ -163,20 +152,22 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     /**
      * Author: CuongNVM
+     *
      * @param id
      */
     @Modifying
-    @Query(value = "update product set product_status_id = 6 where product_id = :id",nativeQuery = true)
+    @Query(value = "update product set product_status_id = 6 where product_id = :id", nativeQuery = true)
     void updateStatus(Integer id);
 
     /**
      * Author: CuongNVM
+     *
      * @param price
      * @param description
      * @param id
      */
     @Modifying
-    @Query(value = "update product set product_register_time = now(), product_status_id = 1 , product_price = :price, product_description = :description where product_id = :id",nativeQuery = true)
+    @Query(value = "update product set product_register_time = now(), product_status_id = 1 , product_price = :price, product_description = :description where product_id = :id", nativeQuery = true)
     void updateProduct(Double price, String description, Integer id);
 
     /**
@@ -187,7 +178,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             " where ((:monthSearch is null) or ((function('month', product.endTime)) = :monthSearch)) and" +
             " ((:daySearch is null) or ((function('day', product.endTime)) = :daySearch)) and" +
             " (function('year', product.endTime) = :yearSearch)")
-    List<Product> getProductByDateForDonutChart(Integer daySearch,Integer monthSearch, Integer yearSearch);
+    List<Product> getProductByDateForDonutChart(Integer daySearch, Integer monthSearch, Integer yearSearch);
 
 }
 
