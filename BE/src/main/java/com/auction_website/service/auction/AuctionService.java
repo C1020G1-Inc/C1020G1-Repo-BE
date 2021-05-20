@@ -12,6 +12,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.Date;
 
 public interface AuctionService {
+
+    int getNumberOfFailAuctionCurrent(Product product);
+    void setStatusAuctionInProgressByAccountId(Integer accountId,Integer productId, String status);
+
     List<Auction> showTopProductAuction(Integer category);
 
     boolean createAuction(double price, Date timeAuction, int accountId, int productId);

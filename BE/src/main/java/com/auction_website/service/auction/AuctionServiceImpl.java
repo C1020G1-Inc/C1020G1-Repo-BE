@@ -117,4 +117,28 @@ public class AuctionServiceImpl implements AuctionService {
     public List<Auction> getAllAuctionByProductId(Integer productId) {
         return auctionRepository.getAllAuctionByProductId(productId);
     }
+
+    /**
+     * author: PhucPT*
+     * method: count number of fail auction in current session
+     * @param product
+     * @return
+     */
+    @Override
+    public int getNumberOfFailAuctionCurrent(Product product) {
+        Timestamp endTime = new Timestamp(product.getRegisterTime().getTime() + (long) product.getAuctionTime() * 60 * 1000);
+        return auctionRepository.getNumberOfFailAuctionCurrent(product.getProductId(),product.getRegisterTime(),endTime);
+    }
+    /**
+     * author: PhucPT*
+     * method: set status auction in progress by account id and product id
+     * @param accountId
+     * @param productId
+     * @param status
+     */
+    @Override
+    @Transactional
+    public void setStatusAuctionInProgressByAccountId(Integer accountId,Integer productId, String status) {
+        auctionRepository.setStatusAuctionInProgressByAccountId(accountId,productId,status);
+    }
 }

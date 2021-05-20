@@ -142,4 +142,14 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     public void deleteTransaction(Integer transactionId) {
         productTransactionRepository.deleteTransaction(transactionId);
     }
+
+    /**
+     * author: PhucPT
+     * @param accountId
+     * @return
+     */
+    @Override
+    public int getNumberOfCancelTransactionByAccount(Integer accountId) {
+        return productTransactionRepository.getNumberOfCancelTransactionByAccount(accountId);
+    }
 }

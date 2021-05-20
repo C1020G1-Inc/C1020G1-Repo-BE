@@ -163,4 +163,14 @@ public interface ProductTransactionRepository extends JpaRepository<ProductTrans
             " (:status is null or pt.status = :status) and" +
             " pt.status <> 'Đang chờ'")
     List<ProductTransaction> getTransactionBySearch(String namePost, String nameBuy, String productName, Double price, String status);
+
+    /**
+     * author: PhucPT
+     * method: set number of cancel transaction
+     * @param accountId
+     * @return
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(product_transaction_id) FROM product_transaction WHERE status = 'fail' AND account_id = :accountId")
+    int getNumberOfCancelTransactionByAccount(Integer accountId);
 }

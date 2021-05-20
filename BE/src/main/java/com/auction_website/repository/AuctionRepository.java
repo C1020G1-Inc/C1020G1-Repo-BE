@@ -137,4 +137,27 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer> {
      */
     @Query(value = "SELECT * FROM auction Where product_id = ?1", nativeQuery = true)
     List<Auction> getAllAuctionByProductId(Integer productId);
+
+    /**
+     * author: PhucPT
+     * method: get number of not purchasing auction in current auction session
+     *
+     * @param productId
+     * @param registerTime
+     * @param endTime
+     * @return
+     */
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(auction_id) FROM auction WHERE product_id = :productId AND status = 'cancel' AND (time_auction BETWEEN :start AND :end)")
+    int getNumberOfFailAuctionCurrent(Integer productId, Timestamp start, Timestamp end);
+    /**
+     * author: PhucPT
+     * method: set current auction by accountId
+     * @param accountId
+     * @param status
+     */
+    @Modifying
+    @Query(nativeQuery = true,
+            value = "UPDATE `auction` SET status = :status WHERE account_id = :accountId AND product_id = :productId AND status = 'in_progress'")
+    void setStatusAuctionInProgressByAccountId(int accountId,int productId, String status);
 }

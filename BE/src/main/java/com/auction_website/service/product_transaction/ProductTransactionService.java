@@ -51,4 +51,5 @@ public interface ProductTransactionService {
      */
     void deleteTransaction(Integer transactionId);
 
+    int getNumberOfCancelTransactionByAccount(Integer accountId);
 }

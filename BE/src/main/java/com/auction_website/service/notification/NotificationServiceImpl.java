@@ -1,5 +1,4 @@
 package com.auction_website.service.notification;
-
 import com.auction_website.model.ProductTransaction;
 import com.auction_website.model.dto.ListCurrentAuctionDTO;
 import com.auction_website.model.dto.MessageNotificationDTO;
@@ -7,13 +6,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class NotificationServiceImpl implements NotificationService {
-
     @Autowired
     FirebaseDatabase database;
-
     /**
      * author: PhucPT
      * method: update auction list to firebase
@@ -25,7 +21,6 @@ public class NotificationServiceImpl implements NotificationService {
         DatabaseReference reference = database.getReference("auction/progress/" + productId);
         reference.setValueAsync(auctions);
     }
-
     /**
      * author: PhucPT
      * method: clear firebase database when auction complete
@@ -36,7 +31,6 @@ public class NotificationServiceImpl implements NotificationService {
         DatabaseReference reference = database.getReference("auction/progress/" + productId);
         reference.removeValueAsync();
     }
-
     /**
      * author: PhucPT
      * method: send notify to firebase when auction end
@@ -52,7 +46,6 @@ public class NotificationServiceImpl implements NotificationService {
         message.setType("winner");
         reference.push().setValueAsync(message);
     }
-
     /**
      * author: PhucPT
      * method: send notify to firebase when transaction cancel
@@ -66,6 +59,16 @@ public class NotificationServiceImpl implements NotificationService {
         message.setTitle("[Cảnh báo] Giao dịch hủy bỏ");
         message.setUrl("/history/"+productTransaction.getAccount().getAccountId());
         message.setType("abort");
+        reference.push().setValueAsync(message);
+    }
+    @Override
+    public void notifyNearEndPurchasing(ProductTransaction productTransaction) {
+        DatabaseReference reference = database.getReference("notification/" + productTransaction.getAccount().getAccountId());
+        MessageNotificationDTO message = new MessageNotificationDTO();
+        message.setContent("Phiên giao dịch sản phẩm '"+productTransaction.getProduct().getProductName()+"' sắp kết thúc");
+        message.setTitle("[Lưu ý] Giao dịch sắp hết hạn");
+        message.setUrl("auction/cart");
+        message.setType("near-abort");
         reference.push().setValueAsync(message);
     }
 }
